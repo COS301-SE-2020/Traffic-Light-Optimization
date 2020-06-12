@@ -1,26 +1,35 @@
-import initialize
+import readFile
 from influxdb_client.client.write_api import SYNCHRONOUS
 from numpy import random
 
-
+initialize = readFile.initialize
 write_api = initialize.client.write_api(write_options=SYNCHRONOUS)
 
 # measurement #
 # tl_name # tl_intersection # tl_state # lane_type # num_lanes # car_capacity
 
-tl_name = ["burnett_1", "hilda_1"]
-tl_intersection = "burnett-hilsa"
+fileData = readFile.csvData
+status = ["red", "green", "orange"]
+tl_type = ["standard", "pedestrian", "turn"]
 car_capacity = [20, 25]
 num_lanes = 3
-for x in range (20):
+
+for x, row in fileData.iterrows():
     random_index = random.randint(1)
+    index = random.randint(2)
     num_cars = random.randint(20)
     json_body = [
         {
             "measurement": "traffic_lights",
             "tags" : {
-                "tl_name": tl_name[random_index],
-                "tl_intersection": tl_intersection
+                "tl_id": row[0],
+                "tl_location": "Austin, Texas",
+                "tl_status": status[index],
+                "tl_type": tl_type[index],
+                "tl_name": row[8],
+                "tl_intersection": row[2],
+                "tl_operation_state": row[4],
+                "tl_operation_processed_time": row[5]
             },
             "fields": {
                 "car_capacity": car_capacity[random_index],
