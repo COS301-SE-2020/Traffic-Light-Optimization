@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="author" content="cos301alpha">
+		<title>Traffic Light Optimization</title>
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+		<link rel="icon" type="image" size="16x16" href="images/favicon.ico"/>
+		<link rel="stylesheet" type="text/css" href="bootstrap-4.0.0-dist/css/bootstrap.min.css">
+		<script type="text/javascript" src="bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+		<script type="text/javascript" src="js/script.js"></script>
+	</head>
+	<body>
+		<div class="fluid-container">
+			<div class="row">
+				<div class="welcome col-6">
+					<div class="logo">
+						<img src="images/logo_welcome.png">
+					</div>
+					<div class="welcome_message">
+						<h2>Imagine Interactive Systems</h2>
+						<br>
+						<h4>Traffic Light Optimization</h4>
+						<p></p>
+					</div>
+				</div>
+				<div class="col-6 welcome-form row">
+					<div class="form-show">
+						<div class="sForm formHid" id="login">
+							<div class="card">
+								<form method="post" onsubmit="return validateForm()" action="pages/home.html">
+									<fieldset>
+										<div class="card-header"><legend>Sign In</legend></div>
+										<div class="card-body">
+											<div class="row">
+												<div class="col-12 col-lg-12">
+													<label for="loginEmail">Email Address</label>
+													<input type="email" id="loginEmail" class="form-control" placeholder="name@email.com" name="email">
+												</div>
+												<div class="col-12 col-lg-12">
+													<label for="loginPass">Password</label>
+													<input type="password" id="loginPass" class="form-control" placeholder="******" name="pass">
+												</div>
+											</div>
+											<div class="row mt-3">
+												<div class="col-5">
+													<button type="submit" class="btn">Sign in<i class="fa fa-angle-right"></i></button>
+												</div>
+												<div class="switch col-7">Not a member yet? <button type="button" id="regSwitch">Sign up</button></div>
+											</div>
+										</div>
+									</fieldset>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="form-show">
+						<div class="sForm" id="register">
+							<div class="card">
+								<form method="post" onsubmit="return validateFormReg()" action="pages/home.html">
+									<fieldset>
+										<div class="card-header"><legend>Sign up</legend></div>
+										<div class="card-body">
+											<div class="row">
+												<div class="col-12 col-lg-12">
+													<label for="regEmail">Email Address</label>
+													<input type="email" id="regEmail" class="form-control" placeholder="doe@email.com" name="regEmail">
+												</div>
+												<div class="col-12 col-lg-12">
+													<label for="regPass">Password</label>
+													<input type="password" id="regPass" class="form-control" placeholder="******" name="pass1">
+												</div>
+												<div class="col-12 col-lg-12">
+													<label for="regPass2">Confirm Password</label>
+													<input type="password" id="regPass2" class="form-control" placeholder="******" name="pass2">
+												</div>
+											</div>
+											<div class="row mt-3">
+												<div class="col-5">
+													<button type="submit" class="btn">Register<i class="fa fa-angle-right"></i></button>
+												</div>
+												<div class="switch col-7">Already have an account? <button id="logSwitch" type="button">Sign in</button></div>
+											</div>
+										</div>
+									</fieldset>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
