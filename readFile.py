@@ -1,7 +1,13 @@
-import initialize
 import pandas as pd
 
-path = r'data/traffic-signals-status-1.csv'
-csvData = pd.read_csv(path)
+class ReadFile:
 
-#print(csvData.columns)
+    def setPath(self, path):
+        self.path = path
+
+    def readData(self):
+        self.csvData = pd.read_csv(self.path)
+        #print(csvData.columns)
+
+    def getData(self):
+        return self.csvData
