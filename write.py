@@ -48,4 +48,8 @@ class Write:
                 }
             ]
 
-           # self.write_api.write(bucket = Bucket, org = Organisation, record = json_body)
+            self.p = "correct"
+            try:
+                self.write_api.write(bucket = Bucket, org = Organisation, record = json_body)
+            except Exception as e:
+                self.p = e

@@ -8,8 +8,10 @@ class ReadFile:
         self.path = path
 
     def readData(self):
-        self.csvData = pd.read_csv(self.path)
-        #print(csvData.columns)
+        try:
+            self.csvData = pd.read_csv(self.path)
+        except Exception:
+            self.path = "file path does not exist"
 
     def getData(self):
         return self.csvData
