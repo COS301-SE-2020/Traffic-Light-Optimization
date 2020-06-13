@@ -1,5 +1,8 @@
-from influxdb_client.client.write_api import SYNCHRONOUS
-from numpy import random
+try:
+    from influxdb_client.client.write_api import SYNCHRONOUS
+    from numpy import random
+except Exception as e:
+    print("there are some modules missing {}".format(e))
 
 class Write:
     
@@ -45,4 +48,4 @@ class Write:
                 }
             ]
 
-            self.write_api.write(bucket = Bucket, org = Organisation, record = json_body)
+           # self.write_api.write(bucket = Bucket, org = Organisation, record = json_body)

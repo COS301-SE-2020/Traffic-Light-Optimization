@@ -1,5 +1,7 @@
-import pandas as pd
-
+try:
+    import pandas as pd
+except Exception as e:
+    print("there are some modules missing {}".format(e))
 class ReadFile:
 
     def setPath(self, path):
