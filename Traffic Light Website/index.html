@@ -68,6 +68,7 @@
 			  	$('.records table tbody tr').css('display','table-row');
 			  	$('.records table tr.loading').css('display','none');
 			    $('.cont-info-nav > div i').html(num);
+				writeSingle();
 			    console.log('\nFinished SUCCESS');
 			    // write(org, Bucket);
 			  },
@@ -94,7 +95,11 @@
 
 			let writeSingle = ()=>{
 				$('.operations button').on('click',()=>{
-					// $('')
+					$('#data-file').click();
+				});
+
+				$('.cont-info-nav form').on('change',(e)=>{
+					$(e.currentTarget).submit();
 				});
 			}
 		</script>
@@ -133,6 +138,9 @@
 									<button class="btn">+ Add Traffic Light</button>
 									<!-- <button class="btn">More ...</button> -->
 								</div>
+								<form enctype="multipart/form-data" action="/index.html" method="post">
+								    <input id="data-file" type="file" />
+								</form>
 							</div>
 							<div class="records">
 								<table class="table table-borderless">

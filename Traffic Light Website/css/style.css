@@ -244,3 +244,7 @@ embed{
 	height: 85vh;
 	/*margin-left: 10%;*/
 }
+
+.cont-info-nav form{
+	display: none;
+}
