@@ -1,0 +1,15 @@
+export declare const escape: {
+    /**
+     * Measurement escapes measurement names.
+     */
+    measurement: (val: string) => string;
+    /**
+     * Quoted escapes quoted values, such as database names.
+     */
+    quoted: (val: string) => string;
+    /**
+     * TagEscaper escapes tag keys, tag values, and field keys.
+     */
+    tag: (val: string) => string;
+};
+//# sourceMappingURL=escape.d.ts.map
