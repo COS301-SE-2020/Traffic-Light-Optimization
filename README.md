@@ -9,7 +9,7 @@ would be archived by the use of AI operations working on time series data.
 1. Tlou Lebelo u15209190@tuks.co.za • [Linkedin](https://www.linkedin.com/in/tlou-lebelo-359a30141/)
 2. RW van Graan u16040865@tuks.co.za • [Linkedin](https://www.linkedin.com/in/rudolf-van-graan-48a7471a9/) • [Github.io](https://u16040865.github.io)
 3. R Rammbuda u16207948@tuks.co.za • [Linkedin](http://www.linkedin.com/in/rammbuda-rilwele-842b11127) • [Github.io](https://u16207948.github.io/index.html)
-4. OM Mogoatlhe u14254922@tuks.co.za • [Linkedin](https://www.linkedin.com/in/moeketsi-mogoatlhe-6b7807194)
+4. OM Mogoatlhe u14254922@tuks.co.za • [Linkedin](https://www.linkedin.com/in/moeketsi-mogoatlhe-6b7807194) • [Github.io](http://mogoatlhe.github.io/)
 5. TR Sithole u15360441@tuks.co.za • [Linkedin](https://www.linkedin.com/in/tshegofatso-sithole-5b8023175)
 
 ## Documentation
