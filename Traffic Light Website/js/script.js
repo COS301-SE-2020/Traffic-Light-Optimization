@@ -1,93 +1,37 @@
 $(()=>{
-	formSwitch();
-	enter();
+	// influx();
 });
 
-enter = ()=>{
-	$('.welcome-form button.btn').on('click',(e)=>{
-		// e.preventDefault();
-		// $('.welcome-form form').preventDefault();
-		// window.location.replace('pages/home.html');
+influx = ()=>{
+	// const {InfluxDB} = require('@influxdata/influxdb-client');
+	  import {InfluxDB, Point} from 'https://unpkg.com/@influxdata/influxdb-client/dist/index.browser.mjs';
+	  import {HealthAPI, SetupAPI} from 'https://unpkg.com/@influxdata/influxdb-client-apis/dist/index.browser.mjs';
+
+	// You can generate a Token from the "Tokens Tab" in the UI
+	const token = 'okx-Wk8zR33DYZxZP91T10ZTfUFmMz866DCKfE3Z8l5azgUT3QLIIdzk6rATGgCdAyuaAbWrReSi9KfchjW0kg==';
+	const org = 'cos301.alpha@gmail.com';
+	const bucket = 'test Bucket';
+
+	const client = new InfluxDB({url: 'https://eu-central-1-1.aws.cloud2.influxdata.com', token: token});
+
+	//Read from database
+	const queryApi = client.getQueryApi(org);
+	    console.log("echo");
+
+	const query = `from(bucket: "${bucket}") |> range(start: -1h)`;
+	queryApi.queryRows(query, {
+	  next(row, tableMeta) {
+	    const o = tableMeta.toObject(row);
+	    console.log(
+	      `${o._time} ${o._measurement} in '${o.location}' (${o.example}): ${o._field}=${o._value}`
+	    );
+	  },
+	  error(error) {
+	    console.error(error);
+	    console.log('\nFinished ERROR');
+	  },
+	  complete() {
+	    console.log('\nFinished SUCCESS');
+	  },
 	});
-}
-
-formSwitch = ()=>{
-	$('.welcome-form').on('click','button#regSwitch',()=>{
-		$('.sForm#login').css('display','none');
-		$('.sForm#register').css('display','block');
-	});
-	$('.welcome-form').on('click','button#logSwitch',()=>{
-		$('.sForm#register').css('display','none');
-		$('.sForm#login').css('display','block');
-	});
-}
-
-validateForm = ()=>{
-
-	var i = document.getElementById("loginEmail");
-	var j = document.getElementById("loginPass");
-
-	var status = true;
-
-	
-	if(i.value===""){
-		i.className += " is-invalid";
-		status = false;
-	}
-	else{
-		i.classList.remove("is-invalid");
-	}
-	if(j.value===""){
-		j.className += " is-invalid";
-		status = false;
-	}
-	else{
-		j.classList.remove("is-invalid");
-	}
-	return status;
-}
-
-
-validateFormReg = ()=>{
-	var c = document.getElementById("regEmail");
-	var e = document.getElementById("regPass");
-	var f = document.getElementById("regPass2");
-
-	var g = document.getElementById("register").style.display;
-
-	var status = true;
-
-	if(c.value===""){
-		c.className += " is-invalid";
-		status = false;
-	}
-	else{
-		c.classList.remove("is-invalid");
-	}
-	if(e.value===""){
-		e.className += " is-invalid";
-		status = false;
-	}
-	else{
-		e.classList.remove("is-invalid");
-	}
-	if(f.value===""){
-		f.className += " is-invalid";
-		status = false;
-	}
-	else{
-		f.classList.remove("is-invalid");
-	}
-	if(e.value!=""&&f.value!=""&&e.value!=f.value){
-		e.className += " is-invalid";
-		f.className += " is-invalid";
-		status = false;
-	}
-	else if(e.value==""||f.value==""){
-		status = false;
-	}
-	else{
-		status = true;
-	}
-	return status;	
 }

@@ -212,6 +212,15 @@ tbody{
 	border: 1px solid var(--secondary-color);
 }
 
+.records table tr{
+	/*display: none;*/
+}
+
+.records table tr.loading{
+	/*display: block;*/
+	/*display: table-row;*/
+}
+
 /* table thead tr th:nth-child(1){
 	border-top-left-radius: 10px;
 }

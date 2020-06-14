@@ -10,82 +10,172 @@
 		<script type="text/javascript" src="bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
 		<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
-		<script type="text/javascript" src="js/script.js"></script>
+		<!-- <script type="module" src="js/script.js"></script> -->
+		<script type="module">
+			
+			// const {InfluxDB} = require('@influxdata/influxdb-client');
+			import {InfluxDB, Point} from 'https://unpkg.com/@influxdata/influxdb-client/dist/index.browser.mjs';
+			import {HealthAPI, SetupAPI} from 'https://unpkg.com/@influxdata/influxdb-client-apis/dist/index.browser.mjs';
+
+			// You can generate a Token from the "Tokens Tab" in the UI
+			const token = 'okx-Wk8zR33DYZxZP91T10ZTfUFmMz866DCKfE3Z8l5azgUT3QLIIdzk6rATGgCdAyuaAbWrReSi9KfchjW0kg==';
+			const org = 'cos301.alpha@gmail.com';
+			const bucket = 'test Bucket';
+
+			const client = new InfluxDB({url: 'https://eu-central-1-1.aws.cloud2.influxdata.com', token: token});
+			let num = 0; 
+
+			//Read from database
+			const queryApi = client.getQueryApi(org);
+
+			const query = `from(bucket: "${bucket}") |> range(start: -1h)`;
+			queryApi.queryRows(query, {
+			  next(row, tableMeta) {
+			  	num++;
+			    const o = tableMeta.toObject(row);
+			    $('.records table tbody')
+			    .append(
+			    	$('<tr>')
+			    	.css('display','none')
+			    	.append(
+			    		$('<th>')
+			    		.attr('scope','row')
+			    		.html(o.tl_id),
+			    		$('<td>')
+			    		.html(o.tl_name),
+			    		$('<td>')
+			    		.html(o.tl_location),
+			    		$('<td>')
+			    		.html(o.tl_intersection),
+			    		$('<td>')
+			    		.html(o.tl_status),
+			    		$('<td>')
+			    		/*.append(
+			    			$('<i>')
+			    			.addClass('fas fa-trash')
+			    		)*/
+			    	)
+			    );
+			    /*console.log(
+			      `${o._time} ${o._measurement} in '${o.location}' (${o.example}): ${o._field}=${o._value}`
+			    );*/
+			  },
+			  error(error) {
+			    console.error(error);
+			    console.log('\nFinished ERROR');
+			  },
+			  complete() {
+			  	$('.records table tbody tr').css('display','table-row');
+			  	$('.records table tr.loading').css('display','none');
+			    $('.cont-info-nav > div i').html(num);
+			    console.log('\nFinished SUCCESS');
+			    // write(org, Bucket);
+			  },
+			});
+
+			let write = (org, bucket)=>{
+				const {Point} = require('@influxdata/influxdb-client');
+				const writeApi = client.getWriteApi(org, bucket);
+				writeApi.useDefaultTags({host: 'host1'});
+
+				const point = new Point('mem')
+				  .floatField('used_percent', 23.43234543);
+				writeApi.writePoint(point);
+				writeApi
+				    .close()
+				    .then(() => {
+				        console.log('FINISHED');
+				    })
+				    .catch(e => {
+				        console.error(e);
+				        console.log('\nFinished ;ERROR');
+				    })
+			}
+
+			let writeSingle = ()=>{
+				$('.operations button').on('click',()=>{
+					// $('')
+				});
+			}
+		</script>
+		<!-- <script type="text/javascript" src="server.js"></script> -->
 	</head>
 	<body>
 		<div class="fluid-container">
 			<div class="row">
-				<div class="welcome col-6">
-					<div class="logo">
+				<div id="navigate" class="col-2">
+					<div class="title">
 						<img src="images/logo_welcome.png">
 					</div>
-					<div class="welcome_message">
-						<h2>Imagine Interactive Systems</h2>
-						<br>
-						<h4>Traffic Light Optimization</h4>
-						<p></p>
+					<div>
+						<a href="#" class="active"><div>DASHBOARD</div></a>
+						<a href="pages/simulation.html"><div>SIMULATION</div></a>
+						<!-- <a href="pages/manual.html"><div>MANUAL</div></a> -->
 					</div>
 				</div>
-				<div class="col-6 welcome-form row">
-					<div class="form-show">
-						<div class="sForm formHid" id="login">
-							<div class="card">
-								<form method="post" onsubmit="return validateForm()" action="pages/home.html">
-									<fieldset>
-										<div class="card-header"><legend>Sign In</legend></div>
-										<div class="card-body">
-											<div class="row">
-												<div class="col-12 col-lg-12">
-													<label for="loginEmail">Email Address</label>
-													<input type="email" id="loginEmail" class="form-control" placeholder="name@email.com" name="email">
-												</div>
-												<div class="col-12 col-lg-12">
-													<label for="loginPass">Password</label>
-													<input type="password" id="loginPass" class="form-control" placeholder="******" name="pass">
-												</div>
-											</div>
-											<div class="row mt-3">
-												<div class="col-5">
-													<button type="submit" class="btn">Sign in<i class="fa fa-angle-right"></i></button>
-												</div>
-												<div class="switch col-7">Not a member yet? <button type="button" id="regSwitch">Sign up</button></div>
-											</div>
-										</div>
-									</fieldset>
-								</form>
-							</div>
+				<div class="content col-12 row">
+					<div class="emp col-2"></div>
+					<div class="cont col-10">
+						<div class="cont-bar">
+							<h2>Traffic Light Optimizer</h2>
 						</div>
-					</div>
-					<div class="form-show">
-						<div class="sForm" id="register">
-							<div class="card">
-								<form method="post" onsubmit="return validateFormReg()" action="pages/home.html">
-									<fieldset>
-										<div class="card-header"><legend>Sign up</legend></div>
-										<div class="card-body">
-											<div class="row">
-												<div class="col-12 col-lg-12">
-													<label for="regEmail">Email Address</label>
-													<input type="email" id="regEmail" class="form-control" placeholder="doe@email.com" name="regEmail">
-												</div>
-												<div class="col-12 col-lg-12">
-													<label for="regPass">Password</label>
-													<input type="password" id="regPass" class="form-control" placeholder="******" name="pass1">
-												</div>
-												<div class="col-12 col-lg-12">
-													<label for="regPass2">Confirm Password</label>
-													<input type="password" id="regPass2" class="form-control" placeholder="******" name="pass2">
-												</div>
-											</div>
-											<div class="row mt-3">
-												<div class="col-5">
-													<button type="submit" class="btn">Register<i class="fa fa-angle-right"></i></button>
-												</div>
-												<div class="switch col-7">Already have an account? <button id="logSwitch" type="button">Sign in</button></div>
-											</div>
-										</div>
-									</fieldset>
-								</form>
+						<div class="cont-info">
+							<div class="cont-info-nav row">
+								<!-- <div class="search col-12">
+									<input type="search" name="search">
+								</div> -->
+								<div class="col-3"><h5><i>0 </i> Traffic Lights Found</h5></div>
+								<!-- <div class="col-2">Sort by:</div> -->
+								<!-- <div class="col-2">Filter:</div> -->
+								<div class="col-2"></div>
+								<div class="col-2"></div>
+								<div class="operations col-5">
+									<button class="btn">+ Add Traffic Light</button>
+									<!-- <button class="btn">More ...</button> -->
+								</div>
+							</div>
+							<div class="records">
+								<table class="table table-borderless">
+									<thead class="thread-dark">
+										<tr>
+											<th scope="col">ID</th>
+											<th scope="col">Name</th>
+											<th scope="col">Location</th>
+											<th scope="col">Intersection</th>
+											<th scope="col">Status</th>
+											<th scope="col"></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr class="loading mb-3">
+											<th>
+												<img src="images/loading.gif" />
+											</th>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+									<!-- 
+										<tr>
+											<th scope="row">1</th>
+											<td>Light1</td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td><i class="fas fa-trash"></i></td>
+										</tr>
+										<tr>
+											<th scope="row">2</th>
+											<td>Light2</td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td><i class="fas fa-trash"></i></td>
+										</tr> -->
+									</tbody>
+								</table>
 							</div>
 						</div>
 					</div>
