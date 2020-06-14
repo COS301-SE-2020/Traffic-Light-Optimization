@@ -20,4 +20,4 @@ For this project we are using [Clubhouse](https://app.clubhouse.io/cos-301-alpha
 ![Screenshot of the tasks we have for demo 1](https://i.imgur.com/VB6bK5W.png)
 
 ## Demo Videos
-The video for demo 1 (and possibly future demos) will be listed here.
+Demo 1: https://drive.google.com/file/d/1F8qVx4_bfQVT08R4-TQUvBwW8aZFH4bK/view?usp=sharing
