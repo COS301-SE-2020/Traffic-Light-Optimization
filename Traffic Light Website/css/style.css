@@ -237,3 +237,10 @@ thead{
 tr td i{
 	color: #f97171;
 }
+
+embed{
+	width: 100%;
+	margin: 0 auto;
+	height: 85vh;
+	/*margin-left: 10%;*/
+}
