@@ -13,7 +13,7 @@ would be archived by the use of AI operations working on time series data.
 5. TR Sithole u15360441@tuks.co.za • [Linkedin](https://www.linkedin.com/in/tshegofatso-sithole-5b8023175)
 
 ## Documentation
-The PDF documentation for this project can be found in the repository. Alternatively, here is a [link](https://www.overleaf.com/project/5ecb85e066c14f0001717033) to the document on Overleaf's LaTeX editor.
+The PDF documentation for this project can be found in the [repository](Team%20Alpha%20Software%20Requirements%20Specification%20for%20Demo%201.pdf).
 
 ## Project Management Tool
 For this project we are using [Clubhouse](https://app.clubhouse.io/cos-301-alpha).
