@@ -2,11 +2,11 @@ from django.db import models
 
 # Create your models here.
 
-# 1. Models an intersection into which different roads meet ................
+# 1. Models an intersection into which different roads meet .....................
 class Network(models.Model):
     name = models.CharField( max_length=200 )
 
-# 2. Models the behavior of a single intersection within a road network ....
+# 2. Models the behavior of a single intersection within a road network .........
 class Intersection(models.Model):
     network = models.ForeignKey(
         Network, 
@@ -18,7 +18,7 @@ class Intersection(models.Model):
     right_of_way = models.TextField( blank=True )
     configuration = models.TextField( blank=True )
 
-# 3. Models a single traffic light within an intersection ...............
+# 3. Models a single traffic light within an intersection ......................
 class TrafficLight(models.Model):
     intersection = models.ForeignKey(
         Intersection, 
@@ -31,7 +31,7 @@ class TrafficLight(models.Model):
     timing_green = models.IntegerField(default=0)
 
 
-# 4. Models traffic artefacts whose movements should be optimized ........
+# 4. Models traffic artefacts whose movements should be optimized .................
 class Artefact(models.Model):
     padestrians = models.IntegerField(default=0)
     cars = models.IntegerField(default=0)
@@ -39,7 +39,7 @@ class Artefact(models.Model):
     bus = models.IntegerField(default=0)
 
 
-# 5. Models a single Road going in or out of an intersection .............
+# 5. Models a single Road going in or out of an intersection ......................
 class Road(models.Model):
 
     intersection_in = models.ForeignKey(
