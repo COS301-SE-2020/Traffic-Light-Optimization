@@ -28,59 +28,14 @@
                             <div class="col-2"></div>
                             <div class="col-2"></div>
                             <div class="operations col-5">
-                                <button class="btn">+ Add Traffic Light</button>
-                            </div>
-                        </div>
-                        <div class="compose hide">
-                            <div>
                                 <form method = "post" enctype = "multipart/form-data" > <!--action="../data_to_database/uploadFile.py"-->
-                                        <legend>Add Traffic Light</legend>
-                                        {% csrf_token %}
-                                        <div class="id_tl">
-                                            <input type = "text" name = "tl_id" />
-                                        </div>
-                                        <div>
-                                            <label for="tl_name">Name: </label>
-                                            <input type = "text" name = "tl_name" placeholder="traffic light 1" required/>
-                                        </div>
-                                        <div>
-                                            <label for="tl_location">Intersection Location: </label>
-                                            <input type = "text" name = "tl_location" placeholder="hilder/south" required/>
-                                        </div>
-                                        <!-- <div> -->
-                                        <!-- <label for="tl_status">Status: </label> -->
-                                        <!-- <input type = "text" name = "tl_status"/> -->
-                                        <!-- </div> -->
-                                        <div>
-                                            <label for="tl_type">Intersection Type: </label>
-                                            <select name="tl_type" required>
-                                                <option value="standard">Standard</option>
-                                                <option value="pedestrian">Pedestrian</option>
-                                                <option value="turn">turn</option>
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <label for="tl_intersection">Intersection Name: </label>
-                                            <input type = "text" name = "tl_intersection" placeholder="hilder" required/>
-                                        </div>
-                                        <!-- <div> -->
-                                            <!-- <label for="tl_operation_state">Name: </label> -->
-                                            <!-- <input type = "text" name = "tl_operation_state"/> -->
-                                        <!-- </div> -->
-                                        <!-- <div> -->
-                                            <!-- <label for="tl_operation_processed_time">Name: </label> -->
-                                            <!-- <input type = "text" name = "tl_operation_processed_time"/> -->
-                                        <!-- </div> -->
-                                        <div>
-                                            <label for="num_lanes">Number of Lanes: </label>
-                                            <input type = "number" name = "num_lanes" required/>
-                                        </div>
-                                        <div>
-                                            <input type = "submit" class="cancel" value = "Cancel"/>
-                                            <input type = "submit" value = "Submit"/>
-                                        </div>
-                                    </form>
-                                </div>
+                                    <!--button class="btn">+ Add Traffic Light</button-->
+                                    {% csrf_token %}
+                                    <input type = "file" name = "filename"/>
+                                    <input type = "submit" value = "Submit"/>
+                                </form>
+                                <!-- <button class="btn">More ...</button> -->
+                            </div>
                         </div>
                         <div class="records">
                             <table class="table table-borderless">
@@ -188,8 +143,6 @@
                 $('.records table tr.loading').css('display','none');
                 $('.cont-info-nav > div i').html(num);
                 console.log('\nFinished SUCCESS');
-
-                $('div.compose div.id_tl > input').attr("value",++num);
                 // write(org, Bucket);
               },
             });
@@ -213,27 +166,9 @@
                     })
             }
 
-            let btns = ()=>{
-                console.log('buttons');
-
-                $('.operations button').on('click',(e)=>{
-                    e.preventDefault();
-
-                    if($('.compose').hasClass('hide'))
-                        $('.compose').removeClass('hide');
-                });
-
-                $('input.cancel').on('click',(e)=>{
-                    e.preventDefault();
-
-                    if($('.compose').hasClass('hide')){
-                        // $('.compose').removeClass('hide');
-                    }
-                    else{
-                        $('.compose').addClass('hide');
-                    }
+            let writeSingle = ()=>{
+                $('.operations button').on('click',()=>{
+                    // $('')
                 });
             }
-
-            btns();
         </script>
