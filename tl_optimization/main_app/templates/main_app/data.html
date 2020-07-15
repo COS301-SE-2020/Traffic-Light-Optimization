@@ -28,9 +28,12 @@
                             <div class="col-2"></div>
                             <div class="col-2"></div>
                             <div class="operations col-5">
-                                <form method = "post" enctype = "multipart/form-data" > <!--action="../data_to_database/uploadFile.py"-->
+                                <form class="add-historic-data" method = "post" enctype = "multipart/form-data" > <!--action="../data_to_database/uploadFile.py"-->
                                     <!--button class="btn">+ Add Traffic Light</button-->
                                     {% csrf_token %}
+                                    <div class="id_tl">
+                                        <input type = "text" name = "tl_form" value="add-historic-data" />
+                                    </div>
                                     <input type = "file" name = "filename"/>
                                     <input type = "submit" value = "Submit"/>
                                 </form>

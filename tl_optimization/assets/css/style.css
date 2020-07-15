@@ -317,3 +317,17 @@ div.compose > div > form > div:last-child > input:nth-child(2):hover{
 div.compose div.id_tl{
 	display: none;
 }
+
+div.compose-historic{
+	position: fixed;
+	height: 100vh;
+	width: 100vw;
+	background-color: rgba(0,0,0,0.6);
+	top: 0;
+	left: 0;
+	z-index: 3;
+}
+
+div.compose-historic.hide{
+	display: none;
+}
