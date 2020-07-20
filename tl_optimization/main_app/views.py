@@ -7,6 +7,8 @@ from numpy import random
 import csv
 import io
 from django.http import HttpResponse
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 
 # Create your views here.
@@ -68,3 +70,32 @@ def index(request):
 
 def home(request):
     return render(request, 'main_app/home.html')
+
+@api_view(['GET'])
+def readData(request):
+    name = []
+    time = []
+    car = []
+    ID = []
+    intersection = []
+    location = []
+    organisation_ = "cos301.alpha@gmail.com"
+    token_ = "okx-Wk8zR33DYZxZP91T10ZTfUFmMz866DCKfE3Z8l5azgUT3QLIIdzk6rATGgCdAyuaAbWrReSi9KfchjW0kg=="
+    bucket_ = "test Bucket"
+    url_ = "https://eu-central-1-1.aws.cloud2.influxdata.com"
+
+    client = InfluxDBClient(url=url_, token=token_, org=organisation_)
+    query_api = client.query_api()
+    records = query_api.query_stream('from(bucket: "test Bucket") |> range(start: -20h)')
+    for record in records:
+        name.append(f'{record["_measurement"]}')
+        time.append(f'{record["_time"]}')
+        car.append(f'{record["_value"]}')
+        ID.append(f'{record["tl_id"]}')
+        intersection.append(f'{record["tl_intersection"]}')
+        location.append(f'{record["tl_location"]}')
+
+    json_body = [{"measurement": n, "time": t, "cars": c, "id": id, "intersection": i, "location": l} for n, t, c, id, i, l in
+                 zip(name, time, car, ID, intersection, location)]
+    # json_body = "api"
+    return Response(json_body)

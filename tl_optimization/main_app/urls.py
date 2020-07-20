@@ -7,6 +7,7 @@ urlpatterns = [
     path('', views.upload, name='index'),
     path('simulation/', views.simulation, name='simulation'),
     path('home', views.home, name='home'),
+    path('api/', views.readData, name='api'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
