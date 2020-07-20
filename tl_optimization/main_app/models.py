@@ -4,23 +4,23 @@ from django.db import models
 
 # 1. Models an intersection into which different roads meet .....................
 class Network(models.Model):
-    name = models.CharField( max_length=200 )
+    network_name = models.CharField( max_length=200 )
 
 # 2. Models the behavior of a single intersection within a road network .........
 class Intersection(models.Model):
-    network = models.ForeignKey(
+    network_id = models.ForeignKey(
         Network, 
         blank=False, 
         null=True,
         on_delete=models.SET_NULL
     )
-    name = models.CharField( max_length=200 )
+    intersection_name = models.CharField( max_length=200 )
     right_of_way = models.TextField( blank=True )
     configuration = models.TextField( blank=True )
 
 # 3. Models a single traffic light within an intersection ......................
 class TrafficLight(models.Model):
-    intersection = models.ForeignKey(
+    intersection_id = models.ForeignKey(
         Intersection, 
         blank=False, 
         null=True,
@@ -62,7 +62,7 @@ class Road(models.Model):
     road_distance = models.IntegerField(default=0)
     average_speed = models.IntegerField(default=0)
     
-    trafficlight =  models.ForeignKey(
+    trafficlight_id =  models.ForeignKey(
         TrafficLight, 
         blank=False, 
         null=True,

@@ -5,7 +5,14 @@
         <title>My test page</title>
     </head>
     <body>
-        <h1> Specific Intersection info <h1>
-        <p> Information about a specific intersection in a network</p>
+        <h1> Specific Intersection info </h1>
+        <p> Information about a specific intersection in a network. </p>
+
+        <hr>
+        <form action="{% url 'intersection' network_info.id intersection_info.id %}" method="post">
+            {% csrf_token %}
+            {{ road_form }}
+            <input type="submit" value="Submit">
+        </form>
     </body>
 </html>

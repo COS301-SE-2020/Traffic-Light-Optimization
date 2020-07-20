@@ -1,11 +1,67 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>View Road Networks</title>
         <meta charset="utf-8">
-        <title>My test page</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+        
+        
     </head>
     <body>
-        <h1> All Networks <h1>
-        <p>Returning all networks in the system</p>
+        <div class="container mt-3">
+            <h1> All Networks </h1>
+            <hr>
+            <div class="row">
+                <div class="col-sm-8 border-right">
+                    <p> Returning all networks in the system </p>
+                    {% if network_list %}
+                        <ul class="list-group" >
+                        {% for network in network_list %}
+                            <li class="list-group-item justify-content-between" >
+                                <a href="{% url 'road_network' network.id %}">
+                                    {{ network.network_name }}
+                                </a>
+                                <span class="badge badge-primary badge-pill" style="float:right"> Intersections 12</span>
+                                <span class="badge badge-secondary badge-pill" style="float:right"> Roads 12</span>
+                                <span class="badge badge-success badge-pill" style="float:right"> Traffic Lights 12</span>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    {% else %}
+                        <h2> No Networks in the System.</h2>
+                    {% endif %}
+
+                </div>
+                <div class="col-sm-4">
+                    <h3> Create New Network </h3>
+                    <form action="{% url 'all_networks' %}" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="email">Network name:</label>
+                            {{ network_form.network_name }}
+                        </div>
+                        <input type="submit" value="Submit">
+                    </form>
+                </div>
+                <hr>
+            </div>
+            <hr>
+            <h2> Recent Visit</h2>
+            <div class="card-deck">
+                {% for network in network_list %}
+                    <div class="card bg-info">
+                        <div class="card-body text-center">
+                            <h4 class="card-title"> {{ network.network_name }} </h4>
+                            <p class="card-text">Some text inside the third card</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
     </body>
 </html>

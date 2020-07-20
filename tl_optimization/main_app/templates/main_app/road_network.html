@@ -1,11 +1,81 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8">
         <title>My test page</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+        <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
+        
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
     <body>
-        <h1> Specific Network Info <h1>
-        <p> Information about a specific a network</p>
+        <div class="container">
+            <h1> 
+                Network: {{ network_info.network_name }} 
+            </h1>
+            <a href="#">
+                    <span class="glyphicon glyphicon-trash"></span>
+            </a>
+            <hr>
+           
+            <div class="row">
+                <div class="col-sm-8 border-right">
+                    <p> Intersections in the Network. </p>
+                    {% if intersection_list %}
+                        <div class="card-columns">
+                            {% for intersection in intersection_list %}
+                                <div class="card bg-light ">
+                                    <div href="{% url 'intersection' network_info.id intersection.id %}" class="card-body text-center">
+                                        <a href="{% url 'intersection' network_info.id intersection.id %}">
+                                            <h6 class="card-title">
+                                                {{ intersection.intersection_name }}
+                                            </h6>
+                                        </a>
+                                        <p> ID: </p>
+                                        <span class="badge badge-success badge-pill" style="float:right"> IN  
+                                            <i class='fas fa-sign-in-alt'> 4 </i>
+                                        </span>
+                                        <span class="badge badge-primary badge-pill" style="float:right"> OUT  
+                                            <i class='fas fa-sign-out-alt'> 4 </i>
+                                        </span>
+    
+                                    </div>
+                                </div>
+                            {% endfor %}  
+                        </div>
+                    {% else %}
+                        <h2> No Intersections in the network.</h2>
+                    {% endif %}
+                    
+                </div>
+                <div class="col-sm-4">
+                    <h3> Create New Network </h3>
+                    <form action="{% url 'road_network' network_info.id %}" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="email">Intersection name:</label>
+                            {{ intersection_form.intersection_name }}
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Right of Way:</label>
+                            <span class="badge badge-secondary badge-pill" style="float:right"> Auto Generated </span>
+                            <p>When roads are added to the intersection the system generates a default right of way rules which can be updated.</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Traffic Light configuration:</label>
+                            <span class="badge badge-secondary badge-pill" style="float:right"> Auto Generated </span>
+                            <p style="text-color:gey">A default configuration is used to add a traffic lights from an incoming Road to all outgoing roads .</p>
+                        </div>
+                        <input type="submit" value="Submit">
+                    </form>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
