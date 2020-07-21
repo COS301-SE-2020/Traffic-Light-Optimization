@@ -30,11 +30,17 @@
                             <div class="operations col-5">
                                 <form method = "post" enctype = "multipart/form-data" > <!--action="../data_to_database/uploadFile.py"-->
                                     <!--button class="btn">+ Add Traffic Light</button-->
+                                    <legend>Add Historic Data</legend>
                                     {% csrf_token %}
-                                    <input type = "file" name = "filename"/>
-                                    <input type = "submit" value = "Submit"/>
+                                    <div class="id_tl">
+                                        <input type = "text" name = "tl_form" value="add-historic-data" />
+                                    </div>
+                                    <div>
+                                        <input type = "file" name = "filename"/>
+                                        <input type = "submit" value = "Submit"/>
+                                        <input type = "submit" class="cancel2" value = "Cancel"/>
+                                    </div>
                                 </form>
-                                <!-- <button class="btn">More ...</button> -->
                             </div>
                         </div>
                         <div class="records">
@@ -164,11 +170,5 @@
                         console.error(e);
                         console.log('\nFinished ;ERROR');
                     })
-            }
-
-            let writeSingle = ()=>{
-                $('.operations button').on('click',()=>{
-                    // $('')
-                });
             }
         </script>
