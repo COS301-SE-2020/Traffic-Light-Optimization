@@ -3,7 +3,7 @@
 :root{
 	--primary-color: #0B1320;
 	--secondary-color: #394d5f;
-	/*--tertiary-color: #F02D3A;*/
+	/*--tertiary-color: #fef9e6;*/
 	--tertiary-color: white;
 	--white-color: #FCFCFC;
 	--black-color: #1D1E2C;
@@ -17,6 +17,7 @@ body{
 
 div.row{
 	width: 100%;
+	margin: 0;
 }
 
 div.welcome, div.welcome-form{
@@ -101,4 +102,218 @@ div#navigate{
 	background-color: var(--primary-color);
 	height: 100vh;
 	position: fixed;
+	color: white;
+	padding: 0;
+	left: 0;
+	z-index: 1;
+}
+
+#navigate > div:nth-child(1){
+	padding: 20px 0%;
+	text-align: center;
+}
+
+#navigate > div:nth-child(1) img{
+	height: 100px;
+	width: auto;
+}
+
+#navigate > div:nth-child(2){
+	border-top: 1px solid white;
+	/*padding-top: 20px;*/
+	/*padding-bottom: 20px;*/
+	height: 70%;
+	position: relative;
+}
+
+#navigate > div  div{
+	color: white;
+	width: 100%;
+	padding: 15px 0px 15px 25%;
+}
+
+#navigate a{
+	text-decoration: none;
+}
+
+#navigate > div > a > div:hover{
+	/*color: black;*/
+	background-color: #394d5f;
+}
+
+#navigate > div > a.active > div{
+	color: black;
+	background-color: var(--tertiary-color);
+}
+
+#navigate > div  a:nth-child(4){
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
+
+div.cont{
+	padding: 0;
+}
+
+div.content{
+	padding: 0;
+	background-color: var(--tertiary-color);
+	min-height: 100vh;
+}
+
+div.cont-bar{
+	border-bottom: 1px solid var(--primary-color);
+	text-align: center;
+	margin: 0;
+	/*height: 100px;*/
+	padding: 20px;
+}
+
+div.cont-info-nav{
+	/*background-color: gold;*/
+	padding: 20px 5%;
+}
+div.cont-info-nav div:nth-child(1) h5{
+	font-weight: bold;
+}
+
+div.cont-info-nav div{
+	vertical-align: top;
+	padding: 10px;
+}
+
+div.cont-info-nav div.operations{
+	text-align: right;
+}
+
+div.cont-info-nav div button{
+	background-color: var(--primary-color);
+	color: white;
+	text-align: center;
+}
+
+div.cont-info-nav div button:nth-child(2){
+	color: var(--primary-color);
+	background-color: white;
+	border-color: var(--primary-color);
+}
+
+div.cont-info-nav div button:hover{
+	background-color: var(--secondary-color);
+	color: white;
+}
+
+div.records{
+	padding: 20px 5%;
+}
+
+tbody{
+	border: 1px solid var(--secondary-color);
+}
+
+.records table tr{
+	/*display: none;*/
+}
+
+.records table tr.loading{
+	/*display: block;*/
+	/*display: table-row;*/
+}
+
+/* table thead tr th:nth-child(1){
+	border-top-left-radius: 10px;
+}
+
+table thead tr th:nth-child(6){
+	border-top-right-radius: 10px;
+} */
+
+thead{
+	background-color: var(--secondary-color);
+	color: white;
+}
+
+tr td i{
+	color: #f97171;
+}
+
+embed{
+	width: 100%;
+	margin: 0 auto;
+	height: 85vh;
+	/*margin-left: 10%;*/
+}
+
+div.compose, div.compose-historic{
+	position: fixed;
+	height: 100vh;
+	width: 100vw;
+	background-color: rgba(0,0,0,0.6);
+	top: 0;
+	left: 0;
+	z-index: 3;
+}
+
+div.compose.hide, div.compose-historic.hide{
+	display: none;
+}
+
+div.compose > div, div.compose-historic > div{
+	height: 80vh;
+	width: 80vw;
+	margin: 10vh 0 0 10vw;
+	background-color: white;
+	padding: 5% 10% 0 10%;
+}
+
+div.compose > div > form legend, div.compose-historic > div > form legend{
+	text-align: center;
+	padding-bottom: 20px;
+}
+
+div.compose > div > form > div, div.compose-historic > div > form > div{
+	padding: 10px 0;
+}
+
+div.compose > div > form > div > label, div.compose-historic > div > form > div > label{
+	width: 40%;
+}
+
+div.compose > div > form > div > input{
+	width: 55%;
+}
+
+div.compose > div > form > div:last-child > input, div.compose-historic > div > form > div:last-child > input:nth-child(3){
+	width: 10%;
+	padding: 10px;
+	margin: 0 30% 0 0;
+	border: 1px solid var(--primary-color);
+	background-color: white;
+	color: var(--primary-color);
+}
+
+div.compose > div > form > div:last-child > input:hover, div.compose-historic > div > form > div:last-child > input:hover{
+	cursor: pointer;
+	background-color: #3B4350;
+	border: 1px solid white;
+	color: white;
+}
+
+div.compose > div > form > div:last-child > input:nth-child(2),  div.compose-historic > div > form > div:last-child > input:nth-child(2){
+	width: 10%;
+	padding: 10px;
+	margin: 0 0%;
+	background-color: var(--primary-color);
+	border-width: 0;
+	color: white;
+}
+
+div.compose > div > form > div:last-child > input:nth-child(2):hover, div.compose-historic > div > form > div:last-child > input:nth-child(2):hover{
+	cursor: pointer;
+	background-color: #3B4350;
+}
+
+div.compose div.id_tl, div.compose-historic div.id_tl{
+	display: none;
 }
