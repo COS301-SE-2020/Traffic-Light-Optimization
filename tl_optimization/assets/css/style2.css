@@ -2,9 +2,8 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins|Righteous|Roboto&display=swap');
 :root{
 	--primary-color: #0B1320;
-	--secondary-color: #394d5f;
-	/*--tertiary-color: #F02D3A;*/
-	--tertiary-color: white;
+	--secondary-color: #124E78;
+	--tertiary-color: #F02D3A;
 	--white-color: #FCFCFC;
 	--black-color: #1D1E2C;
 }

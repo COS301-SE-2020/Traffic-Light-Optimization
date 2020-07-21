@@ -22,6 +22,11 @@ def upload(request):
     client = InfluxDBClient(url=url_, token=token_, org=organisation_)
     write_api = client.write_api(write_options=SYNCHRONOUS)
     if request.method == 'POST':
+        uploaded_file = request.FILES['filename']
+        if uploaded_file.name.endswith('.csv'):
+            messages.error(request, 'Not a csv file')
+            csv_data = uploaded_file.read().decode('UTF-8')
+            io_data = io.StringIO(csv_data)
 
             next(io_data)
             status = ["red", "green", "orange"]
