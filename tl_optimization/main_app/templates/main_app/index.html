@@ -156,68 +156,54 @@
         <script type="module">
 
             // const {InfluxDB} = require('@influxdata/influxdb-client');
-                import {InfluxDB, Point} from 'https://unpkg.com/@influxdata/influxdb-client/dist/index.browser.mjs';
-                import {HealthAPI, SetupAPI} from 'https://unpkg.com/@influxdata/influxdb-client-apis/dist/index.browser.mjs';
+            import {InfluxDB, Point} from 'https://unpkg.com/@influxdata/influxdb-client/dist/index.browser.mjs';
+            import {HealthAPI, SetupAPI} from 'https://unpkg.com/@influxdata/influxdb-client-apis/dist/index.browser.mjs';
+            let num = 0;
 
+            function complete(amount) {
+                $('.records table tbody tr').css('display','table-row');
+                $('.records table tr.loading').css('display','none');
+                $('.cont-info-nav > div i').html(amount);
+                console.log('\nFinished SUCCESS');
+                // write(org, Bucket);
+                $('div.compose div.id_tl > input.tl_id').attr("value",++amount);
+            }
+                
             let getData = (measure)=>{
-                // You can generate a Token from the "Tokens Tab" in the UI
-                const token = 'okx-Wk8zR33DYZxZP91T10ZTfUFmMz866DCKfE3Z8l5azgUT3QLIIdzk6rATGgCdAyuaAbWrReSi9KfchjW0kg==';
-                const org = 'cos301.alpha@gmail.com';
-                const bucket = 'test Bucket';
-
-                const client = new InfluxDB({url: 'https://eu-central-1-1.aws.cloud2.influxdata.com', token: token});
-                let num = 0;
-
-                //Read from database
-                const queryApi = client.getQueryApi(org);
-
-                const query = `from(bucket: "${bucket}") |> range(start: -1h)`;
-                queryApi.queryRows(query, {
-                  next(row, tableMeta) {
-                    const o = tableMeta.toObject(row);
-                    if(o._measurement==measure){
-                        num++;
-                        $('.records table tbody')
-                        .append(
-                            $('<tr>')
-                            .css('display','none')
-                            .append(
-                                $('<th>')
-                                .attr('scope','row')
-                                .html(o.tl_id),
-                                $('<td>')
-                                .html(o.tl_name),
-                                $('<td>')
-                                .html(o.tl_location),
-                                $('<td>')
-                                .html(o.tl_intersection),
-                                $('<td>')
-                                .html(o.tl_status),
-                                $('<td>')
-                                /*.append(
-                                    $('<i>')
-                                    .addClass('fas fa-trash')
-                                )*/
-                            )
-                        );
-                        /*console.log(
-                          `${o._time} ${o._measurement} in '${o.location}' (${o.example}): ${o._field}=${o._value}`
-                        );*/
+                var req = new XMLHttpRequest();
+                num=0;
+                req.onreadystatechange = function() {
+                    if(req.readyState == 4 && req.status == 200) {
+                        var res = JSON.parse(req.responseText);
+                        $.each(res, function(key, value){
+                            if(o._measurement==measure){
+                                num++;
+                                $('.records table tbody')
+                                .append(
+                                    $('<tr>')
+                                    .css('display','none')
+                                    .append(
+                                        $('<th>')
+                                        .attr('scope','row')
+                                        .html(value.id),
+                                        $('<td>')
+                                        .html(value.tl_name),
+                                        $('<td>')
+                                        .html(value.location),
+                                        $('<td>')
+                                        .html(value.intersection),
+                                        $('<td>')
+                                        .html(value.status),
+                                        $('<td>')
+                                    )
+                                );
+                            }
+                        });
                     }
-                  },
-                  error(error) {
-                    console.error(error);
-                    console.log('\nFinished ERROR');
-                  },
-                  complete() {
-                    $('.records table tbody tr').css('display','table-row');
-                    $('.records table tr.loading').css('display','none');
-                    $('.cont-info-nav > div i').html(num);
-                    console.log('\nFinished SUCCESS');
-                    // write(org, Bucket);
-                    $('div.compose div.id_tl > input.tl_id').attr("value",++num);
-                  }
-                });
+                }
+                req.open("GET", "http://localhost:8000/api/", false);
+                req.send();
+                complete(num);
             }
 
             let write = (org, bucket)=>{
