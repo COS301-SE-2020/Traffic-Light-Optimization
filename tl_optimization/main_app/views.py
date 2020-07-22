@@ -6,7 +6,7 @@ from django.urls import reverse
 from .forms import *
 from .models import *
 
-# 1. Create views ...........................................................................................
+# 1. Create views //////////////////////////////////////////////////////////////////////////////////////////////////
 '''
 
 '''
@@ -52,25 +52,27 @@ def main_controller(request):
         2. A template UI is called with the form parameters to add an intersection
 '''
 def road_network_controller(request, network_id):
-    # 1. Handling Form ------------------------------------
+    # 1. Data components ------------------------------------------------
+    network_info = get_object_or_404( Network, pk=network_id )
+
+    # 2. Handling Form ------------------------------------
     if request.method == 'POST':
         form_intersection = IntersectionForm(request.POST)
         if form_intersection.is_valid():
             new_intersection = form_intersection.save()
-            #URL = '/netwok/'+network_id+'/'+new_intersection.id+'/'
+            new_intersection.network_id = network_info
+            new_intersection.save()
             return HttpResponseRedirect(reverse('intersection', args=(network_id, new_intersection.id )))
     else:
         form_intersection = IntersectionForm()
         
-    # 2. Data components ------------------------------------------------
-    network_info = get_object_or_404( Network, pk=network_id )
-
+    # 4. Preparing Data for User Intrerface ------------------------------
     if Intersection.objects.filter( network_id=network_id ).exists():
         intersection_entries_for_network = Intersection.objects.filter( network_id=network_id )
     else:
         intersection_entries_for_network = []
     
-    # 3. Preparing Data for User Intrerface ------------------------------
+    # 4. Preparing Data for User Intrerface ------------------------------
     ui_data = {
         'network_info': network_info,
         'intersection_list': intersection_entries_for_network ,
@@ -80,24 +82,62 @@ def road_network_controller(request, network_id):
 
 # 4. View relating to an intersection within a network ////////////////////////////////////////////////////////////////
 def intersection_controller(request, network_id, intersection_id):
-    # 1. Handling forms for intersection -----------------------------
+    # 1. Getting parents infomation ------------------------------------
+    newtork_info = get_object_or_404( Network, pk=network_id )
+    intersection_info = get_object_or_404( Intersection, pk=intersection_id)
+    if Intersection.objects.filter( network_id=network_id ).exists():
+        intersection_entries_for_network = Intersection.objects.filter( network_id=network_id )
+    else:
+        intersection_entries_for_network = []
+
+    # 2. Handling forms for intersection -----------------------------
     if request.method == 'POST':
         form_road = RoadForm(request.POST)
         if form_road.is_valid():
             new_road = form_road.save()
+            form_road = RoadForm()
+        form_road.fields['intersection_in'] = customModelChoiceField( 
+            intersection_entries_for_network , 
+            empty_label="" , 
+            required=False,
+            widget=forms.Select(attrs={'class':'form-control'})
+        )
+        form_road.fields['intersection_out'] = customModelChoiceField( 
+            intersection_entries_for_network , 
+            empty_label="" , 
+            required=False,
+            widget=forms.Select(attrs={'class':'form-control'})
+        )
+
     else:
-        form_trafficlight = TrafficlightForm()
+    
         form_road = RoadForm()
 
-    # 2. Getting parents infomation ------------------------------------
-    newtork_info = get_object_or_404( Network, pk=network_id )
-    intersection_info = get_object_or_404( Intersection, pk=intersection_id)
+        form_road.fields['intersection_in'] = customModelChoiceField( 
+            intersection_entries_for_network , 
+            empty_label="" , 
+            required=False,
+            widget=forms.Select(attrs={'class':'form-control'})
+        )
+        form_road.fields['intersection_out'] = customModelChoiceField( 
+            intersection_entries_for_network , 
+            empty_label="" , 
+            required=False,
+            widget=forms.Select(attrs={'class':'form-control'})
+        )
 
-    # 3. Getting information about this intersection --------------------
+
+
+    # 3. Getting information about this intersection i.e. checking the roads ------------------
     if Road.objects.filter(intersection_in=intersection_id).exists():
-        road_entries_for_intersection = Road.objects.filter(intersection_in=intersection_id)
+        road_entries_for_intersection_in = Road.objects.filter(intersection_in=intersection_id)
     else:
-        road_entries_for_intersection = []
+        road_entries_for_intersection_in = []
+
+    if Road.objects.filter(intersection_out=intersection_id).exists():
+        road_entries_for_intersection_out = Road.objects.filter(intersection_out=intersection_id)
+    else:
+        road_entries_for_intersection_out = []
     
     if TrafficLight.objects.filter( intersection_id=intersection_id ).exists():
         trafficlight_entries_for_intersection = TrafficLight.objects.filter( intersection_id=intersection_id )
@@ -108,10 +148,13 @@ def intersection_controller(request, network_id, intersection_id):
     ui_data = {
         'network_info': newtork_info ,
         'intersection_info': intersection_info ,
-        'road_list': road_entries_for_intersection ,
+        'road_list_in': road_entries_for_intersection_in ,
+        'road_list_out': road_entries_for_intersection_out ,
         'trafficlight_list': trafficlight_entries_for_intersection ,
         'road_form': form_road ,
-        'trafficlight_form': form_trafficlight
+        'len_road_list_in': len(road_entries_for_intersection_in) ,
+        'len_road_list_out': len(road_entries_for_intersection_out) ,
+        'max_roads': range( max( len(road_entries_for_intersection_in), len(road_entries_for_intersection_out)))
     }
     return render(request, 'main_app/intersection.html', ui_data)
     

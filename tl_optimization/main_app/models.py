@@ -4,7 +4,7 @@ from django.db import models
 
 # 1. Models an intersection into which different roads meet .....................
 class Network(models.Model):
-    network_name = models.CharField( max_length=200 )
+    network_name = models.CharField( max_length=50, unique=True )
 
 # 2. Models the behavior of a single intersection within a road network .........
 class Intersection(models.Model):
@@ -14,7 +14,7 @@ class Intersection(models.Model):
         null=True,
         on_delete=models.SET_NULL
     )
-    intersection_name = models.CharField( max_length=200 )
+    intersection_name = models.CharField( max_length=50, unique=True )
     right_of_way = models.TextField( blank=True )
     configuration = models.TextField( blank=True )
 
@@ -58,17 +58,17 @@ class Road(models.Model):
         related_name='%(class)s_out'
     )
 
-    road_name = models.CharField(max_length=200)
+    road_name = models.CharField( max_length=50, unique=True)
     road_distance = models.IntegerField(default=0)
     average_speed = models.IntegerField(default=0)
     
     trafficlight_id =  models.ForeignKey(
         TrafficLight, 
-        blank=False, 
+        blank=False,
         null=True,
         on_delete=models.SET_NULL,
     )
 
     def __str__(self):
-        return self.name
+        return self.road_name
 
