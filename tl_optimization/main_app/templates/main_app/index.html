@@ -103,7 +103,7 @@
             const queryApi = client.getQueryApi(org);
 
             const query = `from(bucket: "${bucket}") |> range(start: -1h)`;
-            queryApi.queryRows(query, {
+            /*queryApi.queryRows(query, {
               next(row, tableMeta) {
                 num++;
                 const o = tableMeta.toObject(row);
@@ -124,15 +124,8 @@
                         $('<td>')
                         .html(o.tl_status),
                         $('<td>')
-                        /*.append(
-                            $('<i>')
-                            .addClass('fas fa-trash')
-                        )*/
                     )
                 );
-                /*console.log(
-                  `${o._time} ${o._measurement} in '${o.location}' (${o.example}): ${o._field}=${o._value}`
-                );*/
               },
               error(error) {
                 console.error(error);
@@ -145,7 +138,48 @@
                 console.log('\nFinished SUCCESS');
                 // write(org, Bucket);
               },
-            });
+            });*/
+
+            function complete() {
+                $('.records table tbody tr').css('display','table-row');
+                $('.records table tr.loading').css('display','none');
+                $('.cont-info-nav > div i').html(num);
+                console.log('\nFinished SUCCESS');
+                // write(org, Bucket);
+            }
+
+            var req = new XMLHttpRequest();
+
+            req.onreadystatechange = function() {
+                 if(req.readyState == 4 && req.status == 200) {
+                      var res = JSON.parse(req.responseText);
+                      $.each(res, function(key, value){
+                      num++;
+                        $('.records table tbody')
+                        .append(
+                            $('<tr>')
+                            .css('display','none')
+                            .append(
+                                $('<th>')
+                                .attr('scope','row')
+                                .html(value.id),
+                                $('<td>')
+                                .html(value.tl_name),
+                                $('<td>')
+                                .html(value.location),
+                                $('<td>')
+                                .html(value.intersection),
+                                $('<td>')
+                                .html(value.status),
+                                $('<td>')
+                            )
+                        );
+                      });
+                  }
+               }
+            req.open("GET", "http://localhost:8000/api/", false);
+            req.send();
+            complete();
 
             let write = (org, bucket)=>{
                 const {Point} = require('@influxdata/influxdb-client');
