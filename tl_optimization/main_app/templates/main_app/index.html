@@ -25,12 +25,16 @@
                             <div class="col-3"><h5><i>0 </i> Traffic Lights Found</h5></div>
                             <!-- <div class="col-2">Sort by:</div> -->
                             <!-- <div class="col-2">Filter:</div> -->
-                            <div class="col-2"></div>
-                            <div class="col-2"></div>
-                            <div class="operations col-5">
+                            <div class="col-1"></div>
+                            <div class="col-1"></div>
+                            <div class="operations col-7">
                                 <button class="btn">+ Add Traffic Light</button>
                                 <button class="btn">+ Add Historic Data</button>
                             </div>
+                        </div>
+                        <div class="switch-btns">
+                            <button id="tl_btn" class="btn show">Traffic Lights</button>
+                            <button id="hd_btn" class="btn">Historic Data</button>
                         </div>
                         <div class="compose hide">
                             <div>
@@ -152,65 +156,69 @@
         <script type="module">
 
             // const {InfluxDB} = require('@influxdata/influxdb-client');
-            import {InfluxDB, Point} from 'https://unpkg.com/@influxdata/influxdb-client/dist/index.browser.mjs';
-            import {HealthAPI, SetupAPI} from 'https://unpkg.com/@influxdata/influxdb-client-apis/dist/index.browser.mjs';
+                import {InfluxDB, Point} from 'https://unpkg.com/@influxdata/influxdb-client/dist/index.browser.mjs';
+                import {HealthAPI, SetupAPI} from 'https://unpkg.com/@influxdata/influxdb-client-apis/dist/index.browser.mjs';
 
-            // You can generate a Token from the "Tokens Tab" in the UI
-            const token = 'okx-Wk8zR33DYZxZP91T10ZTfUFmMz866DCKfE3Z8l5azgUT3QLIIdzk6rATGgCdAyuaAbWrReSi9KfchjW0kg==';
-            const org = 'cos301.alpha@gmail.com';
-            const bucket = 'test Bucket';
+            let getData = (measure)=>{
+                // You can generate a Token from the "Tokens Tab" in the UI
+                const token = 'okx-Wk8zR33DYZxZP91T10ZTfUFmMz866DCKfE3Z8l5azgUT3QLIIdzk6rATGgCdAyuaAbWrReSi9KfchjW0kg==';
+                const org = 'cos301.alpha@gmail.com';
+                const bucket = 'test Bucket';
 
-            const client = new InfluxDB({url: 'https://eu-central-1-1.aws.cloud2.influxdata.com', token: token});
-            let num = 0;
+                const client = new InfluxDB({url: 'https://eu-central-1-1.aws.cloud2.influxdata.com', token: token});
+                let num = 0;
 
-            //Read from database
-            const queryApi = client.getQueryApi(org);
+                //Read from database
+                const queryApi = client.getQueryApi(org);
 
-            const query = `from(bucket: "${bucket}") |> range(start: -1h)`;
-            queryApi.queryRows(query, {
-              next(row, tableMeta) {
-                num++;
-                const o = tableMeta.toObject(row);
-                $('.records table tbody')
-                .append(
-                    $('<tr>')
-                    .css('display','none')
-                    .append(
-                        $('<th>')
-                        .attr('scope','row')
-                        .html(o.tl_id),
-                        $('<td>')
-                        .html(o.tl_name),
-                        $('<td>')
-                        .html(o.tl_location),
-                        $('<td>')
-                        .html(o.tl_intersection),
-                        $('<td>')
-                        .html(o.tl_status),
-                        $('<td>')
-                        /*.append(
-                            $('<i>')
-                            .addClass('fas fa-trash')
-                        )*/
-                    )
-                );
-                /*console.log(
-                  `${o._time} ${o._measurement} in '${o.location}' (${o.example}): ${o._field}=${o._value}`
-                );*/
-              },
-              error(error) {
-                console.error(error);
-                console.log('\nFinished ERROR');
-              },
-              complete() {
-                $('.records table tbody tr').css('display','table-row');
-                $('.records table tr.loading').css('display','none');
-                $('.cont-info-nav > div i').html(num);
-                console.log('\nFinished SUCCESS');
-                // write(org, Bucket);
-                $('div.compose div.id_tl > input.tl_id').attr("value",++num);
-              },
-            });
+                const query = `from(bucket: "${bucket}") |> range(start: -1h)`;
+                queryApi.queryRows(query, {
+                  next(row, tableMeta) {
+                    const o = tableMeta.toObject(row);
+                    if(o._measurement==measure){
+                        num++;
+                        $('.records table tbody')
+                        .append(
+                            $('<tr>')
+                            .css('display','none')
+                            .append(
+                                $('<th>')
+                                .attr('scope','row')
+                                .html(o.tl_id),
+                                $('<td>')
+                                .html(o.tl_name),
+                                $('<td>')
+                                .html(o.tl_location),
+                                $('<td>')
+                                .html(o.tl_intersection),
+                                $('<td>')
+                                .html(o.tl_status),
+                                $('<td>')
+                                /*.append(
+                                    $('<i>')
+                                    .addClass('fas fa-trash')
+                                )*/
+                            )
+                        );
+                        /*console.log(
+                          `${o._time} ${o._measurement} in '${o.location}' (${o.example}): ${o._field}=${o._value}`
+                        );*/
+                    }
+                  },
+                  error(error) {
+                    console.error(error);
+                    console.log('\nFinished ERROR');
+                  },
+                  complete() {
+                    $('.records table tbody tr').css('display','table-row');
+                    $('.records table tr.loading').css('display','none');
+                    $('.cont-info-nav > div i').html(num);
+                    console.log('\nFinished SUCCESS');
+                    // write(org, Bucket);
+                    $('div.compose div.id_tl > input.tl_id').attr("value",++num);
+                  }
+                });
+            }
 
             let write = (org, bucket)=>{
                 const {Point} = require('@influxdata/influxdb-client');
@@ -232,7 +240,6 @@
             }
 
             let btns = ()=>{
-                console.log('buttons');
 
                 $('.operations button:nth-child(1)').on('click',(e)=>{
                     e.preventDefault();
@@ -269,7 +276,47 @@
                         $('.compose-historic').addClass('hide');
                     }
                 });
+
+                $('div.switch-btns button').on('click',(e)=>{
+                    e.preventDefault();
+                    $('.records table tbody').empty();
+                    $('.records table tbody')
+                    .append(
+                        $('<tr>')
+                        .addClass('loading mb-3')
+                        .append(
+                            $('<th>')
+                            .append(
+                                $('<img>')
+                                .attr("src","{% static 'images/loading.gif'%}")
+                            ),
+                            $('<td>'),
+                            $('<td>'),
+                            $('<td>'),
+                            $('<td>'),
+                            $('<td>')
+                        )
+                    );
+
+                    if($(e.currentTarget).attr('id')=='tl_btn')
+                        getData('added_traffic_lights');
+                    else if($(e.currentTarget).attr('id')=='hd_btn')
+                        getData('traffic_lights');
+
+                    $(e.currentTarget).siblings('button')
+                    .removeClass('show')
+                    .css({
+                        'background-color':'white',
+                        'color':'#394d5f'
+                    });
+                    $(e.currentTarget).addClass('show')
+                    .css({
+                        'background-color':'#394d5f',
+                        'color':'white'
+                    });
+                });
             }
 
+            getData('added_traffic_lights');
             btns();
         </script>

@@ -205,7 +205,7 @@ div.cont-info-nav div button:hover{
 }
 
 div.records{
-	padding: 20px 5%;
+	padding: 0px 5% 20px 5%;
 }
 
 tbody{
@@ -245,7 +245,7 @@ embed{
 	/*margin-left: 10%;*/
 }
 
-div.compose{
+div.compose, div.compose-historic{
 	position: fixed;
 	height: 100vh;
 	width: 100vw;
@@ -255,11 +255,11 @@ div.compose{
 	z-index: 3;
 }
 
-div.compose.hide{
+div.compose.hide, div.compose-historic.hide{
 	display: none;
 }
 
-div.compose > div{
+div.compose > div, div.compose-historic > div{
 	height: 80vh;
 	width: 80vw;
 	margin: 10vh 0 0 10vw;
@@ -267,16 +267,16 @@ div.compose > div{
 	padding: 5% 10% 0 10%;
 }
 
-div.compose > div > form legend{
+div.compose > div > form legend, div.compose-historic > div > form legend{
 	text-align: center;
 	padding-bottom: 20px;
 }
 
-div.compose > div > form > div{
+div.compose > div > form > div, div.compose-historic > div > form > div{
 	padding: 10px 0;
 }
 
-div.compose > div > form > div > label{
+div.compose > div > form > div > label, div.compose-historic > div > form > div > label{
 	width: 40%;
 }
 
@@ -284,7 +284,7 @@ div.compose > div > form > div > input{
 	width: 55%;
 }
 
-div.compose > div > form > div:last-child > input{
+div.compose > div > form > div:last-child > input, div.compose-historic > div > form > div:last-child > input:nth-child(3){
 	width: 10%;
 	padding: 10px;
 	margin: 0 30% 0 0;
@@ -293,14 +293,14 @@ div.compose > div > form > div:last-child > input{
 	color: var(--primary-color);
 }
 
-div.compose > div > form > div:last-child > input:hover{
+div.compose > div > form > div:last-child > input:hover, div.compose-historic > div > form > div:last-child > input:hover{
 	cursor: pointer;
 	background-color: #3B4350;
 	border: 1px solid white;
 	color: white;
 }
 
-div.compose > div > form > div:last-child > input:nth-child(2){
+div.compose > div > form > div:last-child > input:nth-child(2),  div.compose-historic > div > form > div:last-child > input:nth-child(2){
 	width: 10%;
 	padding: 10px;
 	margin: 0 0%;
@@ -309,25 +309,35 @@ div.compose > div > form > div:last-child > input:nth-child(2){
 	color: white;
 }
 
-div.compose > div > form > div:last-child > input:nth-child(2):hover{
+div.compose > div > form > div:last-child > input:nth-child(2):hover, div.compose-historic > div > form > div:last-child > input:nth-child(2):hover{
 	cursor: pointer;
 	background-color: #3B4350;
 }
 
-div.compose div.id_tl{
+div.compose div.id_tl, div.compose-historic div.id_tl{
 	display: none;
 }
 
-div.compose-historic{
-	position: fixed;
-	height: 100vh;
-	width: 100vw;
-	background-color: rgba(0,0,0,0.6);
-	top: 0;
-	left: 0;
-	z-index: 3;
+div.switch-btns button{
+	background-color: white;
+	border: 1px solid var(--secondary-color);
+	color: var(--secondary-color);
+	margin-bottom: -2px;
+	margin-left: -5px;
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+	outline: 0px;
 }
 
-div.compose-historic.hide{
-	display: none;
+div.switch-btns button:focus{
+	outline: none;
+}
+
+div.switch-btns button:nth-child(1){
+	margin-left: 5%;
+}
+
+div.switch-btns button.show{
+	background-color: var(--secondary-color);
+	color: white;
 }

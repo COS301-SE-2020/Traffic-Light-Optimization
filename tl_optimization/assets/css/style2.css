@@ -205,7 +205,7 @@ div.cont-info-nav div button:hover{
 }
 
 div.records{
-	padding: 20px 5%;
+	padding: 0px 5% 20px 5%;
 }
 
 tbody{
@@ -316,4 +316,24 @@ div.compose > div > form > div:last-child > input:nth-child(2):hover, div.compos
 
 div.compose div.id_tl, div.compose-historic div.id_tl{
 	display: none;
+}
+
+div.switch-btns button{
+	background-color: white;
+	border: 1px solid var(--secondary-color);
+	color: var(--secondary-color);
+	margin-bottom: -2px;
+	margin-left: -5px;
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+	outline: none;
+}
+
+div.switch-btns button:nth-child(1){
+	margin-left: 5%;
+}
+
+div.switch-btns button.show{
+	background-color: var(--secondary-color);
+	color: white;
 }

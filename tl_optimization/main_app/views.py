@@ -21,7 +21,7 @@ def upload(request):
     client = InfluxDBClient(url=url_, token=token_, org=organisation_)
     write_api = client.write_api(write_options=SYNCHRONOUS)
     if request.method == 'POST':
-        if request.POST['tl_form'] == 'add_traffic_light':
+        if request.POST['tl_form'] == 'add-traffic-light':
             json_body = [
                 {
                     "measurement": "added_traffic_lights",
@@ -43,9 +43,9 @@ def upload(request):
                     "time": None
                 }
             ]
-            # write_api.write(bucket=bucket_, org=organisation_, record=json_body)
-            print(json_body)
-        elif request.POST['tl_form'] == 'add_histric_data':
+            write_api.write(bucket=bucket_, org=organisation_, record=json_body)
+            # print(json_body)
+        elif request.POST['tl_form'] == 'add-historic-data':
             uploaded_file = request.FILES['filename']
             if uploaded_file.name.endswith('.csv'):
                 messages.error(request, 'Not a csv file')
@@ -81,8 +81,10 @@ def upload(request):
                             "time": None
                         }
                     ]
-                    print(json_body)
-                    # write_api.write(bucket=bucket_, org=organisation_, record=json_body)
+                    # print(json_body)
+                    write_api.write(bucket=bucket_, org=organisation_, record=json_body)
+        else:
+            print("Incorrect values entered")
     else:
         print("hello")
     return render(request, 'main_app/base.html')
