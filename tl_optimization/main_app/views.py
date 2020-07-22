@@ -182,6 +182,8 @@ def readData(request):
     ID = []
     intersection = []
     location = []
+    tl_name = []
+    status = []
     organisation_ = "cos301.alpha@gmail.com"
     token_ = "okx-Wk8zR33DYZxZP91T10ZTfUFmMz866DCKfE3Z8l5azgUT3QLIIdzk6rATGgCdAyuaAbWrReSi9KfchjW0kg=="
     bucket_ = "test Bucket"
@@ -197,8 +199,10 @@ def readData(request):
         ID.append(f'{record["tl_id"]}')
         intersection.append(f'{record["tl_intersection"]}')
         location.append(f'{record["tl_location"]}')
+        tl_name.append(f'{record["tl_name"]}')
+        status.append(f'{record["tl_status"]}')
 
-    json_body = [{"measurement": n, "time": t, "cars": c, "id": id, "intersection": i, "location": l} for n, t, c, id, i, l in
-                 zip(name, time, car, ID, intersection, location)]
+    json_body = [{"measurement": n, "time": t, "cars": c, "id": id, "intersection": i, "location": l, "name": tl_name, "status": s} for n, t, c, id, i, l, tl_name, s in
+                 zip(name, time, car, ID, intersection, location, tl_name, status)]
     # json_body = "api"
     return Response(json_body)
