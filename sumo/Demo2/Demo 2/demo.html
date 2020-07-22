@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title id="demo">demo 2</title>
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial;
+  font-size: 17px;
+
+}
+
+
+ul{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+li {
+  float: left;
+}
+
+li a{
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+
+}
+
+li a:hover:not(.logi){
+  background-color: gold;
+}
+
+.active {
+  background-color: blue;
+}
+
+}
+#myVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 150%;
+  min-height: 100%;
+}
+
+.content {
+  position: fixed;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  color: #f1f1f1;
+  width: 100%;
+  padding: 20px;
+}
+
+#myBtn {
+  width: 200px;
+  font-size: 18px;
+  padding: 10px;
+  border: none;
+  background: #000;
+  color: #fff;
+  cursor: pointer;
+}
+
+#myBtn:hover {
+  background: #ddd;
+  color: black;
+}
+</style>
+</head>
+<body>
+  <header>
+    <br>
+    <ul>
+      <li><a class="active" href="./index.html">Home</a></li>
+      <li><a class="active" href="#">Demo 2</a></li>
+      <br>
+      <br>
+    </ul>
+  </header>
+<hr>
+<ul>
+  <li><a class="active" href="simu.html">Simulation two</a></li>
+</ul>
+<br>
+</br>
+
+<h1> Standard interactive Road System </h1>
+  <img src="int.png" alt="error" />
+</br>
+  <h1>User interactive Road network </h1>
+  <img src="us.png" alt="error" />
+</br>
+</body>
+</head>
+</html>
