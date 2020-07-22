@@ -164,7 +164,7 @@
                 $('.records table tbody tr').css('display','table-row');
                 $('.records table tr.loading').css('display','none');
                 $('.cont-info-nav > div i').html(amount);
-                console.log('\nFinished SUCCESS');
+                // console.log('\nFinished SUCCESS');
                 // write(org, Bucket);
                 $('div.compose div.id_tl > input.tl_id').attr("value",++amount);
             }
@@ -176,7 +176,7 @@
                     if(req.readyState == 4 && req.status == 200) {
                         var res = JSON.parse(req.responseText);
                         $.each(res, function(key, value){
-                            if(o._measurement==measure){
+                            if(value.measurement==measure){
                                 num++;
                                 $('.records table tbody')
                                 .append(

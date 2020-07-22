@@ -44,9 +44,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd765d4d-4d4a-4e3a-b886-a336f43f0754" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main_app/templates/main_app/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/main_app/templates/main_app/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main_app/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_app/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tl_optimization/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/tl_optimization/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,5 +91,11 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="442" y="169" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1595416553969">
+      <screen x="0" y="0" width="1366" height="736" />
+    </state>
+    <state x="442" y="169" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.736@0.0.1366.736" timestamp="1595416553969" />
   </component>
 </project>
