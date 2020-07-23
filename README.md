@@ -14,7 +14,7 @@ would be archived by the use of AI operations working on time series data.
 
 ## Documentation
 ### Software Requirements Specification
-The PDF SRS documentation for this project can be found in the [repository](Demo2_SRS.pdf).\
+The PDF SRS documentation for this project can be found in the [repository](documentation/Demo2_SRS.pdf).\
 Alternatively, the raw documentation can be viewed on [Overleaf](https://www.overleaf.com/read/prybbnksrcry).
 
 ## Project Management Tool
