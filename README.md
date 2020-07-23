@@ -18,7 +18,7 @@ The PDF SRS documentation for this project can be found in the [repository](docu
 Alternatively, the raw documentation can be viewed on [Overleaf](https://www.overleaf.com/read/prybbnksrcry).
 
 ### Architecture
-The architectural design document can be found in the [repository](documentation/Demo2_Architecture.pdf).\
+The architectural design document can be found in the [repository](documentation/Demo2_Architecture.pdf).
 
 ## Project Management Tool
 For this project we are using [Clubhouse](https://app.clubhouse.io/cos-301-alpha).
@@ -26,4 +26,4 @@ For this project we are using [Clubhouse](https://app.clubhouse.io/cos-301-alpha
 
 ## Demo Videos
 Demo 1: https://drive.google.com/file/d/1F8qVx4_bfQVT08R4-TQUvBwW8aZFH4bK/view?usp=sharing \
-Demo 2: https://drive.google.com/file/d/14pRw9N3YMTnpxqOg1PZLMJw0H0ablBns/view?usp=sharing \
+Demo 2: https://drive.google.com/file/d/14pRw9N3YMTnpxqOg1PZLMJw0H0ablBns/view?usp=sharing 
