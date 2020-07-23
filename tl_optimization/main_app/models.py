@@ -2,20 +2,44 @@ from django.db import models
 
 # Create your models here.
 
-# Models an intersection into which different roads meet
+# 1. Models an intersection into which different roads meet .....................
+class Network(models.Model):
+    network_name = models.CharField( max_length=50, unique=True )
+
+# 2. Models the behavior of a single intersection within a road network .........
 class Intersection(models.Model):
-    name = models.CharField( max_length=200 )
+    network_id = models.ForeignKey(
+        Network, 
+        blank=False, 
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    intersection_name = models.CharField( max_length=50, unique=True )
     right_of_way = models.TextField( blank=True )
     configuration = models.TextField( blank=True )
 
-# Models traffic artefacts whose movements should be optimized
+# 3. Models a single traffic light within an intersection ......................
+class TrafficLight(models.Model):
+    intersection_id = models.ForeignKey(
+        Intersection, 
+        blank=False, 
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    timing_red = models.IntegerField(default=0)
+    timing_yellow = models.IntegerField(default=0)
+    timing_green = models.IntegerField(default=0)
+
+
+# 4. Models traffic artefacts whose movements should be optimized .................
 class Artefact(models.Model):
     padestrians = models.IntegerField(default=0)
     cars = models.IntegerField(default=0)
     taxi = models.IntegerField(default=0)
     bus = models.IntegerField(default=0)
 
-# Models a single Road going in or out of an intersection
+
+# 5. Models a single Road going in or out of an intersection ......................
 class Road(models.Model):
 
     intersection_in = models.ForeignKey(
@@ -33,17 +57,18 @@ class Road(models.Model):
         on_delete=models.SET_NULL,
         related_name='%(class)s_out'
     )
-    name = models.CharField(max_length=200)
-    capacity = models.IntegerField(default=0)
+
+    road_name = models.CharField( max_length=50, unique=True)
+    road_distance = models.IntegerField(default=0)
     average_speed = models.IntegerField(default=0)
     
-    traffic =  models.ForeignKey(
-        Artefact, 
-        blank=True, 
+    trafficlight_id =  models.ForeignKey(
+        TrafficLight, 
+        blank=False,
         null=True,
         on_delete=models.SET_NULL,
     )
 
     def __str__(self):
-        return self.name
+        return self.road_name
 
