@@ -1,9 +1,16 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
     <head>
         <title>My test page</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+        <link rel="icon" type="image" size="16x16" href="{% static 'images/favicon.ico'%}"/>
+        <link rel="stylesheet" type="text/css" href = "{% static 'css/style.css'%}"/><!--href="css/style.css"> /-->
+        <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js'%}"></script>
+
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -11,120 +18,200 @@
         <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     </head>
     <body onload="gridView()">
-        <div class="container mt-3">
-            <!--h1> Intersection: {{intersection_info.intersection_name}} ( ID - {{intersection_info.id}}) </h1-->
-            <ul class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="{% url 'all_networks' %}"> All Networks </a>
-                </li>
-                <li class="breadcrumb-item">
-                    <a href="{% url 'road_network' network_info.id %}"> Network: {{ network_info.network_name }}  </a>
-                </li>
-                <li class="breadcrumb-item">
-                    <a href="{% url 'intersection' network_info.id intersection_info.id %}"> Intersection: {{intersection_info.intersection_name}} </a>
-                </li>
-            </ul>
-            <hr>
-            <p> 
-                <div id="btnContainer">
-                    Intersection Specific Information: 
-                    <button class="btn btn-default btn-sm" onclick="gridView()"><i class="fa fa-th-large"></i> List</button> 
-                    <button class="btn btn-default btn-sm active" onclick="renderView()"><i class="fa fa-play"></i> Simulation</button>
-                </div>
-            </p>
+        <div class="fluid-container">
             <div class="row">
-                <div class="col-sm-8 border-right">
-                    <div id="gridView">
-                        <table class="table" style="text-align:center">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th> Roads IN</th>
-                                    <th></th>
-                                    <th> Roads OUT</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        {% if road_list_in %}
-                                            <ul class="list-group" >
-                                            {% for road in road_list_in %}
-                                                <li class="list-group-item justify-content-between" >
-                                                    {{ road.road_name }}
-                                                    <span class="badge badge-success badge-pill" style="float:right"> > </span>
-                                                </li>
-                                            {% endfor %}
-                                            </ul>
-                                        {% else %}
-                                            <h2> No Roads </h2>
-                                        {% endif %}
-                                    </td>
-                                    <td></td>
-                                    <td>
-                                        {% if road_list_out %}
-                                            <ul class="list-group" >
-                                            {% for road in road_list_out %}
-                                                <li class="list-group-item justify-content-between" >
-                                                    {{ road.road_name }}
-                                                    <span class="badge badge-success badge-pill" style="float:right"> > </span>
-                                                </li>
-                                            {% endfor %}
-                                            </ul>
-                                        {% else %}
-                                            <h2> No Roads </h2>
-                                        {% endif %}  
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div id="renderView" >
-                        <p> The render view</p>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <h3> Add New Road </h3>
-                    <form action="{% url 'intersection' network_info.id intersection_info.id %}" method="post">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <label for="email"> Intersection IN:</label>
-                            {{ road_form.intersection_in }}
-                        </div>
-                        <div class="form-group">
-                            <label for="email"> Intersection OUT:</label>
-                            {{ road_form.intersection_out }}
-                        </div>
-                        <div class="form-group">
-                            <label for="email"> Road name:</label>
-                        {{ road_form.road_name }}
-                        </div>
-                        <div class="form-group">
-                            <label for="email"> Road Capacity (meters):</label>
-                            {{ road_form.road_distance }}
-                        </div>
-                        <div class="form-group">
-                            <label for="email"> Average speed (km):</label>
-                            {{ road_form.average_speed }}
-                        </div>
-                        <input type="submit" value="Submit">
-                    </form>
-                </div>
-            </div>
-            <div class="row">
-            </div>
-        </div>
+                <div id="navigate" class="col-2">
+                    <div class="title">
+                        <img src="{% static 'images/logo_welcome.png' %}">
+					</div>
+					<div>
+						<a href="{% url 'all_networks' %}" class="active"><div>DASHBOARD</div></a>
+						<a href="{% url 'simulation' %}" ><div>SIMULATION</div></a>
+						<!-- <a href="manual.html"><div>MANUAL</div></a> -->
+					</div>
+				</div>
+				<div class="content col-12 row">
+					<div class="emp col-2"></div>
+					<div class="cont col-10">
+						<div class="cont-bar">
+							<h2>Traffic Light Optimizer</h2>
+						</div>
+						<div class="cont-info">
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="{% url 'all_networks' %}"> All Networks </a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="{% url 'road_network' network_info.id %}"> Network: {{ network_info.network_name }}  </a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="{% url 'intersection' network_info.id intersection_info.id %}"> Intersection: {{intersection_info.intersection_name}} </a>
+                                </li>
+                            </ul>
+							<div class="row">
+                                <!--h1> Intersection: {{intersection_info.intersection_name}} ( ID - {{intersection_info.id}}) </h1-->
+                                
+                                
+                                <p> 
+                                    <div id="btnContainer">
+                                        Intersection Specific Information: 
+                                        <button class="btn btn-default btn-sm" onclick="gridView()"><i class="fa fa-th-large"></i> List</button> 
+                                        <button class="btn btn-default btn-sm" onclick="configView()"><i class="fa fa-th-large"></i> Configuration</button> 
+                                        <button class="btn btn-default btn-sm active" onclick="renderView()"><i class="fa fa-play"></i> Simulation</button>
+                                    </div>
+                                </p>
+                                <div class="row">
+                                    <div class="col-sm-8 border-right">
+                                        <div id="gridView">
+                                            <table class="table" style="text-align:center">
+                                                <thead class="thead-dark">
+                                                    <tr>
+                                                        <th> Roads IN</th>
+                                                        <th></th>
+                                                        <th> Roads OUT</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            {% if road_list_in %}
+                                                                <ul class="list-group" >
+                                                                {% for road in road_list_in %}
+                                                                    <li class="list-group-item justify-content-between" >
+                                                                        {{ road.road_name }}
+                                                                        <span class="badge badge-success badge-pill" style="float:right"> > </span>
+                                                                    </li>
+                                                                {% endfor %}
+                                                                </ul>
+                                                            {% else %}
+                                                                <h2> No Roads </h2>
+                                                            {% endif %}
+                                                        </td>
+                                                        <td></td>
+                                                        <td>
+                                                            {% if road_list_out %}
+                                                                <ul class="list-group" >
+                                                                {% for road in road_list_out %}
+                                                                    <li class="list-group-item justify-content-between" >
+                                                                        {{ road.road_name }}
+                                                                        <span class="badge badge-success badge-pill" style="float:right"> > </span>
+                                                                    </li>
+                                                                {% endfor %}
+                                                                </ul>
+                                                            {% else %}
+                                                                <h2> No Roads </h2>
+                                                            {% endif %}  
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div id="configView" >
+                                            <table class="table" style="text-align:center">
+                                                <thead class="thead-dark">
+                                                    
+                                                    <tr>
+                                                        <th></th>
+                                                        {% if road_list_out %}
+                                                            {% for road in road_list_out %}
+                                                                <th> 
+                                                                    {{ road.road_name }}
+                                                                </th>
+                                                            {% endfor %}
+                                                        {% else %}
+                                                            <th> 
+                                                                <h2> No Roads Out </h2>
+                                                            </th>
+                                                        {% endif %}
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% if road_list_in %}
+                                                        {% for road in road_list_in %}
+                                                            <tr>
+                                                                <td> {{ road.road_name }} </td>
+                                                                {% if road_list_out %}
+                                                                    {% for road in road_list_out %}
+                                                                        <td> 
+                                                                            5.0
+                                                                        </td>
+                                                                    {% endfor %}
+                                                                {% else %}
+                                                                    <td> 
+                                                                        <h2> No Roads Out </h2>
+                                                                    </td>
+                                                                {% endif %}
+                                                            </tr>
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        <td> 
+                                                            <h2> No Roads In </h2>
+                                                        </td>
+                                                    {% endif %}
+                                                            
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div id="renderView" >
+                                            <p> The render view</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <h3> Add New Road </h3>
+                                        <form action="{% url 'intersection' network_info.id intersection_info.id %}" method="post">
+                                            {% csrf_token %}
+                                            <div class="form-group">
+                                                <label for="email"> Intersection IN:</label>
+                                                {{ road_form.intersection_in }}
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="email"> Intersection OUT:</label>
+                                                {{ road_form.intersection_out }}
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="email"> Road name:</label>
+                                            {{ road_form.road_name }}
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="email"> Road Capacity (meters):</label>
+                                                {{ road_form.road_distance }}
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="email"> Average speed (km):</label>
+                                                {{ road_form.average_speed }}
+                                            </div>
+                                            <input type="submit" value="Submit">
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                </div>
+                            </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
     </body>
     <script>
         var grid = document.getElementById("gridView");
         var render = document.getElementById("renderView");
+        var config = document.getElementById("configView");
         
         function gridView(){
             render.style.display = "none";
             grid.style.display = "block";
+            config.style.display = "none";
         }
         function renderView(){
             render.style.display = "block";
             grid.style.display = "none";
+            config.style.display = "none";
+        }
+        function configView(){
+            render.style.display = "none";
+            grid.style.display = "none";
+            config.style.display = "block";
         }
     </script>
 </html>
