@@ -18,7 +18,7 @@ The PDF SRS documentation for this project can be found in the [repository](docu
 Alternatively, the raw documentation can be viewed on [Overleaf](https://www.overleaf.com/read/prybbnksrcry).
 
 ### Architecture
-The architectural design document can be found in the [repository](documentation/Demo2_Architecture.pdf).
+The architectural design document can be found in the [repository](documentation/Demo2_Architecture.jpeg).
 
 ### User Manual
 The user manual can be found in the [repository](documentation/Demo2_UserManual.pdf).
