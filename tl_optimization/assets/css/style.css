@@ -205,7 +205,7 @@ div.cont-info-nav div button:hover{
 }
 
 div.records{
-	padding: 20px 5%;
+	padding: 0px 5% 20px 5%;
 }
 
 tbody{
@@ -244,3 +244,305 @@ embed{
 	height: 85vh;
 	/*margin-left: 10%;*/
 }
+
+div.compose, div.compose-historic{
+	position: fixed;
+	height: 100vh;
+	width: 100vw;
+	background-color: rgba(0,0,0,0.6);
+	top: 0;
+	left: 0;
+	z-index: 3;
+}
+
+div.compose.hide, div.compose-historic.hide{
+	display: none;
+}
+
+div.compose > div, div.compose-historic > div{
+	height: 80vh;
+	width: 80vw;
+	margin: 10vh 0 0 10vw;
+	background-color: white;
+	padding: 5% 10% 0 10%;
+}
+
+div.compose > div > form legend, div.compose-historic > div > form legend{
+	text-align: center;
+	padding-bottom: 20px;
+}
+
+div.compose > div > form > div, div.compose-historic > div > form > div{
+	padding: 10px 0;
+}
+
+div.compose > div > form > div > label, div.compose-historic > div > form > div > label{
+	width: 40%;
+}
+
+div.compose > div > form > div > input{
+	width: 55%;
+}
+
+div.compose > div > form > div:last-child > input, div.compose-historic > div > form > div:last-child > input:nth-child(3){
+	width: 10%;
+	padding: 10px;
+	margin: 0 30% 0 0;
+	border: 1px solid var(--primary-color);
+	background-color: white;
+	color: var(--primary-color);
+}
+
+div.compose > div > form > div:last-child > input:hover, div.compose-historic > div > form > div:last-child > input:nth-child(2):hover{
+	cursor: pointer;
+	background-color: #3B4350;
+	border: 1px solid white;
+	color: white;
+}
+
+div.compose > div > form > div:last-child > input:nth-child(2),  div.compose-historic > div > form > div:last-child > input:nth-child(2){
+	width: 10%;
+	padding: 10px;
+	margin: 0 0%;
+	background-color: var(--primary-color);
+	border-width: 0;
+	color: white;
+}
+
+div.compose > div > form > div:last-child > input:nth-child(2):hover, div.compose-historic > div > form > div:last-child > input:nth-child(2):hover{
+	cursor: pointer;
+	background-color: #3B4350;
+}
+
+div.compose div.id_tl, div.compose-historic div.id_tl{
+	display: none;
+}
+
+div.switch-btns button{
+	background-color: white;
+	border: 1px solid var(--secondary-color);
+	color: var(--secondary-color);
+	margin-bottom: -2px;
+	margin-left: -5px;
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+	outline: none;
+}
+
+div.switch-btns button:focus{
+	outline: none;
+}
+
+div.switch-btns button:nth-child(1){
+	margin-left: 5%;
+}
+
+div.switch-btns button.show{
+	background-color: var(--secondary-color);
+	color: white;
+}
+
+/*RoadNetwork(){*/
+div.road-content{
+	padding: 0 7%;
+}
+
+div.road-content.intersec > div{
+	/*padding: 0 7%;*/
+}
+
+div.add-button{
+	height: 20px;
+	/*position: relative;*/
+	text-align: right;
+	width: 100%;
+	z-index: 2;
+}
+
+div.add-button button.add-network{
+	background-color: var(--primary-color);
+	color: white;
+	text-align: center;
+	border-width: 0;
+	padding: 10px 15px;
+	margin: 20px;
+	margin-top: 0;
+	border-radius: 5px;
+	right: 0;
+	text-align: center;
+	outline: none;
+	/*position: absolute;*/
+}
+
+div.road-content.intersec > p{
+	padding-left: 50px;
+}
+
+div.road-content.intersec > div > div:nth-child(2){
+	padding-top: 50px;
+}
+
+div.add-button button.add-network:hover{
+	background-color: #3B4350;
+}
+
+div.create-new{
+	position: absolute;
+	width: 100vw;
+	min-height: 100vh;
+	background-color: rgba(0,0,0,0.6);
+	top: 0;
+	left: 0;
+	z-index: 3;
+	padding: 10vh 10vw;
+	left: -16.7vw;
+}
+div.create-new.hide{
+	display: none;
+}
+
+div.create-new > div{
+	background-color: white;
+	padding: 6% 10%;
+}
+
+div.create-new > div button.close-btn{
+	border-radius: 50px;
+	height: 50px;
+	width: 50px;
+	background-color: white;
+	position: absolute;
+	right: 0;
+	top: 0;
+	margin-right: 9vw;
+	margin-top: 9vh;
+	border-width: 0;
+	box-shadow: 0px 0px 10px rgba(0,0,0,0.7);
+	font-weight: bolder;
+	outline: none;
+}
+
+div.create-new > div button.close-btn:hover{
+	background-color: #c6452d;
+	color: white;
+}
+
+div.create-new > div > form{
+	padding: 5%;
+}
+
+div.create-new > div > form input[type="submit"]{
+	background-color: var(--primary-color);
+	color: white;
+	border-width: 0;
+	padding: 5px 10px;
+}
+
+div.create-new > div > form input[type="submit"]:hover{
+	background-color: #3B4350;
+}
+
+div.recent-visit h2{
+	padding: 15px 20px;
+}
+
+div.recent-visit > div div.card-body{
+	padding: 0;
+}
+
+div.recent-visit > div h4.card-title{
+	/*background-color: var(--primary-color);*/
+	background-color: #3B4350;
+	color: white;
+	margin: 0;
+	padding: 7% 13%;
+}
+
+div.recent-visit > div p.card-text{
+	padding: 13%;
+}
+
+div.upload-dt{
+	padding: 20px 0;
+}
+
+div.upload-dt > div > form legend, div.upload-dt > div > form legend{
+	text-align: center;
+	padding-bottom: 20px;
+}
+
+div.upload-dt > div > form > div, div.upload-dt > div > form > div{
+	padding: 10px 0;
+}
+
+div.upload-dt > div > form > div > label, div.upload-dt > div > form > div > label{
+	width: 40%;
+}
+
+div.upload-dt > div > form > div > input{
+	width: 55%;
+}
+
+div.upload-dt > div > form > div:last-child > input, div.upload-dt > div > form > div:last-child > input:nth-child(3){
+	width: 10%;
+	padding: 10px;
+	margin: 0 30% 0 0;
+	border: 1px solid var(--primary-color);
+	background-color: white;
+	color: var(--primary-color);
+}
+
+div.upload-dt > div > form > div:last-child > input:hover, div.upload-dt > div > form > div:last-child > input:hover{
+	cursor: pointer;
+	background-color: #3B4350;
+	border: 1px solid white;
+	color: white;
+}
+
+div.upload-dt > div > form > div:last-child > input:nth-child(2),  div.upload-dt > div > form > div:last-child > input:nth-child(2){
+	width: 10%;
+	padding: 10px;
+	margin: 0 0%;
+	background-color: var(--primary-color);
+	border-width: 0;
+	color: white;
+}
+
+div.upload-dt > div > form > div:last-child > input:nth-child(2):hover, div.upload-dt > div > form > div:last-child > input:nth-child(2):hover{
+	cursor: pointer;
+	background-color: #3B4350;
+}
+
+div.upload-dt div.id_tl, div.upload-dt div.id_tl{
+	display: none;
+}
+
+div.upload-dt > div > form > div:last-child > input:nth-child(1){
+	width: 80%;
+	border-width: 0;
+	margin: 0;
+	outline: none;
+}
+
+div.upload-dt > div > form > div:last-child > input:nth-child(1):hover{
+	background-color: white;
+	color: black;
+}
+
+div.upload-dt > div > form > div:last-child > input:nth-child(3){
+	margin: 0;
+}
+
+div.upload-dt > div > form > legend{
+	text-align: left;
+}
+
+div.road-n div.card.bg-light{
+	max-width: 90%;
+	margin-left: -30px;
+}
+
+div.road-n div.card.bg-light:nth-child(1){
+	margin-left: 0;
+}
+/*}RoadNetwork*/

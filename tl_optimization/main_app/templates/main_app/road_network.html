@@ -10,6 +10,7 @@
         <link rel="icon" type="image" size="16x16" href="{% static 'images/favicon.ico'%}"/>
         <link rel="stylesheet" type="text/css" href = "{% static 'css/style.css'%}"/><!--href="css/style.css"> /-->
         <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js'%}"></script>
+        <script type="text/javascript" src="{% static 'js/script.js'%}"></script>
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -46,16 +47,19 @@
                                         <a href="{% url 'road_network' network_info.id %}"> Network: {{ network_info.network_name }}  </a>
                                     </li>
                             </ul>
-                            <div class="row">
+                            <div class="road-content road-n row">
                                 <!--h1> Network: {{ network_info.network_name }} </h1-->
 
                                 <div class="row">
-                                    <div class="col-sm-8 border-right">
+                                    <div class="add-button">
+                                        <button class="add-network">+ Add New Intersection</button>
+                                    </div>
+                                    <div class="col-sm-12">
                                         <p> Intersections in this Network: </p>
                                         {% if intersection_list %}
                                             <div class="card-columns">
                                                 {% for intersection in intersection_list %}
-                                                    <div class="card bg-light ">
+                                                    <div class="card bg-light">
                                                         <div href="{% url 'intersection' network_info.id intersection.id %}" class="card-body text-center">
                                                             <a href="{% url 'intersection' network_info.id intersection.id %}">
                                                                 <h6 class="card-title">
@@ -80,101 +84,47 @@
                                         {% endif %}
                                         
                                     </div>
-                                    <div class="col-sm-4">
-                                        <h3> Add New Intersection </h3>
-                                        <form action="{% url 'road_network' network_info.id %}" method="post">
-                                            {% csrf_token %}
-                                            <div class="form-group">
-                                                <label for="email"> Intersection name:</label>
-                                                {{ intersection_form.intersection_name }}
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="email"> Right of Way:</label>
-                                                <span class="badge badge-secondary badge-pill" style="float:right"> Auto Generated </span>
-                                                <!--p>When roads are added to the intersection the system generates a default right of way rules which can be updated.</p-->
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="email"> Traffic Light configuration:</label>
-                                                <span class="badge badge-secondary badge-pill" style="float:right"> Auto Generated </span>
-                                                <!--p>A default configuration is used to add a traffic lights from all incoming Road to all outgoing roads .</p-->
-                                            </div>
-                                            <input type="submit" value="Submit">
-                                        </form>
-                                        <hr>
-                                        <h3> Upload Data </h3>
-                                        <div class="operations">
-                                            <form method = "post" enctype = "multipart/form-data" > <!--action="../data_to_database/uploadFile.py"-->
-                                                <!--button class="btn">+ Add Traffic Light</button-->
+                                    <div class="create-new new-intersection hide">
+                                        <div>
+                                            <button class="close-btn">X</button>
+                                            <h3> Add New Intersection </h3>
+                                            <form action="{% url 'road_network' network_info.id %}" method="post">
                                                 {% csrf_token %}
-                                                <input type = "file" name = "filename"/>
-                                                <input type = "submit" value = "Submit"/>
+                                                <div class="form-group">
+                                                    <label for="email"> Intersection name:</label>
+                                                    {{ intersection_form.intersection_name }}
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email"> Right of Way:</label>
+                                                    <span class="badge badge-secondary badge-pill" style="float:right"> Auto Generated </span>
+                                                    <!--p>When roads are added to the intersection the system generates a default right of way rules which can be updated.</p-->
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email"> Traffic Light configuration:</label>
+                                                    <span class="badge badge-secondary badge-pill" style="float:right"> Auto Generated </span>
+                                                    <!--p>A default configuration is used to add a traffic lights from all incoming Road to all outgoing roads .</p-->
+                                                </div>
+                                                <input type="submit" value="Submit">
                                             </form>
-                                            <!-- <button class="btn">More ...</button> -->
+                                            <hr>
+                                            <div class="upload-dt">
+                                                    <div>
+                                                        <form method = "post" enctype = "multipart/form-data" > <!--action="../data_to_database/uploadFile.py"-->
+                                                                <!--button class="btn">+ Add Traffic Light</button-->
+                                                            <legend>Add Historic Data</legend>
+                                                            {% csrf_token %}
+                                                            <div class="id_tl">
+                                                                <input type = "text" name = "tl_form" value="add-historic-data" />
+                                                            </div>
+                                                            <div>
+                                                                <input type = "file" name = "filename"/>
+                                                                <input type = "submit" value = "Submit"/>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="records">
-                                <table class="table table-borderless">
-                                    <thead class="thread-dark">
-                                        <tr>
-                                            <th scope="col">ID</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Location</th>
-                                            <th scope="col">Intersection</th>
-                                            <th scope="col">Status</th>
-                                            <th scope="col"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="loading mb-3">
-                                            <th>
-                                                <img src="{% static 'images/loading.gif'%}" />
-                                            </th>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                    <!--
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>Light1</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><i class="fas fa-trash"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td>Light2</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><i class="fas fa-trash"></i></td>
-                                        </tr> -->
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="row">
-                                <!-- <div class="search col-12">
-                                    <input type="search" name="search">
-                                </div> -->
-                                <div class="col-2"></div>
-                                <div class="col-3"><h5><i>0 </i> Traffic Lights Found</h5></div>
-                                <!-- <div class="col-2">Sort by:</div> -->
-                                <!-- <div class="col-2">Filter:</div> -->
-                                <div class="col-2"></div>
-                                
-                                <div class="operations col-5">
-                                    <form method = "post" enctype = "multipart/form-data" > <!--action="../data_to_database/uploadFile.py"-->
-                                        <!--button class="btn">+ Add Traffic Light</button-->
-                                        {% csrf_token %}
-                                        <input type = "file" name = "filename"/>
-                                        <input type = "submit" value = "Submit"/>
-                                    </form>
-                                    <!-- <button class="btn">More ...</button> -->
                                 </div>
                             </div>
                         </div>

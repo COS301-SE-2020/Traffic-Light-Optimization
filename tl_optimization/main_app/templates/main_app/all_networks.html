@@ -11,6 +11,7 @@
         <link rel="icon" type="image" size="16x16" href="{% static 'images/favicon.ico'%}"/>
         <link rel="stylesheet" type="text/css" href = "{% static 'css/style.css'%}"/><!--href="css/style.css"> /-->
         <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js'%}"></script>
+        <script type="text/javascript" src="{% static 'js/script.js'%}"></script>
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -44,11 +45,14 @@
                                 <li class="breadcrumb-item"><a href="#">All Road Networks</a></li>
                             </ul>
                         
-							<div class="row">
+							<div class="road-content row">
                                 <!--h1> All Networks </h1-->
                                 
                                 <div class="row">
-                                    <div class="col-sm-8 border-right">
+                                    <div class="add-button">
+                                        <button class="add-network">+ Create New Network</button>
+                                    </div>
+                                    <div class="col-sm-12">
                                         <p> Returning all networks in the system </p>
                                         {% if network_list %}
                                             <ul class="list-group" >
@@ -68,21 +72,24 @@
                                         {% endif %}
 
                                     </div>
-                                    <div class="col-sm-4">
-                                        <h3> Create New Network </h3>
-                                        <form action="{% url 'all_networks' %}" method="post">
-                                            {% csrf_token %}
-                                            <div class="form-group">
-                                                <label for="email">Network name:</label>
-                                                {{ network_form.network_name }}
-                                            </div>
-                                            <input type="submit" value="Submit">
-                                        </form>
+                                    <div class="create-new new-network hide">
+                                        <div>
+                                            <button class="close-btn">X</button>
+                                            <h3> Create New Network </h3>
+                                            <form action="{% url 'all_networks' %}" method="post">
+                                                {% csrf_token %}
+                                                <div class="form-group">
+                                                    <label for="email">Network name:</label>
+                                                    {{ network_form.network_name }}
+                                                </div>
+                                                <input type="submit" value="Submit">
+                                            </form>
+                                        </div>
                                     </div>
                                     <hr>
                                 </div>
                                 <hr>
-                                <div class="row">
+                                <div class="recent-visit row">
                                     <br>
                                     <h2 style="text-align:center;">    Recent Visit</h2>
                                     <div class="col-sm-12 card-deck">

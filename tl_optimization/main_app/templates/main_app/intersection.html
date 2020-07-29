@@ -10,6 +10,7 @@
         <link rel="icon" type="image" size="16x16" href="{% static 'images/favicon.ico'%}"/>
         <link rel="stylesheet" type="text/css" href = "{% static 'css/style.css'%}"/><!--href="css/style.css"> /-->
         <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js'%}"></script>
+        <script type="text/javascript" src="{% static 'js/script.js'%}"></script>
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -48,7 +49,7 @@
                                     <a href="{% url 'intersection' network_info.id intersection_info.id %}"> Intersection: {{intersection_info.intersection_name}} </a>
                                 </li>
                             </ul>
-							<div class="row">
+							<div class="road-content intersec row">
                                 <!--h1> Intersection: {{intersection_info.intersection_name}} ( ID - {{intersection_info.id}}) </h1-->
                                 
                                 
@@ -61,7 +62,10 @@
                                     </div>
                                 </p>
                                 <div class="row">
-                                    <div class="col-sm-8 border-right">
+                                    <div class="add-button">
+                                        <button class="add-network">+ Add New Road</button>
+                                    </div>
+                                    <div class="col-sm-12">
                                         <div id="gridView">
                                             <table class="table" style="text-align:center">
                                                 <thead class="thead-dark">
@@ -156,32 +160,35 @@
                                             <p> The render view</p>
                                         </div>
                                     </div>
-                                    <div class="col-sm-4">
-                                        <h3> Add New Road </h3>
-                                        <form action="{% url 'intersection' network_info.id intersection_info.id %}" method="post">
-                                            {% csrf_token %}
-                                            <div class="form-group">
-                                                <label for="email"> Intersection IN:</label>
-                                                {{ road_form.intersection_in }}
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="email"> Intersection OUT:</label>
-                                                {{ road_form.intersection_out }}
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="email"> Road name:</label>
-                                            {{ road_form.road_name }}
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="email"> Road Capacity (meters):</label>
-                                                {{ road_form.road_distance }}
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="email"> Average speed (km):</label>
-                                                {{ road_form.average_speed }}
-                                            </div>
-                                            <input type="submit" value="Submit">
-                                        </form>
+                                    <div class="create-new new-intersection hide">
+                                        <div>
+                                            <button class="close-btn">X</button>
+                                            <h3> Add New Road </h3>
+                                            <form action="{% url 'intersection' network_info.id intersection_info.id %}" method="post">
+                                                {% csrf_token %}
+                                                <div class="form-group">
+                                                    <label for="email"> Intersection IN:</label>
+                                                    {{ road_form.intersection_in }}
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email"> Intersection OUT:</label>
+                                                    {{ road_form.intersection_out }}
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email"> Road name:</label>
+                                                {{ road_form.road_name }}
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email"> Road Capacity (meters):</label>
+                                                    {{ road_form.road_distance }}
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email"> Average speed (km):</label>
+                                                    {{ road_form.average_speed }}
+                                                </div>
+                                                <input type="submit" value="Submit">
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row">

@@ -18,23 +18,91 @@
                         <h2>Traffic Light Optimizer</h2>
                     </div>
                     <div class="cont-info">
-                        <div class="row">
+                        <div class="cont-info-nav row">
                             <!-- <div class="search col-12">
                                 <input type="search" name="search">
                             </div> -->
                             <div class="col-3"><h5><i>0 </i> Traffic Lights Found</h5></div>
                             <!-- <div class="col-2">Sort by:</div> -->
                             <!-- <div class="col-2">Filter:</div> -->
-                            <div class="col-2"></div>
-                            <div class="col-2"></div>
-                            <div class="operations col-5">
+                            <div class="col-1"></div>
+                            <div class="col-1"></div>
+                            <div class="operations col-7">
+                                <button class="btn">+ Add Traffic Light</button>
+                                <button class="btn">+ Add Historic Data</button>
+                            </div>
+                        </div>
+                        <div class="switch-btns">
+                            <button id="tl_btn" class="btn show">Traffic Lights</button>
+                            <button id="hd_btn" class="btn">Historic Data</button>
+                        </div>
+                        <div class="compose hide">
+                            <div>
                                 <form method = "post" enctype = "multipart/form-data" > <!--action="../data_to_database/uploadFile.py"-->
-                                    <!--button class="btn">+ Add Traffic Light</button-->
+                                    <legend>Add Traffic Light</legend>
                                     {% csrf_token %}
-                                    <input type = "file" name = "filename"/>
-                                    <input type = "submit" value = "Submit"/>
+                                    <div class="id_tl">
+                                        <input type = "text" name = "tl_form" value="add-traffic-light" />
+                                        <input type = "text" class="tl_id" name = "tl_id" />
+                                    </div>
+                                    <div>
+                                        <label for="tl_name">Name: </label>
+                                        <input type = "text" name = "tl_name" placeholder="traffic light 1" required/>
+                                    </div>
+                                    <div>
+                                        <label for="tl_location">Intersection Location: </label>
+                                        <input type = "text" name = "tl_location" placeholder="hilder/south" required/>
+                                    </div>
+                                    <!-- <div> -->
+                                    <!-- <label for="tl_status">Status: </label> -->
+                                    <!-- <input type = "text" name = "tl_status"/> -->
+                                    <!-- </div> -->
+                                    <div>
+                                        <label for="tl_type">Intersection Type: </label>
+                                        <select name="tl_type" required>
+                                            <option value="standard">Standard</option>
+                                            <option value="pedestrian">Pedestrian</option>
+                                            <option value="turn">turn</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="tl_intersection">Intersection Name: </label>
+                                        <input type = "text" name = "tl_intersection" placeholder="hilder" required/>
+                                    </div>
+                                    <!-- <div> -->
+                                        <!-- <label for="tl_operation_state">Name: </label> -->
+                                        <!-- <input type = "text" name = "tl_operation_state"/> -->
+                                    <!-- </div> -->
+                                    <!-- <div> -->
+                                        <!-- <label for="tl_operation_processed_time">Name: </label> -->
+                                        <!-- <input type = "text" name = "tl_operation_processed_time"/> -->
+                                    <!-- </div> -->
+                                    <div>
+                                        <label for="num_lanes">Number of Lanes: </label>
+                                        <input type = "number" name = "num_lanes" required/>
+                                    </div>
+                                    <div>
+                                        <input type = "submit" class="cancel" value = "Cancel"/>
+                                        <input type = "submit" value = "Submit"/>
+                                    </div>
                                 </form>
-                                <!-- <button class="btn">More ...</button> -->
+                            </div>
+                        </div>
+                        <div class="compose-historic hide">
+                            <div>
+                                <form method = "post" enctype = "multipart/form-data" > <!--action="../data_to_database/uploadFile.py"-->
+                                        <!--button class="btn">+ Add Traffic Light</button-->
+                                    <legend>Add Historic Data</legend>
+                                    {% csrf_token %}
+                                    <div class="id_tl">
+                                        <input type = "text" name = "tl_form" value="add-historic-data" />
+                                    </div>
+                                    <div>
+                                        <input type = "file" name = "filename"/>
+                                        <input type = "submit" value = "Submit"/>
+                                        <input type = "submit" class="cancel2" value = "Cancel"/>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                         <div class="records">
@@ -90,62 +158,53 @@
             // const {InfluxDB} = require('@influxdata/influxdb-client');
             import {InfluxDB, Point} from 'https://unpkg.com/@influxdata/influxdb-client/dist/index.browser.mjs';
             import {HealthAPI, SetupAPI} from 'https://unpkg.com/@influxdata/influxdb-client-apis/dist/index.browser.mjs';
-
-            // You can generate a Token from the "Tokens Tab" in the UI
-            const token = 'okx-Wk8zR33DYZxZP91T10ZTfUFmMz866DCKfE3Z8l5azgUT3QLIIdzk6rATGgCdAyuaAbWrReSi9KfchjW0kg==';
-            const org = 'cos301.alpha@gmail.com';
-            const bucket = 'test Bucket';
-
-            const client = new InfluxDB({url: 'https://eu-central-1-1.aws.cloud2.influxdata.com', token: token});
             let num = 0;
 
-            //Read from database
-            const queryApi = client.getQueryApi(org);
-
-            const query = `from(bucket: "${bucket}") |> range(start: -1h)`;
-            queryApi.queryRows(query, {
-              next(row, tableMeta) {
-                num++;
-                const o = tableMeta.toObject(row);
-                $('.records table tbody')
-                .append(
-                    $('<tr>')
-                    .css('display','none')
-                    .append(
-                        $('<th>')
-                        .attr('scope','row')
-                        .html(o.tl_id),
-                        $('<td>')
-                        .html(o.tl_name),
-                        $('<td>')
-                        .html(o.tl_location),
-                        $('<td>')
-                        .html(o.tl_intersection),
-                        $('<td>')
-                        .html(o.tl_status),
-                        $('<td>')
-                        /*.append(
-                            $('<i>')
-                            .addClass('fas fa-trash')
-                        )*/
-                    )
-                );
-                /*console.log(
-                  `${o._time} ${o._measurement} in '${o.location}' (${o.example}): ${o._field}=${o._value}`
-                );*/
-              },
-              error(error) {
-                console.error(error);
-                console.log('\nFinished ERROR');
-              },
-              complete() {
+            function complete(amount) {
                 $('.records table tbody tr').css('display','table-row');
                 $('.records table tr.loading').css('display','none');
-                $('.cont-info-nav > div i').html(num);
-                console.log('\nFinished SUCCESS');
+                $('.cont-info-nav > div i').html(amount);
+                // console.log('\nFinished SUCCESS');
                 // write(org, Bucket);
-              },
-            });
+                $('div.compose div.id_tl > input.tl_id').attr("value",++amount);
+            }
+                
+            let getData = (measure)=>{
+                var req = new XMLHttpRequest();
+                num=0;
+                req.onreadystatechange = function() {
+                    if(req.readyState == 4 && req.status == 200) {
+                        var res = JSON.parse(req.responseText);
+                        $.each(res, function(key, value){
+                            if(value.measurement==measure){
+                                num++;
+                                $('.records table tbody')
+                                .append(
+                                    $('<tr>')
+                                    .css('display','none')
+                                    .append(
+                                        $('<th>')
+                                        .attr('scope','row')
+                                        .html(value.id),
+                                        $('<td>')
+                                        .html(value.tl_name),
+                                        $('<td>')
+                                        .html(value.location),
+                                        $('<td>')
+                                        .html(value.intersection),
+                                        $('<td>')
+                                        .html(value.status),
+                                        $('<td>')
+                                    )
+                                );
+                            }
+                        });
+                    }
+                }
+                req.open("GET", "http://localhost:8000/api/", false);
+                req.send();
+                complete(num);
+            }
 
             let write = (org, bucket)=>{
                 const {Point} = require('@influxdata/influxdb-client');
@@ -166,9 +225,84 @@
                     })
             }
 
-            let writeSingle = ()=>{
-                $('.operations button').on('click',()=>{
-                    // $('')
+            let btns = ()=>{
+
+                $('.operations button:nth-child(1)').on('click',(e)=>{
+                    e.preventDefault();
+
+                    if($('.compose').hasClass('hide'))
+                        $('.compose').removeClass('hide');
+                });
+
+                $('input.cancel').on('click',(e)=>{
+                    e.preventDefault();
+
+                    if($('.compose').hasClass('hide')){
+                        // $('.compose').removeClass('hide');
+                    }
+                    else{
+                        $('.compose').addClass('hide');
+                    }
+                });
+
+                $('.operations button:nth-child(2)').on('click',(e)=>{
+                    e.preventDefault();
+
+                    if($('.compose-historic').hasClass('hide'))
+                        $('.compose-historic').removeClass('hide');
+                });
+
+                $('input.cancel2').on('click',(e)=>{
+                    e.preventDefault();
+
+                    if($('.compose-historic').hasClass('hide')){
+                        // $('.compose').removeClass('hide');
+                    }
+                    else{
+                        $('.compose-historic').addClass('hide');
+                    }
+                });
+
+                $('div.switch-btns button').on('click',(e)=>{
+                    e.preventDefault();
+                    $('.records table tbody').empty();
+                    $('.records table tbody')
+                    .append(
+                        $('<tr>')
+                        .addClass('loading mb-3')
+                        .append(
+                            $('<th>')
+                            .append(
+                                $('<img>')
+                                .attr("src","{% static 'images/loading.gif'%}")
+                            ),
+                            $('<td>'),
+                            $('<td>'),
+                            $('<td>'),
+                            $('<td>'),
+                            $('<td>')
+                        )
+                    );
+
+                    if($(e.currentTarget).attr('id')=='tl_btn')
+                        getData('added_traffic_lights');
+                    else if($(e.currentTarget).attr('id')=='hd_btn')
+                        getData('traffic_lights');
+
+                    $(e.currentTarget).siblings('button')
+                    .removeClass('show')
+                    .css({
+                        'background-color':'white',
+                        'color':'#394d5f'
+                    });
+                    $(e.currentTarget).addClass('show')
+                    .css({
+                        'background-color':'#394d5f',
+                        'color':'white'
+                    });
                 });
             }
+
+            getData('added_traffic_lights');
+            btns();
         </script>
