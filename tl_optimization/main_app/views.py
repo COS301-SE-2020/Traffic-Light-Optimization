@@ -2,6 +2,8 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, get_list_or_404, render
 from django.urls import reverse
+from django.views.generic.edit import UpdateView
+from django.views.generic.edit import DeleteView
 from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 from django.contrib import messages
@@ -223,5 +225,43 @@ def intersection_controller(request, network_id, intersection_id):
     
 
 # 4. View for Simulation of the traffic flow //////////////////////////////////////////////////////////////////////////
-def get_simulator(request):
-    return render( request, 'main_app/roadnetwork.html')
+
+
+def road_controller(request, network_id):
+    return render( request, 'main_app/roadview.html')
+
+def trafficlight_controller( request, network_id, intersection_id ):
+    return render( request, 'main_app/roadview.html')
+
+# Network ------------------------------------------------------------------------------------------------
+def update_network_controller(request, network_id):
+    net_up = Network.objects.get(pk=network_id)
+    if request.method == 'POST':
+        form_road = RoadForm(request.POST)
+        if form_road.is_valid():
+            net_up.name = request.POST.get('name')
+            net_up.save()
+    else:
+        return HttpResponseRedirect(reverse('road_network', args=(network_id, ))) 
+    return HttpResponseRedirect(reverse('road_network', args=(network_id, ))) 
+
+def delete_network_controller(request, network_id):
+    net_del = Network.objects.get(pk=network_id)
+    net_del.delete()
+    return HttpResponseRedirect(reverse('all_network')) 
+# Intersection -------------------------------------------------------------------------------------------------
+def update_intersection_controller(request, network_id, intersection_id):
+    return HttpResponseRedirect(reverse('intersection', args=(network_id, intersection.id ))) 
+
+def delete_intersection_controller(request, network_id, intersection_id):
+    inter_del = Intersection.objects.get(pk=intersection_id)
+    inter_del.delete()
+    return HttpResponseRedirect(reverse('road_network', args=(network_id, )))
+# Road -------------------------------------------------------------------------------------------------
+def update_road_controller(request, network_id, intersection_id, road_id):
+    return HttpResponseRedirect(reverse('intersection', args=(network_id, intersection.id )))
+
+def delete_road_controller(request, network_id, intersection_id, road_id):
+    road_del = Intersection.objects.get(pk=road_id)
+    road_del.delete()
+    return HttpResponseRedirect(reverse('intersection', args=(network_id, intersection.id )))
