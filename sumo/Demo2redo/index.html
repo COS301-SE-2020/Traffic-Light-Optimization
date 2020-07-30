@@ -2,10 +2,52 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title id="Traffic">Traffic light simulation</title>
 <style>
+.dropbtn {
+  background-color: #3498DB;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #2980B9;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
 * {
 box-sizing: border-box;
+}
+
+body
+{
+  background-color: LightGray;
 }
 
 .container {
@@ -61,31 +103,120 @@ box-shadow: 0 0 20px 5px #2ecc71;
   background-image: url("try.png");
 }
 
-</style>
+img#light
+{
+  visibility: hidden;
+}
 
+img#lightT
+{
+  visibility: hidden;
+}
+</style>
+</head>
 <body>
 
 <h1 align="center">Simulation</h1>
 <h2 align="center">Traffic light</h2>
-<div class="container">
-	<div class="circle red" color="red"></div>
-	<div class="circle" color="yellow"></div>
-	<div class="circle" color="green"></div>
+
+<div class="dropdown">
+  <button onclick="myFunctionL()" class="dropbtn">Traffic light simulation</button>
+  <div id="myDropdownL" class="dropdown-content">
+    <a href="#home">
+      <video id="video1" controls width="270" autoplay loop>
+           <source src="ezgif.mp4" type="video/mp4" />
+           <source src="movie.ogg" type="video/ogg" />
+           Your browser does not support the video element.
+
+      </video>
+</a>
 </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
-
-<h3 align="center">Road intersection</h3>
+<h3 align="center">Intersections</h3>
+<br>
+<div class="dropdown">
+  <button onclick="myFunction()" class="dropbtn">4-Way Intersection</button>
+  <div id="myDropdown" class="dropdown-content">
+    <a href="#home">
 <canvas id="myCanvas" width="800" height="800"
 style="border:1px solid #c3c3c3;">
 Your browser does not support the canvas element.
 </canvas>
+    </a>
+
+  </div>
+</div>
+
+<div class="dropdown">
+  <button onclick="myFunctionS()" class="dropbtn">T-Junction</button>
+  <div id="myDropdow" class="dropdown-content">
+    <a href="#home">
+<canvas id="myCanva" width="800" height="800"
+style="border:1px solid #c3c3c3;">
+Your browser does not support the canvas element.
+</canvas>
+    </a>
+
+  </div>
+</div>
 
 <script>
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+function myFunctionS() {
+  document.getElementById("myDropdow").classList.toggle("show");
+}
+
+function myFunctionL() {
+  document.getElementById("myDropdownL").classList.toggle("show");
+}
+
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
+
+
+
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
 const circles = document.querySelectorAll('.circle')
 let activeLight = 0;
-
-
-
 
 setInterval(() => {
 changeLight();
@@ -165,27 +296,125 @@ ctx.fillRect(500,395,10,104);
 ctx.fillStyle = "white";
 ctx.fillRect(301,500,104,10);
 
+
+/*T junction*/
+ canvas = document.getElementById("myCanva");
+ ctx = canvas.getContext("2d");
+ctx.fillStyle = "black";
+ctx.fillRect(0,300,800,200);
+
+
+ctx.fillStyle = "black";
+ctx.fillRect(300,500,200,300);
+
+ctx.fillStyle = "white";
+ctx.fillRect(50,395,50,10);
+
+ctx.fillStyle = "white";
+ctx.fillRect(150,395,50,10);
+
+ctx.fillStyle = "white";
+ctx.fillRect(250,395,50,10);
+
+ctx.fillStyle = "white";
+ctx.fillRect(500,395,50,10);
+
+ctx.fillStyle = "white";
+ctx.fillRect(600,395,50,10);
+
+ctx.fillStyle = "white";
+ctx.fillRect(700,395,50,10);
+
+/*VERTICAL*/
+
+ctx.fillStyle = "white";
+ctx.fillRect(395,500,10,50);
+
+ctx.fillStyle = "white";
+ctx.fillRect(395,600,10,50);
+
+ctx.fillStyle = "white";
+ctx.fillRect(395,700,10,50);
+
+/*lANE INDICATER*/
+ctx.fillStyle = "white";
+ctx.fillRect(300,300,10,105);
+
+ctx.fillStyle = "white";
+ctx.fillRect(500,395,10,104);
+
+ctx.fillStyle = "white";
+ctx.fillRect(301,500,104,10);
+
+/* Traffic liht*/
+  window.onload = function() {
+    var v = document.getElementById("video1");
+    var c = document.getElementById("myCanvas");
+    ctx = c.getContext("2d");
+    var i;
+
+    v.addEventListener("play", function() {i = window.setInterval(function()
+      {ctx.drawImage(v,200, 150,100,150)},0);}, false);
+    v.addEventListener("pause", function() {window.clearInterval(i);}, false);
+    v.addEventListener("ended", function() {clearInterval(i);}, false);
+
+    v.addEventListener("play", function() {i = window.setInterval(function()
+      {ctx.drawImage(v,200, 500,100,150)},0);}, false);
+    v.addEventListener("pause", function() {window.clearInterval(i);}, false);
+    v.addEventListener("ended", function() {clearInterval(i);}, false);
+
+    v.addEventListener("play", function() {i = window.setInterval(function()
+      {ctx.drawImage(v,500, 150,100,150)},0);}, false);
+    v.addEventListener("pause", function() {window.clearInterval(i);}, false);
+    v.addEventListener("ended", function() {clearInterval(i);}, false);
+
+    v.addEventListener("play", function() {i = window.setInterval(function()
+      {ctx.drawImage(v,500, 500,100,150)},0);}, false);
+    v.addEventListener("pause", function() {window.clearInterval(i);}, false);
+    v.addEventListener("ended", function() {clearInterval(i);}, false);
+
+
+    /*v = document.getElementById("video1");
+   var c = document.getElementById("myCanva");
+   ctx = c.getContext("2d");
+   var i;
+
+    v.addEventListener("play", function() {i = window.setInterval(function()
+      {ctx.drawImage(v,200, 150,100,150)},0);}, false);
+    v.addEventListener("pause", function() {window.clearInterval(i);}, false);
+    v.addEventListener("ended", function() {clearInterval(i);}, false);
+
+    v.addEventListener("play", function() {i = window.setInterval(function()
+      {ctx.drawImage(v,200, 200, 500,100,150)},0);}, false);
+    v.addEventListener("pause", function() {window.clearInterval(i);}, false);
+    v.addEventListener("ended", function() {clearInterval(i);}, false);
+
+    v.addEventListener("play", function() {i = window.setInterval(function()
+      {ctx.drawImage(v,500, 500,100,150)},0);}, false);
+    v.addEventListener("pause", function() {window.clearInterval(i);}, false);
+    v.addEventListener("ended", function() {clearInterval(i);}, false);*/
+
+}
+
 </script>
 
-</br>
-</br>
-
-<h3 align="center">Simple simulation</h3>
-<div style=""width="800" height="800">
-	<img src="try.png" alt="Flowers in Chania">
-	<p> currently not working </p>
-</div>
 <br>
-</br>
-<h4 align="center">Previus simulation</h4>
-<div style=""width="800" height="800">
-<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT7isSP-ZORH_Onz6F6DvalkY3btZZRvFgYcA&usqp=CAU" alt="Flowers in Chania">
-<p> coming soon </p>
-</div>
+
 
 <br>
-</br>
+<br>
+<h4>Current simulation</h4>
+<img src="Produce3.gif" alt="Previus demo" />
 
+<br>
+<image id="light" width="10" height="17" src="images.png" alt="The Scream" />
+<img id="lightT" width="10" height="17" src="image.jpg" alt="The Scream" />
+<br>
 
+<h5>Previus Demo(SUMO simulation)</h5>
+<img src="Produce_1.gif" alt="Previus demo" />
+
+<br>
+<br>
 </body>
 </html>
