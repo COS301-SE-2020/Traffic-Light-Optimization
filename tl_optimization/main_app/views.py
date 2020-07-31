@@ -160,7 +160,7 @@ def intersection_controller(request, network_id, intersection_id):
         form_road = RoadForm(request.POST)
         if form_road.is_valid():
             new_road = form_road.save()
-            form_road = RoadForm()
+            return HttpResponseRedirect(reverse('intersection', args=(network_id, intersection_id )))
         form_road.fields['intersection_in'] = customModelChoiceField( 
             intersection_entries_for_network , 
             empty_label="" , 

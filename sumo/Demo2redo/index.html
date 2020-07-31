@@ -81,89 +81,90 @@ Your browser does not support the canvas element.
 </canvas>
 
 <script>
-const circles = document.querySelectorAll('.circle')
-let activeLight = 0;
+    //1. Traffic Light
+    const circles = document.querySelectorAll('.circle')
+    let activeLight = 0;
 
 
+    setInterval(() => {
+            changeLight();
+        }, (Math.floor(Math.random() * 5000) + 1000)
+    );
+
+    function changeLight() {
+        circles[activeLight].className = 'circle';
+        activeLight++;
+
+        if(activeLight > 2) {
+            activeLight = 0;
+        }
+
+        const currentLight = circles[activeLight]
+        currentLight.classList.add(currentLight.getAttribute('color'));
+    }
+
+    //2. Road Network 
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    ctx.fillStyle = "black";
+    ctx.fillRect(0,300,800,200);
 
 
-setInterval(() => {
-changeLight();
-}, (Math.floor(Math.random() * 5000) + 1000));
+    ctx.fillStyle = "black";
+    ctx.fillRect(300,0,200,800);
 
-function changeLight() {
-circles[activeLight].className = 'circle';
-activeLight++;
+    /*lane divider*/
 
-if(activeLight > 2) {
-	activeLight = 0;
-}
+    /*HORZONTAL*/
+    ctx.fillStyle = "white";
+    ctx.fillRect(50,395,50,10);
 
-const currentLight = circles[activeLight]
-currentLight.classList.add(currentLight.getAttribute('color'));
-}
+    ctx.fillStyle = "white";
+    ctx.fillRect(150,395,50,10);
 
-var canvas = document.getElementById("myCanvas");
-var ctx = canvas.getContext("2d");
-ctx.fillStyle = "black";
-ctx.fillRect(0,300,800,200);
+    ctx.fillStyle = "white";
+    ctx.fillRect(250,395,50,10);
 
+    ctx.fillStyle = "white";
+    ctx.fillRect(500,395,50,10);
 
-ctx.fillStyle = "black";
-ctx.fillRect(300,0,200,800);
+    ctx.fillStyle = "white";
+    ctx.fillRect(600,395,50,10);
 
-/*lane divider*/
+    ctx.fillStyle = "white";
+    ctx.fillRect(700,395,50,10);
 
-/*HORZONTAL*/
-ctx.fillStyle = "white";
-ctx.fillRect(50,395,50,10);
+    /*VERTICAL*/
+    ctx.fillStyle = "white";
+    ctx.fillRect(395,50,10,50);
 
-ctx.fillStyle = "white";
-ctx.fillRect(150,395,50,10);
+    ctx.fillStyle = "white";
+    ctx.fillRect(395,150,10,50);
 
-ctx.fillStyle = "white";
-ctx.fillRect(250,395,50,10);
+    ctx.fillStyle = "white";
+    ctx.fillRect(395,250,10,50);
 
-ctx.fillStyle = "white";
-ctx.fillRect(500,395,50,10);
+    ctx.fillStyle = "white";
+    ctx.fillRect(395,500,10,50);
 
-ctx.fillStyle = "white";
-ctx.fillRect(600,395,50,10);
+    ctx.fillStyle = "white";
+    ctx.fillRect(395,600,10,50);
 
-ctx.fillStyle = "white";
-ctx.fillRect(700,395,50,10);
+    ctx.fillStyle = "white";
+    ctx.fillRect(395,700,10,50);
 
-/*VERTICAL*/
-ctx.fillStyle = "white";
-ctx.fillRect(395,50,10,50);
+    /*lANE INDICATER*/
+    ctx.fillStyle = "white";
+    ctx.fillRect(300,300,10,105);
 
-ctx.fillStyle = "white";
-ctx.fillRect(395,150,10,50);
+    ctx.fillStyle = "white";
+    ctx.fillRect(395,300,105,10);
 
-ctx.fillStyle = "white";
-ctx.fillRect(395,250,10,50);
+    ctx.fillStyle = "white";
+    ctx.fillRect(500,395,10,104);
 
-ctx.fillStyle = "white";
-ctx.fillRect(395,500,10,50);
-
-ctx.fillStyle = "white";
-ctx.fillRect(395,600,10,50);
-
-ctx.fillStyle = "white";
-ctx.fillRect(395,700,10,50);
-
-/*lANE INDICATER*/
-ctx.fillStyle = "white";
-ctx.fillRect(300,300,10,105);
-
-ctx.fillStyle = "white";
-ctx.fillRect(395,300,105,10);
-
-ctx.fillStyle = "white";
-ctx.fillRect(500,395,10,104);
-
-ctx.fillStyle = "white";
-ctx.fillRect(301,500,104,10);
+    ctx.fillStyle = "white";
+    ctx.fillRect(301,500,104,10);
 
 </script>
 
@@ -179,8 +180,8 @@ ctx.fillRect(301,500,104,10);
 </br>
 <h4 align="center">Previus simulation</h4>
 <div style=""width="800" height="800">
-<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT7isSP-ZORH_Onz6F6DvalkY3btZZRvFgYcA&usqp=CAU" alt="Flowers in Chania">
-<p> coming soon </p>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT7isSP-ZORH_Onz6F6DvalkY3btZZRvFgYcA&usqp=CAU" alt="Flowers in Chania">
+    <p> coming soon </p>
 </div>
 
 <br>
