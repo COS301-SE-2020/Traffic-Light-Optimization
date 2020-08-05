@@ -1,0 +1,26 @@
+
+
+<routes>
+   <vType id="car"
+   			vClass="passenger" length="5" accel="3.5" decel="2.2"
+   			sigma="1.0" maxSpeed="10"/>
+
+   <vType id="ev"
+      		vClass="emergency" length="7" accel="5.5" decel="2.2" sigma="1.0"
+      		maxSpeed="20" guiShape="emergency" speedFactor="2.0"
+      		minGapLat="0.2"/>
+
+
+          <flow id="carflow_0" type="car" beg="0" end="0" number="20" from="-gneE64" to="gneE72" depart="0"/>
+          <flow id="carflow_1" type="car" beg="0" end="0" number="20" from="-gneE72" to="gneE64" depart="0"/>
+          <flow id="carflow_2" type="car" beg="0" end="0" number="50" from="gneE62" to="gneE72" depart="0"/>
+          <flow id="carflow_3" type="car" beg="0" end="0" number="20" from="-gneE24" to="gneE64" depart="0"/>
+          <flow id="carflow_4" type="car" beg="0" end="0" number="20" from="4243492#2" to="gneE64" depart="0"/>
+            <flow id="carflow_5" type="car" beg="0" end="0" number="20" from="gneE16" to="gneE59" depart="0"/>
+
+          <flow id="evflow" type="ev" beg="0" end="0" number="5" from="-gneE64" to="gneE72"/>
+          <flow id="evflow_1" type="ev" beg="0" end="0" number="5" from="-gneE72" to="gneE64"/>
+
+
+
+</routes>
