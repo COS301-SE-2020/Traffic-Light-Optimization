@@ -14,8 +14,8 @@ import csv
 import io
 from django.http import HttpResponse
 
-from .forms import *
-from .models import *
+from ..forms import *
+from ..models import *
 
 # 1. Create views //////////////////////////////////////////////////////////////////////////////////////////////////
 '''

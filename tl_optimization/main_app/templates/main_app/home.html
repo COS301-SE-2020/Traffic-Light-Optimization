@@ -1,10 +1,80 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
     <head>
+        <title>Home Page</title>
         <meta charset="utf-8">
-        <title>My test page</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <style>
+            .footer {
+                position: fixed;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                background-color: red;
+                color: white;
+                text-align: center;
+            }
+        </style>
     </head>
     <body>
-        <p>This is my page</p>
+    <!--********************************************************************************************************-->
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'images/logo_welcome.png' %}" width="70" height="70">
+            </a>
+            <ul class="navbar-nav">
+                <h1>Traffic Light Optimizer</h1>
+            </ul>
+        </nav>
+        <br><br>
+    <!--********************************************************************************************************-->
+        <div class="container-fluid">
+            <br><br>
+            <div class="container-fluid">
+                <br>
+                <div class="row">
+                    <!--div class="col-sm-2" style="background-color:#379683;text-align:center;"-->
+                    <div class="col-sm-2" style="background-color:white;text-align:center;">
+                        <h5> <b> Intersections </b></h5> <br>
+                        {% include 'main_app/intersection_view.html'%}
+                    </div>
+                    
+                    <div class="col-sm-7" style="background-color:#8ee4af;height: 500px">
+                        <div class="row">
+                            <div class="col-sm-6" >
+                                <h5> <b> View: {intersection name} </b></h5>
+                            </div>
+                            <div class="col-sm-6">
+                                <div id="btn-group btn-group-sm">
+                                    <button type="button" class="btn btn-outline-primary">Simulation</button>
+                                    <button type="button" class="btn btn-outline-primary"> <i class="fa fa-play"></i> play</button>
+                                    <button type="button" class="btn btn-outline-primary"> <i class="fa fa-pause"></i> pause</button> 
+                                    <button type="button" class="btn btn-outline-primary"> <i class="fa fa-stop"></i> stop</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <div class="col-sm-3" style="background-color:#5cdb95;">
+                        <b> Road Info & Optimizer </b>
+                    </div>
+                </div>
+                <br>
+                <br>
+            </div>
+        </div>
+    <!--********************************************************************************************************-->
+        <div class="footer bg-dark navbar-dark fixed-bottom">
+            <p>Footer</p>
+        </div>
+
     </body>
 </html>

@@ -20,11 +20,12 @@ class NetworkForm(ModelForm):
 class IntersectionForm(ModelForm):
     class Meta:
         model = Intersection
-        fields = ['intersection_name', 'right_of_way', 'configuration']
+        #fields = ['intersection_name', 'right_of_way', 'configuration']
+        fields = ['intersection_name']
         widgets = {
             'intersection_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'right_of_way': forms.Textarea(attrs={'class': 'form-control'}),
-            'configuration': forms.Textarea(attrs={'class': 'form-control'}),
+            #'right_of_way': forms.Textarea(attrs={'class': 'form-control'}),
+            #'configuration': forms.Textarea(attrs={'class': 'form-control'}),
         }
 
 
