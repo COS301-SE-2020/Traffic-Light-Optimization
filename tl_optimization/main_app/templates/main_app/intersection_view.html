@@ -1,16 +1,18 @@
 
-<span class="current">
-    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-</span>
 
-<div class="list-group">
-{% for intersection in page_obj %}
-    {# Each "contact" is a Contact model object. #}
-    <a href="#" class="list-group-item list-group-item-action">
-    {{ intersection.intersection_name }}
-    </a>
-    
-{% endfor %}
+<div class="list-group" style="text-align:left;">
+    <span class="current list-group-item bg-primary" style="text-align:center;">
+        <h5> <b> Intersections </b></h5>
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+    </span>
+    {% for intersection in page_obj %}
+        {# Each "contact" is a Contact model object. #}
+        <a href="#" class="list-group-item ">
+            <span class="badge badge-primary">+</span>
+            {{ intersection.intersection_name }}
+        </a>
+        
+    {% endfor %}
 </div>
 
 <div class="pagination pagination-sm">
@@ -44,9 +46,10 @@
             
             <!-- Modal body -->
             <div class="modal-body">
-                <form >
+                <form method="post">
                     {% csrf_token %}
-                    {{ intersection_form}}
+                    {{ intersection_form }}
+                    <input type="submit" value="Submit">
                 </form>
             </div>
             

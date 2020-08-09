@@ -14,12 +14,12 @@ def index(request):
 def home(request):
     # Prepare the intersections list --------------------------------------
     intersection_list = Intersection.objects.get_queryset().order_by('id')
-    paginator = Paginator(intersection_list, 5) # Show 25 contacts per page.
+    paginator = Paginator(intersection_list, 7) # Show 25 contacts per page.
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
     intersection_form = IntersectionForm()
-
+    road_form = RoadForm()
     # Prepare data for the simulation --------------------------------------
 
     # Prepare the optimizer ------------------------------------------------
@@ -28,7 +28,8 @@ def home(request):
     data_input = {
         #'current_intersection': intersection_id,
         'page_obj': page_obj ,
-        'intersection_form': intersection_form
+        'intersection_form': intersection_form ,
+        'road_form': road_form
     }
     return render(request, 'main_app/home.html', data_input )
 
