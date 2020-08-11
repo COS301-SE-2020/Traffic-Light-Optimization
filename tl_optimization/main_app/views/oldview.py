@@ -78,8 +78,8 @@ def simulation(request):
 def index(request):
     return HttpResponse("Hello, world. You're at the main_app's index.")
 
-def home(request):
-    return render(request, 'main_app/home.html')
+def visualization(request):
+    return render(request, 'main_app/view_simulation.html')
 
 
 # 2. The Road Networks /////////////////////////////////////////////////////////////////////////////////////////////

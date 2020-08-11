@@ -31,7 +31,7 @@ def home(request):
         'intersection_form': intersection_form ,
         'road_form': road_form
     }
-    return render(request, 'main_app/home.html', data_input )
+    return render(request, 'main_app/view_home.html', data_input )
 
 def intersection_View(request):
-    return render(request, 'main_app/home.html')
+    return render(request, 'main_app/view_home.html')

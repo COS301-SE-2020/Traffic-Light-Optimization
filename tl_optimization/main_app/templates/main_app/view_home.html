@@ -45,7 +45,7 @@
                     <!--div class="col-sm-2" style="background-color:#379683;text-align:center;"-->
                     <div class="col-sm-3" style="background-color:white;text-align:center;">
                         <!--h5> <b> Intersections </b></h5> <br-->
-                        {% include 'main_app/intersection_view.html'%}
+                        {% include 'main_app/view_intersection.html'%}
                     </div>
                     
                     <div class="col-sm-6" style="background-color:#8ee4af;height: 500px">
@@ -62,12 +62,17 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div style="width=100%;text-align:center;" >
+                                {% include 'main_app/view_simulation.html'%}
+                            </div>
+                        </div>
                     </div>
                     
                     <!--div class="col-sm-3" style="background-color:#5cdb95;"-->
                     <div class="col-sm-3" style="background-color:white;text-align:center;">
                         <b> Intersection Info </b><br><br>
-                        {% include 'main_app/road_view.html'%}
+                        {% include 'main_app/view_road.html'%}
                     </div>
                 </div>
                 <br>
