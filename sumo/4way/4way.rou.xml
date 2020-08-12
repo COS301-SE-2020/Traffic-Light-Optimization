@@ -1,0 +1,54 @@
+
+
+<routes>
+   <vType id="car"
+   			vClass="passenger" length="5" accel="3.5" decel="2.2"
+   			sigma="1.0" maxSpeed="10"/>
+
+   <vType id="ev"
+      		vClass="emergency" length="7" accel="5.5" decel="2.2" sigma="1.0"
+      		maxSpeed="20" guiShape="emergency" speedFactor="2.0"
+      		minGapLat="0.2"/>
+
+
+          <flow id="carflow_0" type="car" beg="0" end="0" number="10" from="-gneE11" to="gneE10" depart="0"/>
+          <flow id="carflow_1" type="car" beg="0" end="0" number="10" from="-gneE11" to="gneE9" depart="0"/>
+          <flow id="carflow_2" type="car" beg="0" end="0" number="10" from="-gneE11" to="gneE12" depart="0"/>
+          
+          <flow id="evflow_10" type="ev" beg="0" end="0" number="1" from="-gneE9" to="gneE10" depart="0"/>
+          <flow id="evflow_11" type="ev" beg="0" end="0" number="1" from="-gneE9" to="gneE11" depart="0"/>
+          <flow id="evflow_22" type="ev" beg="0" end="0" number="1" from="-gneE9" to="gneE12" depart="0"/>
+
+
+
+         <flow id="carflow_10" type="car" beg="0" end="0" number="5" from="-gneE9" to="gneE10" depart="3"/>
+          <flow id="carflow_11" type="car" beg="0" end="0" number="5" from="-gneE9" to="gneE11" depart="3"/>
+          <flow id="carflow_12" type="car" beg="0" end="0" number="5" from="-gneE9" to="gneE12" depart="3"/>
+
+          <flow id="evflow_0" type="ev" beg="0" end="0" number="1" from="-gneE11" to="gneE10" depart="3"/>
+          <flow id="evflow_1" type="ev" beg="0" end="0" number="1" from="-gneE11" to="gneE9" depart="3"/>
+          <flow id="evflow_2" type="ev" beg="0" end="0" number="1" from="-gneE11" to="gneE12" depart="3"/>
+
+
+
+          <flow id="carflow_20" type="car" beg="0" end="0" number="5" from="-gneE12" to="gneE10" depart="0"/>
+          <flow id="carflow_21" type="car" beg="0" end="0" number="5" from="-gneE12" to="gneE9" depart="0"/>
+          <flow id="carflow_22" type="car" beg="0" end="0" number="5" from="-gneE12" to="gneE11" depart="0"/>
+          
+          <flow id="evflow_40" type="ev" beg="0" end="0" number="2" from="-gneE12" to="gneE11" depart="0"/>
+          <flow id="evflow_41" type="ev" beg="0" end="0" number="2" from="-gneE12" to="gneE9" depart="0"/>
+          <flow id="evflow_42" type="ev" beg="0" end="0" number="3" from="-gneE12" to="gneE10" depart="0"/>
+
+
+
+          <flow id="carflow_30" type="car" beg="0" end="0" number="5" from="-gneE10" to="gneE12" depart="0"/>
+          <flow id="carflow_31" type="car" beg="0" end="0" number="5" from="-gneE10" to="gneE9" depart="0"/>
+          <flow id="carflow_32" type="car" beg="0" end="0" number="5" from="-gneE10" to="gneE11" depart="0"/>
+
+          <flow id="evflow_30" type="ev" beg="0" end="0" number="2" from="-gneE10" to="gneE11" depart="0"/>
+          <flow id="evflow_31" type="ev" beg="0" end="0" number="2" from="-gneE10" to="gneE9" depart="0"/>
+          <flow id="evflow_32" type="ev" beg="0" end="0" number="3" from="-gneE10" to="gneE12" depart="0"/>
+
+          
+
+</routes>
