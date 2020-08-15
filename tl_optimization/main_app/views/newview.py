@@ -35,3 +35,17 @@ def home(request):
 
 def intersection_View(request):
     return render(request, 'main_app/view_home.html')
+# ................................................................................
+def delete_intersection(request):
+    return render(request, 'main_app/view_home.html')
+
+
+# ................................................................................
+def add_road(request):
+    return render(request, 'main_app/view_home.html')
+
+def update_road(request):
+    return render(request, 'main_app/view_home.html')
+
+def delete_road(request):
+    return render(request, 'main_app/view_home.html')
