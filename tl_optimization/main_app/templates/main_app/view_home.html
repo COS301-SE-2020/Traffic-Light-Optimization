@@ -51,7 +51,7 @@
                     <div class="col-sm-6" style="background-color:#8ee4af;height: 500px">
                         <div class="row">
                             <div class="col-sm-5" >
-                                <h5> <b> View: {intersection name} </b></h5>
+                                <h5> <b> {{intersection_info.intersection_name}} </b></h5>
                             </div>
                             <div class="col-sm-7">
                                 <div id="btn-group btn-group-sm">
@@ -71,8 +71,12 @@
                     
                     <!--div class="col-sm-3" style="background-color:#5cdb95;"-->
                     <div class="col-sm-3" style="background-color:white;text-align:center;">
-                        <b> Intersection Info </b><br><br>
-                        {% include 'main_app/view_road.html'%}
+                        <div class="list-group">
+                            <span class="current list-group-item bg-primary" style="text-align:center;">
+                                <b> Intersection Info </b><br>
+                            </span>
+                            {% include 'main_app/view_road.html'%}
+                        </div>  
                     </div>
                 </div>
                 <br>

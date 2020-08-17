@@ -17,7 +17,7 @@ def intersection_fitness(individual, data):
     for timing , traffic_light in zip(individual, data):
         if traffic_light.get('road_name') == name: 
             acceleration = traffic_light.get("rate") * traffic_light.get("rate")
-            road_freed_number_of_cars = timing * traffic_light.get("rate") * ( timing * acceleration)
+            road_freed_number_of_cars = timing * traffic_light.get("rate") + ( timing * acceleration)
             road_timing = road_timing + timing
             road_rate = road_rate + traffic_light.get("rate")
             capacity = traffic_light.get("capacity")
@@ -32,7 +32,7 @@ def intersection_fitness(individual, data):
             road_freed_number_of_cars , road_timing, road_rate, capacity = 0, 0, 0, 0
             name = traffic_light.get('road_name')
             acceleration = traffic_light.get("rate") * traffic_light.get("rate")
-            road_freed_number_of_cars = timing * traffic_light.get("rate") * ( timing * acceleration)
+            road_freed_number_of_cars = timing * traffic_light.get("rate") + ( timing * acceleration)
             road_timing = road_timing + timing
             road_rate = road_rate + traffic_light.get("rate")
             capacity = traffic_light.get("capacity")

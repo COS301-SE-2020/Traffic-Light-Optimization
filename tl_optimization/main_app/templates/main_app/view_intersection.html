@@ -7,7 +7,7 @@
     </span>
     {% for intersection in page_obj %}
         {# Each "contact" is a Contact model object. #}
-        <a href="#" class="list-group-item ">
+        <a href="{% url 'home' intersection.id %}" class="list-group-item ">
             <span class="badge badge-primary">+</span>
             {{ intersection.intersection_name }}
         </a>

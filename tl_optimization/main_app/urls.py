@@ -4,7 +4,9 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     #path('', views.index, name='index'),
-    path('home/', views.home, name='home'),
+    path('home/', views.home_, name='home'),
+    path('home/<int:intersection_id>/', views.home, name='home'),
+
     path('roadvisual/', views.visualization, name='visualization'),
     path('network/', views.main_controller, name='all_networks'),
     path('network/<int:network_id>/', views.road_network_controller, name='road_network'),

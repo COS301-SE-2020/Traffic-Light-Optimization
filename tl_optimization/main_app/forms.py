@@ -32,7 +32,7 @@ class IntersectionForm(ModelForm):
 class TrafficlightForm(ModelForm):
     class Meta:
         model = TrafficLight
-        fields = ['intersection_id', 'timing_red', 'timing_yellow', 'timing_green']
+        fields = ['road_id', 'timing_red', 'timing_yellow', 'timing_green']
 
 # Road Forms .............................................
 class RoadForm(ModelForm):
