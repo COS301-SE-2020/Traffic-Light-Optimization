@@ -21,7 +21,7 @@
 					</div>
 					<div>
 						<a href="{% url 'all_networks'%}"><div>DASHBOARD</div></a>
-                        <a href="#" ><div>OPTIMIZATION</div></a>
+                        <!--a href="#" ><div>OPTIMIZATION</div></a-->
 						<a href="#" class="active"><div>SIMULATION</div></a>
 						<!-- <a href="manual.html"><div>MANUAL</div></a> -->
 					</div>
@@ -33,7 +33,8 @@
 							<h2>Traffic Light Optimizer</h2>
 						</div>
 						<div class="cont-info">
-							<embed src="https://u16207948.github.io/sumo/simu">
+                            {% include 'main_app/Demo2redo/index.html'%}
+							<!--embed src="https://u16207948.github.io/sumo/simu"-->
 						</div>
 					</div>
 				</div>

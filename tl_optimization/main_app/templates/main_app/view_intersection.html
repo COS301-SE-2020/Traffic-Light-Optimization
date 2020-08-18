@@ -1,0 +1,63 @@
+
+
+<div class="list-group" style="text-align:left;">
+    <span class="current list-group-item bg-primary" style="text-align:center;">
+        <h5> <b> Intersections </b></h5>
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+    </span>
+    {% for intersection in page_obj %}
+        {# Each "contact" is a Contact model object. #}
+        <a href="{% url 'home' intersection.id %}" class="list-group-item ">
+            <span class="badge badge-primary">+</span>
+            {{ intersection.intersection_name }}
+        </a>
+        
+    {% endfor %}
+</div>
+
+<div class="pagination pagination-sm">
+    <span class="step-links">
+        <ul class="pagination">
+        {% if page_obj.has_previous %}
+            <li class="page-item" ><a class="page-link" href="?page=1">&laquo; first</a></li>
+            <li class="page-item" ><a class="page-link" href="?page={{ page_obj.previous_page_number }}"> prev</a></li>
+        {% endif %}
+
+        {% if page_obj.has_next %}
+            <li class="page-item" ><a class="page-link" href="?page={{ page_obj.next_page_number }}"> next</a></li>
+            <li class="page-item" ><a class="page-link"href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a></li>
+        {% endif %}
+        </ul>
+    </span>
+</div>
+<br>
+<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#myModal"> Add Intersection</button>
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+      
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">New Intersection</h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ intersection_form }}
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+            
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" >Submit</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
