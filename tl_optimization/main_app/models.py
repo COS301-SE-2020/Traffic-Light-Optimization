@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from datetime import datetime
 # Create your models here.
 
 # 1. Models an intersection into which different roads meet .....................
@@ -99,10 +100,10 @@ class Road(models.Model):
             }
 
         info = {
-            "name": road_name ,
-            "capaicty": road_distance,
-            "speed": average_speed,
-            "traffic-light": light
+            "name": self.road_name ,
+            "capaicty": self.road_distance,
+            "speed": self.average_speed,
+            "traffic-light": light_info
         }
         return info
 
@@ -114,12 +115,12 @@ class TrafficLight(models.Model):
         null=True,
         on_delete=models.SET_NULL
     )
-    date_time = models.DateTimeField() 
-    traffic_info = models.IntegerField(default=0)
+    date_time = models.DateTimeField(default=datetime.now, blank=True) 
+    traffic_count = models.FloatField(default=0)
 
     timing_red = models.IntegerField(default=0)
     timing_yellow = models.IntegerField(default=0)
-    timing_green = models.FloatField(default=0)
+    timing_green = models.IntegerField(default=0)
 
     def get_absolute_url(self):
         road = Road.objects.get(pk=self.road_id)
@@ -130,8 +131,8 @@ class TrafficLight(models.Model):
 
     def light_info(self):
         light_info = {
-            "red": timing_red,
-            "orange": timing_yellow,
-            "green": timing_green
+            "red": self.timing_red,
+            "orange": self.timing_yellow,
+            "green": self.timing_green
         }
         return light_info

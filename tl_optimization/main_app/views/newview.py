@@ -55,22 +55,33 @@ def intersection_View(request):
 def create_intersection(request):
     if request.method == 'POST':
         #perform required operations
-        pass
-    return HttpResponseRedirect(reverse('home', args=(network_id, intersection_id ))) 
+        form_intersection = IntersectionForm(request.POST)
+        if form_intersection.is_valid():
+            new_intersection = form_intersection.save()
+            new_intersection.network_id = get_object_or_404( Network, pk=1)
+            new_intersection.save()
+            return HttpResponseRedirect(reverse('home', args=(new_intersection.id, ))) 
+    return home_(request )
 
-def delete_intersection(request):
+def delete_intersection(request, intersection_id):
+    intersection = get_object_or_404( Intersection, pk=intersection_id)
+    intersection.delete()
+    return HttpResponseRedirect(reverse('home_')) 
 
-    return HttpResponseRedirect(reverse('home', args=(network_id, intersection_id ))) 
 
-
-# ...................................................................................................................
-def add_road(request):
+# .....................................................................................................................
+def add_road(request, intersection_id):
     if request.method == 'POST':
         #perform required operations
-        pass
-    return HttpResponseRedirect(reverse('home', args=(network_id, intersection_id ))) 
+        form_road = RoadForm(request.POST)
+        if form_road.is_valid():
+            new_road = form_road.save()
+            new_road.intersection_id = get_object_or_404( Intersection, pk=intersection_id)
+            new_road.save()
+            return HttpResponseRedirect(reverse('home', args=(new_intersection.id, ))) 
+    return HttpResponseRedirect(reverse('home', args=(intersection_id, ))) 
 
-def update_road(request):
+def update_road(request, road_id):
     if request.method == 'POST':
         #perform required operations
         pass
