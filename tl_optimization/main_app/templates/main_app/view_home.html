@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Home Page</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image" size="16x16" href="{% static 'images/favicon.ico'%}"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <style>
+            .footer {
+                position: fixed;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                background-color: red;
+                color: white;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+    <!--********************************************************************************************************-->
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'images/logo_welcome.png' %}" width="70" height="70">
+            </a>
+            <ul class="navbar-nav">
+                <h1>Traffic Light Optimizer</h1>
+            </ul>
+        </nav>
+        <br><br>
+    <!--********************************************************************************************************-->
+        <div class="container-fluid">
+            <br><br>
+            <div class="container-fluid">
+                <br>
+                <div class="row">
+                    <!--div class="col-sm-2" style="background-color:#379683;text-align:center;"-->
+                    <div class="col-sm-3" style="background-color:white;text-align:center;">
+                        {% include 'main_app/view_intersection.html'%}
+                        <hr>
+                    </div>
+
+                    <!--div class="col-sm-6" style="background-color:#5cdb95;height: 500px"-->
+                    <div class="col-sm-6" style="background-color:#8ee4af;height: 600px">
+                        <div class="row bg-info">
+                            <div class="col-sm-6" >
+                                <nav class="navbar navbar-expand bg-info navbar-dark ">
+                                    <span class="navbar-text">
+                                        <h5> <b> 
+                                            <span class="badge badge-primary">+</span> 
+                                            {{intersection_info.intersection_name}} |
+                                        </b></h5>
+                                    </span>
+                                    
+                                </nav>
+                            </div>
+                            <div class="col-sm-6">
+                                <nav class="navbar navbar-expand bg-info navbar-dark ">
+                                    <div id="btn-group btn-group-sm">
+                                        <button type="button" class="btn btn-outline-primary"> <i class="fa fa-play"></i> play</button>
+                                        <button type="button" class="btn btn-outline-primary"> <i class="fa fa-pause"></i> pause</button> 
+                                        <button type="button" class="btn btn-outline-primary"> <i class="fa fa-stop"></i> stop</button>
+                                        <a type="button" class="btn btn-outline-secondary" 
+                                            href="{% url 'delete_intersection' intersection_info.id %}"> 
+                                            <i class="fa fa-trash"></i> 
+                                        </a>
+                                    </div>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div style="width=100%;text-align:center;" >
+                                {% include 'main_app/view_simulation.html'%}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!--div class="col-sm-3" style="background-color:#5cdb95;"-->
+                    <div class="col-sm-3" style="background-color:white;text-align:center;">
+                        <div class="list-group">
+                            <span class="current list-group-item bg-primary" style="text-align:center;">
+                                <b> Intersection Info </b><br>
+                            </span>
+                            {% include 'main_app/view_road.html'%}
+                        </div>  
+                        <hr>
+                    </div>
+
+                </div>
+                <br>
+                <br>
+            </div>
+        </div>
+    <!--********************************************************************************************************-->
+        <div class="footer bg-dark navbar-dark fixed-bottom">
+            <i class="fa fa-github" aria-hidden="true"></i> github
+        </div>
+
+    </body>
+</html>

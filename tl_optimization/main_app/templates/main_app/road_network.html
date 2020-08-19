@@ -54,8 +54,8 @@
                                     <div class="add-button">
                                         <button class="add-network">+ Add New Intersection</button>
                                     </div>
-                                    <div class="col-sm-12">
-                                        <p> Intersections in this Network: </p>
+                                    <div class="col-sm-16">
+                                        <h2> Intersections in {{ network_info.network_name }} </h2>
                                         {% if intersection_list %}
                                             <div class="card-columns">
                                                 {% for intersection in intersection_list %}
@@ -80,7 +80,7 @@
                                                 {% endfor %}  
                                             </div>
                                         {% else %}
-                                            <h2> No Intersections in the network.</h2>
+                                            <p> No Intersections in the network.</p>
                                         {% endif %}
                                         
                                     </div>
@@ -107,11 +107,11 @@
                                                 <input type="submit" value="Submit">
                                             </form>
                                             <hr>
-                                            <div class="upload-dt">
+                                            <!--div class="upload-dt">
                                                     <div>
                                                         <form method = "post" enctype = "multipart/form-data" > <!--action="../data_to_database/uploadFile.py"-->
                                                                 <!--button class="btn">+ Add Traffic Light</button-->
-                                                            <legend>Add Historic Data</legend>
+                                                            <!--legend>Add Historic Data</legend>
                                                             {% csrf_token %}
                                                             <div class="id_tl">
                                                                 <input type = "text" name = "tl_form" value="add-historic-data" />
@@ -122,7 +122,7 @@
                                                             </div>
                                                         </form>
                                                     </div>
-                                            </div>
+                                            </div-->
                                         </div>
                                     </div>
                                 </div>

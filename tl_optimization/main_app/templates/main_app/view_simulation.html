@@ -1,0 +1,22 @@
+
+<b>Roads</b> <br>
+<b>In:</b>
+{% if road_list_in %}
+    {% for road in road_list_in %}
+        {{ road.road_info }} <br>
+    {% endfor %}
+{% else %}
+    { empty } <br>
+{% endif %}
+
+
+<b>Out:</b> 
+{% if road_list_out %}
+    {% for road in road_list_out %}
+        {{ road.road_info }} <br>
+    {% endfor %}
+{% else %}
+    { empty } <br>
+{% endif %}
+<b>Traffic Data</b> <br>
+

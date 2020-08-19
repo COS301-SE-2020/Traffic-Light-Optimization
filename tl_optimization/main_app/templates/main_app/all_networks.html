@@ -53,7 +53,7 @@
                                         <button class="add-network">+ Create New Network</button>
                                     </div>
                                     <div class="col-sm-12">
-                                        <p> Returning all networks in the system </p>
+                                        <h2> Existing networks </h2>
                                         {% if network_list %}
                                             <ul class="list-group" >
                                             {% for network in network_list %}
@@ -68,7 +68,7 @@
                                             {% endfor %}
                                             </ul>
                                         {% else %}
-                                            <h2> No Networks in the System.</h2>
+                                            <p> No Networks in the System.</p>
                                         {% endif %}
 
                                     </div>
