@@ -1,0 +1,6 @@
+<configuration>
+    <input>
+        <net-file value="s_g.net.xml"/>
+        <route-files value="demo.rou.xml"/>
+    </input>
+</configuration>

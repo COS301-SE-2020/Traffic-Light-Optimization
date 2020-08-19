@@ -1,0 +1,8 @@
+<configuration>
+    <input>
+        <net-file value="4way.net.xml"/>
+        <route-files value="4way.rou.xml"/>
+	      <additional-files value="4way.add.xml"/>
+
+    </input>
+</configuration>
