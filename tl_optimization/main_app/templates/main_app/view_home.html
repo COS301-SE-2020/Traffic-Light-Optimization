@@ -44,22 +44,36 @@
                 <div class="row">
                     <!--div class="col-sm-2" style="background-color:#379683;text-align:center;"-->
                     <div class="col-sm-3" style="background-color:white;text-align:center;">
-                        <!--h5> <b> Intersections </b></h5> <br-->
                         {% include 'main_app/view_intersection.html'%}
+                        <hr>
                     </div>
-                    
-                    <div class="col-sm-6" style="background-color:#8ee4af;height: 500px">
-                        <div class="row">
-                            <div class="col-sm-5" >
-                                <h5> <b> {{intersection_info.intersection_name}} </b></h5>
+
+                    <!--div class="col-sm-6" style="background-color:#5cdb95;height: 500px"-->
+                    <div class="col-sm-6" style="background-color:#8ee4af;height: 600px">
+                        <div class="row bg-info">
+                            <div class="col-sm-6" >
+                                <nav class="navbar navbar-expand bg-info navbar-dark ">
+                                    <span class="navbar-text">
+                                        <h5> <b> 
+                                            <span class="badge badge-primary">+</span> 
+                                            {{intersection_info.intersection_name}} |
+                                        </b></h5>
+                                    </span>
+                                    
+                                </nav>
                             </div>
-                            <div class="col-sm-7">
-                                <div id="btn-group btn-group-sm">
-                                    <button type="button" class="btn btn-outline-primary">Simulation</button>
-                                    <button type="button" class="btn btn-outline-primary"> <i class="fa fa-play"></i> play</button>
-                                    <button type="button" class="btn btn-outline-primary"> <i class="fa fa-pause"></i> pause</button> 
-                                    <button type="button" class="btn btn-outline-primary"> <i class="fa fa-stop"></i> stop</button>
-                                </div>
+                            <div class="col-sm-6">
+                                <nav class="navbar navbar-expand bg-info navbar-dark ">
+                                    <div id="btn-group btn-group-sm">
+                                        <button type="button" class="btn btn-outline-primary"> <i class="fa fa-play"></i> play</button>
+                                        <button type="button" class="btn btn-outline-primary"> <i class="fa fa-pause"></i> pause</button> 
+                                        <button type="button" class="btn btn-outline-primary"> <i class="fa fa-stop"></i> stop</button>
+                                        <a type="button" class="btn btn-outline-secondary" 
+                                            href="{% url 'delete_intersection' intersection_info.id %}"> 
+                                            <i class="fa fa-trash"></i> 
+                                        </a>
+                                    </div>
+                                </nav>
                             </div>
                         </div>
                         <div class="row">
@@ -77,7 +91,9 @@
                             </span>
                             {% include 'main_app/view_road.html'%}
                         </div>  
+                        <hr>
                     </div>
+
                 </div>
                 <br>
                 <br>
