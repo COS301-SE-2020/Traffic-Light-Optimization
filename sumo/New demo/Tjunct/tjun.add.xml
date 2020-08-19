@@ -1,0 +1,7 @@
+<additionals>
+
+    <e1Detector id="det_0" lane="-gneE7_0" pos="25" freq="500" file="tjun.out.xml" />
+    <e1Detector id="det_1" lane="-gneE6_0" pos="50" freq="500" file="tjun.out.xml" />
+    <e1Detector id="det_2" lane="-gneE5_0" pos="50" freq="500" file="tjun.out.xml" />
+
+</additionals>
