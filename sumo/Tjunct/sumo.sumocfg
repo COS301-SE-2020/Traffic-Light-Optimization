@@ -1,0 +1,7 @@
+<configuration>
+    <input>
+        <net-file value="tjun.net.xml"/>
+        <route-files value="tjun.rou.xml"/>
+        <additional-files value="tjun.add.xml"/>
+    </input>
+</configuration>
