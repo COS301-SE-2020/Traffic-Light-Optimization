@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on Wed 19 Aug 2020 16:16:13 by Eclipse SUMO GUI Version 1.4.0
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="4way.net.xml"/>
+        <route-files value="4way.rou.xml"/>
+        <additional-files value="4way.add.xml"/>
+    </input>
+
+    <output>
+        <tripinfo-output value="tripinfo.xml"/>
+    </output>
+
+    <traci_server>
+        <remote-port value="54619"/>
+    </traci_server>
+
+</configuration>
+-->
+
+<detector xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/det_e1_file.xsd">
+    <interval begin="0.00" end="65.00" id="det_0" nVehContrib="12" flow="664.62" occupancy="43.43" speed="6.27" harmonicMeanSpeed="5.76" length="5.50" nVehEntered="13"/>
+    <interval begin="0.00" end="65.00" id="det_1" nVehContrib="8" flow="443.08" occupancy="54.80" speed="5.18" harmonicMeanSpeed="1.22" length="5.00" nVehEntered="9"/>
+    <interval begin="0.00" end="65.00" id="det_2" nVehContrib="7" flow="387.69" occupancy="26.42" speed="3.85" harmonicMeanSpeed="2.04" length="5.00" nVehEntered="7"/>
+    <interval begin="0.00" end="65.00" id="det_3" nVehContrib="10" flow="553.85" occupancy="33.01" speed="4.47" harmonicMeanSpeed="2.33" length="5.00" nVehEntered="10"/>
+</detector>
