@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on Wed Aug 19 13:28:38 2020 by Eclipse SUMO duarouter Version 1.4.0
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/duarouterConfiguration.xsd">
+
+    <input>
+        <net-file value="4way.net.xml"/>
+        <route-files value="4way.rou.xml"/>
+    </input>
+
+    <output>
+        <output-file value="4way.rou.xml"/>
+        <alternatives-output value="4way.rou.alt.xml"/>
+    </output>
+
+    <processing>
+        <randomize-flows value="true"/>
+    </processing>
+
+</configuration>
+-->
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <vType id="car" length="5.00" maxSpeed="10.00" vClass="passenger" accel="3.5" decel="2.2" sigma="1.0"/>
+    <vehicle id="carflow_11.0" type="car" depart="-2092415.40">
+        <routeDistribution last="0">
+            <route cost="14.90" probability="1.00000000" edges="-gneE9 gneE11"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_1.0" type="car" depart="-2091793.54">
+        <routeDistribution last="0">
+            <route cost="14.51" probability="1.00000000" edges="-gneE11 gneE9"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_1.1" type="car" depart="-1957159.20">
+        <routeDistribution last="0">
+            <route cost="14.51" probability="1.00000000" edges="-gneE11 gneE9"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_0.0" type="car" depart="-1953028.02">
+        <routeDistribution last="0">
+            <route cost="19.37" probability="1.00000000" edges="-gneE11 gneE10"/>
+        </routeDistribution>
+    </vehicle>
+    <vType id="ev" length="7.00" maxSpeed="20.00" speedFactor="normc(2.00,0.00)" vClass="emergency" guiShape="emergency" minGapLat="0.20" accel="5.5" decel="2.2" sigma="1.0"/>
+    <vehicle id="evflow_11.0" type="ev" depart="-1946611.86">
+        <routeDistribution last="0">
+            <route cost="8.20" probability="1.00000000" edges="-gneE9 gneE11"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="evflow_41.0" type="ev" depart="-1936005.63">
+        <routeDistribution last="0">
+            <route cost="4.82" probability="1.00000000" edges="-gneE12 gneE9"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_0.1" type="car" depart="-1862832.00">
+        <routeDistribution last="0">
+            <route cost="19.37" probability="1.00000000" edges="-gneE11 gneE10"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_10.0" type="car" depart="-1859089.38">
+        <routeDistribution last="0">
+            <route cost="14.07" probability="1.00000000" edges="-gneE9 gneE10"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="evflow_31.0" type="ev" depart="-1852884.60">
+        <routeDistribution last="0">
+            <route cost="7.24" probability="1.00000000" edges="-gneE10 gneE9"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="evflow_32.0" type="ev" depart="-1848633.13">
+        <routeDistribution last="0">
+            <route cost="7.20" probability="1.00000000" edges="-gneE10 gneE12"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_2.0" type="car" depart="-1839926.78">
+        <routeDistribution last="0">
+            <route cost="15.18" probability="1.00000000" edges="-gneE11 gneE12"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_22.0" type="car" depart="-1832500.17">
+        <routeDistribution last="0">
+            <route cost="13.33" probability="1.00000000" edges="-gneE12 gneE11"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_12.0" type="car" depart="-1831147.64">
+        <routeDistribution last="0">
+            <route cost="9.63" probability="1.00000000" edges="-gneE9 gneE12"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_32.0" type="car" depart="-1805760.33">
+        <routeDistribution last="0">
+            <route cost="17.89" probability="1.00000000" edges="-gneE10 gneE11"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_2.1" type="car" depart="-1803592.97">
+        <routeDistribution last="0">
+            <route cost="15.18" probability="1.00000000" edges="-gneE11 gneE12"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_11.1" type="car" depart="-1782340.82">
+        <routeDistribution last="0">
+            <route cost="14.90" probability="1.00000000" edges="-gneE9 gneE11"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_21.0" type="car" depart="-1764836.43">
+        <routeDistribution last="0">
+            <route cost="9.65" probability="1.00000000" edges="-gneE12 gneE9"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_0.2" type="car" depart="-1761130.74">
+        <routeDistribution last="0">
+            <route cost="19.37" probability="1.00000000" edges="-gneE11 gneE10"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_22.1" type="car" depart="-1749397.36">
+        <routeDistribution last="0">
+            <route cost="13.33" probability="1.00000000" edges="-gneE12 gneE11"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_2.2" type="car" depart="-1734193.53">
+        <routeDistribution last="0">
+            <route cost="15.18" probability="1.00000000" edges="-gneE11 gneE12"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_10.1" type="car" depart="-1653067.28">
+        <routeDistribution last="0">
+            <route cost="14.07" probability="1.00000000" edges="-gneE9 gneE10"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_12.1" type="car" depart="-1609628.35">
+        <routeDistribution last="0">
+            <route cost="9.63" probability="1.00000000" edges="-gneE9 gneE12"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_1.2" type="car" depart="-1574205.77">
+        <routeDistribution last="0">
+            <route cost="14.51" probability="1.00000000" edges="-gneE11 gneE9"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_22.2" type="car" depart="-1541365.17">
+        <routeDistribution last="0">
+            <route cost="13.33" probability="1.00000000" edges="-gneE12 gneE11"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="evflow_10.0" type="ev" depart="-1539146.55">
+        <routeDistribution last="0">
+            <route cost="7.04" probability="1.00000000" edges="-gneE9 gneE10"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_30.0" type="car" depart="-1466184.33">
+        <routeDistribution last="0">
+            <route cost="14.40" probability="1.00000000" edges="-gneE10 gneE12"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="evflow_2.0" type="ev" depart="-1452480.92">
+        <routeDistribution last="0">
+            <route cost="8.34" probability="1.00000000" edges="-gneE11 gneE12"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_21.1" type="car" depart="-1446106.97">
+        <routeDistribution last="0">
+            <route cost="9.65" probability="1.00000000" edges="-gneE12 gneE9"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_2.3" type="car" depart="-1425388.94">
+        <routeDistribution last="0">
+            <route cost="15.18" probability="1.00000000" edges="-gneE11 gneE12"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_0.3" type="car" depart="-1404437.55">
+        <routeDistribution last="0">
+            <route cost="19.37" probability="1.00000000" edges="-gneE11 gneE10"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_20.0" type="car" depart="-1394438.84">
+        <routeDistribution last="0">
+            <route cost="16.29" probability="1.00000000" edges="-gneE12 gneE10"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_10.2" type="car" depart="-1380068.94">
+        <routeDistribution last="0">
+            <route cost="14.07" probability="1.00000000" edges="-gneE9 gneE10"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_22.3" type="car" depart="-1370746.90">
+        <routeDistribution last="0">
+            <route cost="13.33" probability="1.00000000" edges="-gneE12 gneE11"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_0.4" type="car" depart="-1358898.84">
+        <routeDistribution last="0">
+            <route cost="19.37" probability="1.00000000" edges="-gneE11 gneE10"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_1.3" type="car" depart="-1352610.68">
+        <routeDistribution last="0">
+            <route cost="14.51" probability="1.00000000" edges="-gneE11 gneE9"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_2.4" type="car" depart="-1324530.46">
+        <routeDistribution last="0">
+            <route cost="15.18" probability="1.00000000" edges="-gneE11 gneE12"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="evflow_1.0" type="ev" depart="-1290713.46">
+        <routeDistribution last="0">
+            <route cost="8.00" probability="1.00000000" edges="-gneE11 gneE9"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_12.2" type="car" depart="-1242326.60">
+        <routeDistribution last="0">
+            <route cost="9.63" probability="1.00000000" edges="-gneE9 gneE12"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_20.1" type="car" depart="-1236017.47">
+        <routeDistribution last="0">
+            <route cost="16.29" probability="1.00000000" edges="-gneE12 gneE10"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_0.5" type="car" depart="-1234831.60">
+        <routeDistribution last="0">
+            <route cost="19.37" probability="1.00000000" edges="-gneE11 gneE10"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_20.2" type="car" depart="-1231470.82">
+        <routeDistribution last="0">
+            <route cost="16.29" probability="1.00000000" edges="-gneE12 gneE10"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_2.5" type="car" depart="-1221661.89">
+        <routeDistribution last="0">
+            <route cost="15.18" probability="1.00000000" edges="-gneE11 gneE12"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_10.3" type="car" depart="-1194534.12">
+        <routeDistribution last="0">
+            <route cost="14.07" probability="1.00000000" edges="-gneE9 gneE10"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_31.0" type="car" depart="-1189094.73">
+        <routeDistribution last="0">
+            <route cost="14.47" probability="1.00000000" edges="-gneE10 gneE9"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="evflow_32.1" type="ev" depart="-1112069.76">
+        <routeDistribution last="0">
+            <route cost="7.20" probability="1.00000000" edges="-gneE10 gneE12"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_0.6" type="car" depart="-1102701.16">
+        <routeDistribution last="0">
+            <route cost="19.37" probability="1.00000000" edges="-gneE11 gneE10"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_0.7" type="car" depart="-1094703.61">
+        <routeDistribution last="0">
+            <route cost="19.37" probability="1.00000000" edges="-gneE11 gneE10"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="evflow_32.2" type="ev" depart="-1075595.00">
+        <routeDistribution last="0">
+            <route cost="7.20" probability="1.00000000" edges="-gneE10 gneE12"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_1.4" type="car" depart="-1011455.77">
+        <routeDistribution last="0">
+            <route cost="14.51" probability="1.00000000" edges="-gneE11 gneE9"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_20.3" type="car" depart="-940593.14">
+        <routeDistribution last="0">
+            <route cost="16.29" probability="1.00000000" edges="-gneE12 gneE10"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_31.1" type="car" depart="-927562.16">
+        <routeDistribution last="0">
+            <route cost="14.47" probability="1.00000000" edges="-gneE10 gneE9"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_32.1" type="car" depart="-903996.72">
+        <routeDistribution last="0">
+            <route cost="17.89" probability="1.00000000" edges="-gneE10 gneE11"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="evflow_31.1" type="ev" depart="-889022.98">
+        <routeDistribution last="0">
+            <route cost="7.24" probability="1.00000000" edges="-gneE10 gneE9"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="evflow_42.0" type="ev" depart="-867772.68">
+        <routeDistribution last="0">
+            <route cost="8.89" probability="1.00000000" edges="-gneE12 gneE10"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_32.2" type="car" depart="-851493.51">
+        <routeDistribution last="0">
+            <route cost="17.89" probability="1.00000000" edges="-gneE10 gneE11"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_2.6" type="car" depart="-808741.26">
+        <routeDistribution last="0">
+            <route cost="15.18" probability="1.00000000" edges="-gneE11 gneE12"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_30.1" type="car" depart="-775888.39">
+        <routeDistribution last="0">
+            <route cost="14.40" probability="1.00000000" edges="-gneE10 gneE12"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="evflow_40.0" type="ev" depart="-768371.28">
+        <routeDistribution last="0">
+            <route cost="6.67" probability="1.00000000" edges="-gneE12 gneE11"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_1.5" type="car" depart="-754592.80">
+        <routeDistribution last="0">
+            <route cost="14.51" probability="1.00000000" edges="-gneE11 gneE9"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_11.2" type="car" depart="-749333.87">
+        <routeDistribution last="0">
+            <route cost="14.90" probability="1.00000000" edges="-gneE9 gneE11"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_31.2" type="car" depart="-671418.45">
+        <routeDistribution last="0">
+            <route cost="14.47" probability="1.00000000" edges="-gneE10 gneE9"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_21.2" type="car" depart="-663626.46">
+        <routeDistribution last="0">
+            <route cost="9.65" probability="1.00000000" edges="-gneE12 gneE9"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_32.3" type="car" depart="-640945.53">
+        <routeDistribution last="0">
+            <route cost="17.89" probability="1.00000000" edges="-gneE10 gneE11"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_30.2" type="car" depart="-638681.31">
+        <routeDistribution last="0">
+            <route cost="14.40" probability="1.00000000" edges="-gneE10 gneE12"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_22.4" type="car" depart="-616067.95">
+        <routeDistribution last="0">
+            <route cost="13.33" probability="1.00000000" edges="-gneE12 gneE11"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_12.3" type="car" depart="-541892.35">
+        <routeDistribution last="0">
+            <route cost="9.63" probability="1.00000000" edges="-gneE9 gneE12"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_11.3" type="car" depart="-534557.65">
+        <routeDistribution last="0">
+            <route cost="14.90" probability="1.00000000" edges="-gneE9 gneE11"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_0.8" type="car" depart="-534363.31">
+        <routeDistribution last="0">
+            <route cost="19.37" probability="1.00000000" edges="-gneE11 gneE10"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_20.4" type="car" depart="-506814.68">
+        <routeDistribution last="0">
+            <route cost="16.29" probability="1.00000000" edges="-gneE12 gneE10"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="evflow_42.1" type="ev" depart="-484434.73">
+        <routeDistribution last="0">
+            <route cost="8.89" probability="1.00000000" edges="-gneE12 gneE10"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_1.6" type="car" depart="-482646.34">
+        <routeDistribution last="0">
+            <route cost="14.51" probability="1.00000000" edges="-gneE11 gneE9"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_0.9" type="car" depart="-468114.00">
+        <routeDistribution last="0">
+            <route cost="19.37" probability="1.00000000" edges="-gneE11 gneE10"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="evflow_42.2" type="ev" depart="-415047.97">
+        <routeDistribution last="0">
+            <route cost="8.89" probability="1.00000000" edges="-gneE12 gneE10"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_21.3" type="car" depart="-410484.70">
+        <routeDistribution last="0">
+            <route cost="9.65" probability="1.00000000" edges="-gneE12 gneE9"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_30.3" type="car" depart="-390201.43">
+        <routeDistribution last="0">
+            <route cost="14.40" probability="1.00000000" edges="-gneE10 gneE12"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="evflow_30.0" type="ev" depart="-352113.82">
+        <routeDistribution last="0">
+            <route cost="8.95" probability="1.00000000" edges="-gneE10 gneE11"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_30.4" type="car" depart="-349486.96">
+        <routeDistribution last="0">
+            <route cost="14.40" probability="1.00000000" edges="-gneE10 gneE12"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_32.4" type="car" depart="-345503.20">
+        <routeDistribution last="0">
+            <route cost="17.89" probability="1.00000000" edges="-gneE10 gneE11"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_12.4" type="car" depart="-322527.54">
+        <routeDistribution last="0">
+            <route cost="9.63" probability="1.00000000" edges="-gneE9 gneE12"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="evflow_22.0" type="ev" depart="-308778.27">
+        <routeDistribution last="0">
+            <route cost="4.82" probability="1.00000000" edges="-gneE9 gneE12"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_2.7" type="car" depart="-278945.78">
+        <routeDistribution last="0">
+            <route cost="15.18" probability="1.00000000" edges="-gneE11 gneE12"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_31.3" type="car" depart="-274138.92">
+        <routeDistribution last="0">
+            <route cost="14.47" probability="1.00000000" edges="-gneE10 gneE9"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_1.7" type="car" depart="-261825.01">
+        <routeDistribution last="0">
+            <route cost="14.51" probability="1.00000000" edges="-gneE11 gneE9"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="evflow_30.1" type="ev" depart="-254667.83">
+        <routeDistribution last="0">
+            <route cost="8.95" probability="1.00000000" edges="-gneE10 gneE11"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="evflow_40.1" type="ev" depart="-237151.82">
+        <routeDistribution last="0">
+            <route cost="6.67" probability="1.00000000" edges="-gneE12 gneE11"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_2.8" type="car" depart="-193681.21">
+        <routeDistribution last="0">
+            <route cost="15.18" probability="1.00000000" edges="-gneE11 gneE12"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_1.8" type="car" depart="-186443.22">
+        <routeDistribution last="0">
+            <route cost="14.51" probability="1.00000000" edges="-gneE11 gneE9"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_2.9" type="car" depart="-172054.30">
+        <routeDistribution last="0">
+            <route cost="15.18" probability="1.00000000" edges="-gneE11 gneE12"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_1.9" type="car" depart="-152287.63">
+        <routeDistribution last="0">
+            <route cost="14.51" probability="1.00000000" edges="-gneE11 gneE9"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="evflow_0.0" type="ev" depart="-122465.67">
+        <routeDistribution last="0">
+            <route cost="10.44" probability="1.00000000" edges="-gneE11 gneE10"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_11.4" type="car" depart="-99545.24">
+        <routeDistribution last="0">
+            <route cost="14.90" probability="1.00000000" edges="-gneE9 gneE11"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_21.4" type="car" depart="-93572.30">
+        <routeDistribution last="0">
+            <route cost="9.65" probability="1.00000000" edges="-gneE12 gneE9"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="evflow_41.1" type="ev" depart="-81793.22">
+        <routeDistribution last="0">
+            <route cost="4.82" probability="1.00000000" edges="-gneE12 gneE9"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_10.4" type="car" depart="-33202.11">
+        <routeDistribution last="0">
+            <route cost="14.07" probability="1.00000000" edges="-gneE9 gneE10"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="carflow_31.4" type="car" depart="-13969.75">
+        <routeDistribution last="0">
+            <route cost="14.47" probability="1.00000000" edges="-gneE10 gneE9"/>
+        </routeDistribution>
+    </vehicle>
+</routes>
