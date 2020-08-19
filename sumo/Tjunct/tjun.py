@@ -34,13 +34,19 @@ def run():
         det_vehs = traci.inductionloop.getLastStepVehicleIDs("det_0")
         det_vehs1 = traci.inductionloop.getLastStepVehicleIDs("det_1")
         det_vehs2 = traci.inductionloop.getLastStepVehicleIDs("det_2")
-        
-        for veh in det_vehs: #number of vihicle
-         traci.vehicle.changeLane(veh, 2, 25)
+
+        #traffic light changing
+        #traci.trafficlight.setRedYellowGreenState("1", "GrGr")
+
+        for veh in det_vehs:
+            print(veh )
+
+            #traci.vehicle.changeLane(veh, 2, 25)
 
         # if step == 100:
         #     traci.vehicle.changeTarget("1", "e9")
         #     traci.vehicle.changeTarget("3", "e9")
+
 
         step += 1
 
