@@ -18,8 +18,15 @@ Alternatively, the raw documentation can be viewed on [Overleaf](https://www.ove
 ### Architecture
 The architectural design document can be found in the [repository](documentation/architecture.jpg).
 
+### Deployment
+The architectural design document can be found in the [repository](documentation/deploy.jpg).
+
+
 ### User Manual
 The user manual can be found in the [repository](documentation/Demo2_UserManual.pdf).
+
+### Technology requirement
+The user manual can be found in the [repository](documentation/tech.pdf).
 
 ### Coding Standards Document
 The coding standards document can be found in the [repository](documentation/Demo2_Coding_Standards.pdf).
