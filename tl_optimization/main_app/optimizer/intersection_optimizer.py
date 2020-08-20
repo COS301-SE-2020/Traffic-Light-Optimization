@@ -74,14 +74,15 @@ def mutate(individual):
    
 
 # Genetic Algorithm .................................................................................
-def traffic_light_optimizer( data=[], road_info=[] ):
+def traffic_light_optimizer( road_info=[] ):
     # Setup data: Intersection information
-    road_info = [
-        {"road_name": "r111" , "capacity": 45 , "rate": 0.6 , "out": "A" ,"direction": "left"} ,
-        {"road_name": "r111" , "capacity": 45 , "rate": 0.2 , "out": "B" ,"direction": "right"} ,
-        {"road_name": "r201" , "capacity": 45 , "rate": 0.3 , "out": "A" ,"direction": "left"} ,
-        {"road_name": "r201" , "capacity": 45 , "rate": 0.3 , "out": "B" ,"direction": "right"}
-    ]
+    if len(road_info) == 0:
+        road_info = [
+            {"road_name": "r111" , "capacity": 45 , "rate": 0.6 , "out": "A" ,"direction": "left"} ,
+            {"road_name": "r111" , "capacity": 45 , "rate": 0.2 , "out": "B" ,"direction": "right"} ,
+            {"road_name": "r201" , "capacity": 45 , "rate": 0.3 , "out": "A" ,"direction": "left"} ,
+            {"road_name": "r201" , "capacity": 45 , "rate": 0.3 , "out": "B" ,"direction": "right"}
+        ]
 
     # setup data
     data = [{'name': 'box1', 'value': 4, 'weight': 12},

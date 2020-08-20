@@ -1,22 +1,33 @@
+{% load static %}
+{% if intersection_info.intersection_name == "hilda-acadia-street" %}
+    <!--div class="embed-responsive embed-responsive-16by9">
+        <iframe class="embed-responsive-item" src="{% static 'images/H_a.mkv' %}" allowfullscreen></iframe>
+    </div-->
+    <video width="700" height="480" controls>
+        <source src="{% static 'images/H_a.mkv' %}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+{%else%}
 
-<b>Roads</b> <br>
-<b>In:</b>
-{% if road_list_in %}
-    {% for road in road_list_in %}
-        {{ road.road_info }} <br>
-    {% endfor %}
-{% else %}
-    { empty } <br>
-{% endif %}
+    <b>Roads</b> <br>
+    <b>In:</b>
+    {% if road_list_in %}
+        {% for road in road_list_in %}
+            {{ road.road_info }} <br>
+        {% endfor %}
+    {% else %}
+        { empty } <br>
+    {% endif %}
 
 
-<b>Out:</b> 
-{% if road_list_out %}
-    {% for road in road_list_out %}
-        {{ road.road_info }} <br>
-    {% endfor %}
-{% else %}
-    { empty } <br>
-{% endif %}
-<b>Traffic Data</b> <br>
+    <b>Out:</b> 
+    {% if road_list_out %}
+        {% for road in road_list_out %}
+            {{ road.road_info }} <br>
+        {% endfor %}
+    {% else %}
+        { empty } <br>
+    {% endif %}
+    <b>Traffic Data</b> <br>
+{%endif%}
 
