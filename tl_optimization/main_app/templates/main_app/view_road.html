@@ -178,10 +178,13 @@
             <!-- Modal body -->
             <div class="modal-body">
                 <h5> Data </h5>
-                {{optimizer.data }}
+                
+                {%for road in optimizer.data%}
+                    {{road }} <br>
+                {%endfor%}
                 <hr>
                 <h5> Results </h5>
-                {{optimizer.results }}
+                {{ optimizer.results }}
             </div>
             
         </div>

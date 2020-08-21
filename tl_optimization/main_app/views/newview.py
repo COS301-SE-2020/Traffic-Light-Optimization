@@ -40,6 +40,7 @@ def home(request, intersection_id ):
         road_entries_for_intersection_out = []
     
     # Prepare the optimizer ------------------------------------------------
+    ''''
     if request.method == 'POST':
         data_file = request.FILES['historic_data']
         graph = forecast_intersection( data_file )
@@ -59,7 +60,7 @@ def home(request, intersection_id ):
         'results': traffic_light_optimizer(),
     }
 
-
+    '''
 
     # Data passed to the User Interface ------------------------------------
     data_input = {
