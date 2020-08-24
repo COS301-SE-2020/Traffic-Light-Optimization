@@ -6,6 +6,7 @@ from datetime import datetime
 # Import other necesary methods ............................
 from .road import Road
 
+
 # 3. Models a single traffic light within an intersection ...........................................................
 class TrafficLight(models.Model):
     road_id = models.ForeignKey(

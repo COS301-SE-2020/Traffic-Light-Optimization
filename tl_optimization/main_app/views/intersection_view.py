@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, get_list_or_404, render
 from django.urls import reverse
 from django.core.paginator import Paginator
+import pandas as pd
 
 # Import optimizer module
 from ..optimizer.time_series_forecast import Time_Series_Forecast
@@ -11,6 +12,7 @@ from ..optimizer.intersection_optimizer import *
 # Views requirements .........
 from ..forms import *
 from ..models import *
+from .road_views import *
 
 def index(request):
     return HttpResponse("Hello, world. You're at the main_app's index.")
@@ -29,22 +31,11 @@ def home(request, intersection_id ):
     road_form = RoadForm()
     # Prepare data for the simulation --------------------------------------
     intersection_info = get_object_or_404( Intersection, pk=intersection_id)
-    if Road.objects.filter(intersection_in=intersection_id).exists():
-        road_entries_for_intersection_in = Road.objects.filter(intersection_in=intersection_id)
-    else:
-        road_entries_for_intersection_in = []
-
-    if Road.objects.filter(intersection_out=intersection_id).exists():
-        road_entries_for_intersection_out = Road.objects.filter(intersection_out=intersection_id)
-    else:
-        road_entries_for_intersection_out = []
+    road_list = read_road( request, intersection_id )
     
     # Prepare the optimizer ------------------------------------------------
     ''''
-    if request.method == 'POST':
-        data_file = request.FILES['historic_data']
-        graph = forecast_intersection( data_file )
-
+    
     data , results = forecast_intersection()
     forecast = {
         'data': data,
@@ -77,9 +68,8 @@ def home(request, intersection_id ):
     }
     return render(request, 'main_app/view_home.html', data_input )
 
-def intersection_View(request):
-    return render(request, 'main_app/view_home.html')
-# .....................................................................................................................
+    
+# Create Intersection ..............................................................................................
 def create_intersection(request):
     if request.method == 'POST':
         #perform required operations
@@ -91,52 +81,46 @@ def create_intersection(request):
             return HttpResponseRedirect(reverse('home', args=(new_intersection.id, ))) 
     return home_(request )
 
-def delete_intersection(request, intersection_id):
+
+# Update OR Delete Intersection ...............................................................................................
+def update_delete_intersection(request, intersection_id):
     intersection = get_object_or_404( Intersection, pk=intersection_id)
+    if request.method == 'POST':
+        return HttpResponseRedirect(reverse('home', args=(intersection.id, ))) 
+    
     intersection.delete()
     return HttpResponseRedirect(reverse('home_')) 
 
 
-# .....................................................................................................................
-def add_road(request, intersection_id):
-    if request.method == 'POST':
-        #perform required operations
-        form_road = RoadForm(request.POST)
-        
-        position = request.POST.get('position')
-        direction = request.POST.get('direction')
-       
-        if direction != None and form_road.is_valid():
-            
-            new_road = form_road.save()
-            if direction == "in":
-                new_road.intersection_in = get_object_or_404( Intersection, pk=intersection_id)
-            else:
-                new_road.intersection_out = get_object_or_404( Intersection, pk=intersection_id)
-            if position != None :
-                new_road.position = position
-            new_road.save()
-            return HttpResponseRedirect(reverse('home', args=(intersection_id, ))) 
-    return HttpResponseRedirect(reverse('home', args=(intersection_id, ))) 
-
-def update_road(request, road_id):
-    if request.method == 'POST':
-        #perform required operations
-        pass
-    return HttpResponseRedirect(reverse('home', args=(network_id, intersection_id ))) 
-
-def delete_road(request, road_id):
-    
-    return HttpResponseRedirect(reverse('home', args=(network_id, intersection_id ))) 
-
-
-# .....................................................................................................................
-
-# 1. Input data
+# Upload historic Data for forecasting future traffic ..............................................................
 def upload_historic_data(request, intersection_id ):
+
+    if request.method == 'POST':
+        data_file = request.FILES['historic_data']
+        # Open data in pandas 
+        df = pd.read_csv(data_file, header=None)
+        headers = df[0]
+
+        # Get roads to validate data 
+        roads = read_road( request, intersection_id )
+        roads_in = roads.roads_in
+        # Validate headers
+        if len(roads_in) > 1 :
+            csv_road_names = headers[1:]
+            count = 0
+            for road in roads_in:
+                if road.road_name in csv_road_names:
+                    count = count + 1
+            if( len(roads_in) == count ):
+                intersection = get_object_or_404( Intersection, pk=intersection_id)
+                intersection.upload_historic_data( data_file )
+                intersection.train_model()
+                optimize_traffic_lights()
+        # Error 
+
     return HttpResponseRedirect(reverse('home', args=(intersection_id, ))) 
    
-# 2. Forecast the uploaded data
+# Forecast the uploaded data .......................................................................................
 def forecast_intersection( ):
     tsf_services = Time_Series_Forecast()
     data = tsf_services.prepare_data()
@@ -145,9 +129,17 @@ def forecast_intersection( ):
     return data , results
 
 
-# 3. Calculate the time for each day
-def optimize_intersection():
+# Calculate the time for each day ...................................................................................
+def optimize_intersection( request , intersection_id):
     return HttpResponseRedirect(reverse('home', args=(intersection_id, ))) 
+
+# Coordinates of the intersection ..................................................................................
+def visualize_intersection(request, intersection_id):
+    return HttpResponseRedirect(reverse('home', args=(intersection_id, )))
+
+# Simulation information for the intersection .......................................................................
+def simulate_intersection(request, intersection_id ):
+    return HttpResponseRedirect(reverse('home', args=(intersection_id, )))
     
 
     

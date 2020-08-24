@@ -52,21 +52,11 @@ class Road(models.Model):
         return self.road_name
 
     def road_info(self):
-        light_info = {}
-        if TrafficLight.objects.filter(road_id=self.id).exists():
-            light = TrafficLight.objects.filter(road_id=self.id)
-            light_info = [ _.light_info() for _ in light ]
-        else:
-            light_info = {
-                "red": 0,
-                "orange": 0,
-                "green": 0
-            }
 
         info = {
             "name": self.road_name ,
             "capaicty": self.road_distance,
             "speed": self.average_speed,
-            "traffic-light": light_info
+            "position": self.position
         }
         return info

@@ -100,6 +100,7 @@ class Intersection(models.Model):
         client.switch_database(network.network_name)
 
         # Query the time series database by default use hourly interval
-        results = client.query('SELECT * FROM "roadTraffic" WHERE time > now() - 4d GROUP BY "brushId"')
+        results = client.query('SELECT * FROM "roadTraffic" ')
+        points = results.get_points(tags={"intersection_name":self.intersection_name})
 
-        return results
+        return points
