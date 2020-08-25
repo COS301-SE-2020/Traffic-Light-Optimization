@@ -115,7 +115,8 @@ def upload_historic_data(request, intersection_id ):
                 intersection = get_object_or_404( Intersection, pk=intersection_id)
                 intersection.upload_historic_data( data_file )
                 intersection.train_model()
-                optimize_traffic_lights()
+                intersection.forecast_traffic()
+                intersection.optimize_traffic_lights()
         # Error 
 
     return HttpResponseRedirect(reverse('home', args=(intersection_id, ))) 

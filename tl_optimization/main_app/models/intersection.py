@@ -104,3 +104,12 @@ class Intersection(models.Model):
         points = results.get_points(tags={"intersection_name":self.intersection_name})
 
         return points
+
+    def train_model(self):
+        tsf_services = Time_Series_Forecast()
+        data = tsf_services.prepare_data()
+        tsf_services.forecast_model()
+
+    def forecast_traffic(self):
+        results = tsf_services.prediction()
+        return results
