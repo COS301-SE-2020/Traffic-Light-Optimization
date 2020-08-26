@@ -30,10 +30,11 @@ def run():
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
         print(step)
-
         det_vehs = traci.inductionloop.getLastStepVehicleIDs("det_0")
         det_vehs1 = traci.inductionloop.getLastStepVehicleIDs("det_1")
         det_vehs2 = traci.inductionloop.getLastStepVehicleIDs("det_2")
+        traci.gui.screenshot("View #0", "images/"+str(step)+".png")
+
         #for veh in det_vehs:
             #print(veh)
             #traci.vehicle.changeLane(veh, 2, 25)
@@ -41,7 +42,6 @@ def run():
         #traci.trafficlight.setRedYellowGreenState('gneJ11','GGggrrrrGGggrrrr')
         #print(traci.inductionloop.getRedYellowGreenState())
 
-        #for i in range(1000):
             #traci.simulationStep()
             #traci.gui.screenshot("View #0", "images/"+str(i)+".png")
             #traci.trafficlight.setRedYellowGreenState('gneJ11','GGggrrrrGGggrrrr')
