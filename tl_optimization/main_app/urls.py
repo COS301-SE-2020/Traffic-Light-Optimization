@@ -19,13 +19,18 @@ urlpatterns = [
     path('', views.upload, name='index'),
     path('simulation/', views.simulation, name='simulation'),
 
-    # New - CRUD Operations
+    # Intersection controllers
     path('intersection/', views.create_intersection, name="create_intersection" ),
-    path('intersection/<int:intersection_id>/', views.delete_intersection, name="delete_intersection" ),
+    path('intersection/<int:intersection_id>/', views.update_delete_intersection, name="update_delete_intersection" ),
+    path('intersection/<int:intersection_id>/upload', views.upload_historic_data, name="upload_historic_data"),
+    path('intersection/<int:intersection_id>/visualization', views.visualize_intersection, name="visualize_intersection"),
+    path('intersection/<int:intersection_id>/simulation', views.simulate_intersection, name="simulate_intersection"),
 
+    # Road controllers 
     path('road/<int:intersection_id>/', views.add_road, name="add_road" ),
-    path('road/<int:road_id>/', views.delete_road, name="delete_road" ),
+    path('road/<int:intersection_id>/<int:road_id>/', views.update_delete_road, name="update_delete_road" ),
     
+
 ]
 
 urlpatterns += staticfiles_urlpatterns()

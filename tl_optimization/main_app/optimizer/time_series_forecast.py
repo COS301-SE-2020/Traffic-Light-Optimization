@@ -65,6 +65,7 @@ class Time_Series_Forecast:
         self.model.compile(optimizer='adam', loss='mse')
         # fit model
         self.model.fit(self.X, self.y, epochs=300, verbose=0)
+        return self.model
 
     def prediction(self):
         # demonstrate prediction
