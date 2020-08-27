@@ -12,14 +12,15 @@ would be archived by the use of AI operations working on time series data.
 
 ## Documentation
 ### Software Requirements Specification
-The PDF SRS documentation for this project can be found in the [repository](documentation/Demo2_SRS.pdf).\
+SRS documentation: [Demo2](documentation/Demo2_SRS.pdf).\
+SRS documentation: [Demo3](documentation/SRS_Demo3.pdf).\
 Alternatively, the raw documentation can be viewed on [Overleaf](https://www.overleaf.com/read/prybbnksrcry).
 
 ### Architecture
 The architectural design document can be found in the [repository](documentation/architecture.jpg).
 
 ### Deployment
-The architectural design document can be found in the [repository](documentation/deploy.jpg).
+The Deployment diagram: [Demo3](documentation/deploymentDiagram.jpg).
 
 
 ### User Manual

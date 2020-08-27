@@ -49,7 +49,7 @@ def read_road(request, intersection_id):
         "roads_in": road_entries_for_intersection_in ,
         "roads_out": road_entries_for_intersection_out
     }
-    HttpResponse( info )
+    return HttpResponse( info )
 
 
 # Delete Road ...............................................................................................................

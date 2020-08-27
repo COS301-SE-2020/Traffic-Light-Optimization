@@ -1,14 +1,17 @@
 {% load static %}
 {% if intersection_info.intersection_name == "hilda-acadia-street" %}
-    <!--div class="embed-responsive embed-responsive-16by9">
-        <iframe class="embed-responsive-item" src="{% static 'images/H_a.mkv' %}" allowfullscreen></iframe>
-    </div-->
     <video width="700" height="480" controls>
-        <source src="{% static 'images/H_a.mkv' %}" type="video/mp4">
-        Your browser does not support the video tag.
+        <source src="{% static 'images/H_a.mkv' %}" type="video/mp4"> Your browser does not support the video tag.
+    </video>
+{%elif intersection_info.intersection_name == "lynwoodroad-universityroad" %}
+    <video width="700" height="480" controls>
+        <source src="{% static 'images/L_u.mkv' %}" type="video/mp4"> Your browser does not support the video tag.
+    </video>
+{%elif intersection_info.intersection_name == "hilder-madiba" %}
+    <video width="700" height="480" controls>
+        <source src="{% static 'images/h_m.mkv' %}" type="video/mp4"> Your browser does not support the video tag.
     </video>
 {%else%}
-
     <b>Roads</b> <br>
     <b>In:</b>
     {% if road_list_in %}

@@ -2,17 +2,22 @@
 # multivariate multi-step encoder-decoder lstm example
 from numpy import array
 from numpy import hstack
+from tensorflow import keras
 from keras.models import Sequential
 from keras.layers import LSTM
 from keras.layers import Dense
 from keras.layers import RepeatVector
 from keras.layers import TimeDistributed
 
+import os
+
 # Preparing Data .................................................................
 # split a multivariate sequence into samples
 class Time_Series_Forecast:
-    def __init__(self, dataset=[], n_steps_in=3, n_steps_out=2 ):
+    def __init__(self, intersection_name="", dataset=[], n_steps_in=3, n_steps_out=2 ):
         super().__init__()
+        self.intersection_name = intersection_name
+        self.model_location = "/trained_models/" + intersection_name 
         self.dataset = dataset
         self.n_steps_in = n_steps_in
         self.n_steps_out = n_steps_out
@@ -51,10 +56,10 @@ class Time_Series_Forecast:
         self.X, self.y = self.split_sequences( self.dataset, self.n_steps_in, self.n_steps_out)
         # the dataset knows the number of features, e.g. 2
         self.n_features = self.X.shape[2]
-        return self.X
+        return self.n_features
 
 
-    # Data Forecasting ...............................................................
+    # Data Forecasting ...........................................................................
     def forecast_model(self):
         # define model
         self.model = Sequential()
@@ -65,12 +70,18 @@ class Time_Series_Forecast:
         self.model.compile(optimizer='adam', loss='mse')
         # fit model
         self.model.fit(self.X, self.y, epochs=300, verbose=0)
+        self.model.save(self.model_location)
         return self.model
 
-    def prediction(self):
-        # demonstrate prediction
+    # demonstrate prediction ......................................................................
+    def prediction(self, input_data=[], n_features=0):
+
         x_input = array([[60, 65, 125], [70, 75, 145], [80, 85, 165]])
-        x_input = x_input.reshape((1, self.n_steps_in, self.n_features))
+        if len(input_data) != 0:
+            x_input = array(input_data)
+            self.model = keras.models.load_model(self.model_location)
+
+        x_input = x_input.reshape((1, self.n_steps_in, n_features))
         yhat = self.model.predict(x_input, verbose=0)
         print(yhat)
         return yhat
@@ -79,7 +90,13 @@ class Time_Series_Forecast:
 
 if __name__ == "__main__":
     
-    tsf_services = Time_Series_Forecast()
+    intersection_name = "mrknowitall"
+    tsf_services = Time_Series_Forecast(intersection_name=intersection_name)
     tsf_services.prepare_data()
     tsf_services.forecast_model()
-    tsf_services.prediction()
+
+    tsf_services = None
+    tsf_services = Time_Series_Forecast(intersection_name=intersection_name)
+    n_features = tsf_services.prepare_data()
+    predict_data = [[60, 65, 125], [70, 75, 145], [80, 85, 165]]
+    tsf_services.prediction( predict_data, n_features )
