@@ -5,15 +5,6 @@
     <e1Detector id="det_2" lane="-gneE12_0" pos="20" freq="500" file="4way.out.xml" />
     <e1Detector id="det_3" lane="-gneE10_0" pos="20" freq="500" file="4way.out.xml" />
 
-    <tlLogic id="gneJ11" programID="my_program" offset="0" type="static">
-   <phase duration="42" state="GGgrrrGGgrrr"/>
-   <phase duration="5"  state="yyggrrrryygg"/>
-   <phase duration="6"  state="rrGGrrrrrrGG"/>
-   <phase duration="5"  state="rryyrrrrrryy"/>
-   <phase duration="42" state="rrrrGGggrrrr"/>
-   <phase duration="5"  state="rrrryyggrrrr"/>
-   <phase duration="6"  state="rrrrrrGGrrrr"/>
-   <phase duration="5"  state="rrrrrryyrryy"/>
- </tlLogic>
+    
 
 </additionals>

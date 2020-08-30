@@ -12,14 +12,14 @@ from ..models import *
 # Create Road .....................................................................................................................
 def add_road(request, intersection_id):
     if request.method == 'POST':
-        #perform required operations
+        # perform required operations
         form_road = RoadForm(request.POST)
         
         position = request.POST.get('position')
         direction = request.POST.get('direction')
        
         if direction != None and form_road.is_valid():
-            
+            print( "Yes: direction != None and form_road.is_valid()" )
             new_road = form_road.save()
             if direction == "in":
                 new_road.intersection_in = get_object_or_404( Intersection, pk=intersection_id)
@@ -28,12 +28,13 @@ def add_road(request, intersection_id):
             if position != None :
                 new_road.position = position
             new_road.save()
+            print( new_road )
             return HttpResponseRedirect(reverse('home', args=(intersection_id, ))) 
 
     return HttpResponseRedirect(reverse('home', args=(intersection_id, ))) 
 
 # Read Road ................................................................................................................
-def read_road(request, intersection_id):
+def read_road( intersection_id):
 
     if Road.objects.filter(intersection_in=intersection_id).exists():
         road_entries_for_intersection_in = Road.objects.filter(intersection_in=intersection_id)
@@ -49,10 +50,10 @@ def read_road(request, intersection_id):
         "roads_in": road_entries_for_intersection_in ,
         "roads_out": road_entries_for_intersection_out
     }
-    return HttpResponse( info )
+    return info.get("roads_in"), info.get("roads_out")
 
 
-# Delete Road ...............................................................................................................
+# Update/Delete Road ...............................................................................................................
 def update_delete_road(request, intersection_id, road_id):
     road = get_object_or_404( Road, pk=road_id)
     if request.method == 'POST':
