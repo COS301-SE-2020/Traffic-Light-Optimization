@@ -12,8 +12,8 @@ from plotly.graph_objs import Bar
 import plotly.express as px
 
 # Import optimizer module ............
-from ..optimizer.time_series_forecast import Time_Series_Forecast
-from ..optimizer.intersection_optimizer import *
+#from ..optimizer.time_series_forecast import Time_Series_Forecast
+#from ..optimizer.intersection_optimizer import *
 
 # Views requirements .................
 from ..forms import *
