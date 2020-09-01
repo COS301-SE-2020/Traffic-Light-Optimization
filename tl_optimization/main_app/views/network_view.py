@@ -251,7 +251,7 @@ def delete_network_controller(request, network_id):
     return HttpResponseRedirect(reverse('all_network')) 
 # Intersection -------------------------------------------------------------------------------------------------
 def update_intersection_controller(request, network_id, intersection_id):
-    return HttpResponseRedirect(reverse('intersection', args=(network_id, intersection.id ))) 
+    return HttpResponseRedirect(reverse('intersection', args=(network_id, intersection_id ))) 
 
 def delete_intersection_controller(request, network_id, intersection_id):
     inter_del = Intersection.objects.get(pk=intersection_id)
@@ -259,9 +259,9 @@ def delete_intersection_controller(request, network_id, intersection_id):
     return HttpResponseRedirect(reverse('road_network', args=(network_id, )))
 # Road -------------------------------------------------------------------------------------------------
 def update_road_controller(request, network_id, intersection_id, road_id):
-    return HttpResponseRedirect(reverse('intersection', args=(network_id, intersection.id )))
+    return HttpResponseRedirect(reverse('intersection', args=(network_id, intersection_id )))
 
 def delete_road_controller(request, network_id, intersection_id, road_id):
     road_del = Intersection.objects.get(pk=road_id)
     road_del.delete()
-    return HttpResponseRedirect(reverse('intersection', args=(network_id, intersection.id )))
+    return HttpResponseRedirect(reverse('intersection', args=(network_id, intersection_id )))

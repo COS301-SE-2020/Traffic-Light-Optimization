@@ -10,6 +10,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -69,7 +70,7 @@
                                         <button type="button" class="btn btn-outline-primary"> <i class="fa fa-pause"></i> pause</button> 
                                         <button type="button" class="btn btn-outline-primary"> <i class="fa fa-stop"></i> stop</button>
                                         <a type="button" class="btn btn-outline-secondary" 
-                                            href="{% url 'delete_intersection' intersection_info.id %}"> 
+                                            href="{% url 'update_delete_intersection' intersection_info.id %}"> 
                                             <i class="fa fa-trash"></i> 
                                         </a>
                                     </div>

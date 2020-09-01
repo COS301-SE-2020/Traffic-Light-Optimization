@@ -25,7 +25,7 @@ class Intersection(models.Model):
     intersection_name = models.CharField( max_length=50, unique=True )
     right_of_way = models.TextField( blank=True )
     configuration = models.TextField( blank=True )
-    forecast_model = models.FileField( upload_to='intersection/forecast_model/' )
+
 
     def get_absolute_url(self):
         return reverse('home', args=(self.id,))
@@ -111,5 +111,6 @@ class Intersection(models.Model):
         tsf_services.forecast_model()
 
     def forecast_traffic(self):
+        tsf_services = Time_Series_Forecast()
         results = tsf_services.prediction()
         return results
