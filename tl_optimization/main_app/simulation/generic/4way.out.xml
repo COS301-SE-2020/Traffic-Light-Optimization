@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 09/03/20 01:13:08 by Eclipse SUMO GUI Version 1.6.0
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="C:\Users\TLOU%20LEBELO\Documents\GitHub\Traffic-Light-Optimization\tl_optimization\main_app\simulation\generic\4way.net.xml"/>
+        <route-files value="C:\Users\TLOU%20LEBELO\Documents\GitHub\Traffic-Light-Optimization\tl_optimization\main_app\simulation\generic\4way.rou.xml"/>
+        <additional-files value="C:\Users\TLOU%20LEBELO\Documents\GitHub\Traffic-Light-Optimization\tl_optimization\main_app\simulation\generic\4way.add.xml"/>
+    </input>
+
+    <output>
+        <tripinfo-output value="C:\Users\TLOU%20LEBELO\Documents\GitHub\Traffic-Light-Optimization\tl_optimization\main_app\simulation\generictripinfo.xml"/>
+    </output>
+
+    <traci_server>
+        <remote-port value="52085"/>
+    </traci_server>
+
+</configuration>
+-->
+
+<detector xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/det_e1_file.xsd">
+    <interval begin="0.00" end="46.00" id="det_0" nVehContrib="6" flow="469.57" occupancy="7.93" speed="8.24" harmonicMeanSpeed="8.22" length="5.00" nVehEntered="6"/>
+    <interval begin="0.00" end="46.00" id="det_1" nVehContrib="6" flow="469.57" occupancy="8.76" speed="8.24" harmonicMeanSpeed="8.20" length="5.00" nVehEntered="7"/>
+    <interval begin="0.00" end="46.00" id="det_2" nVehContrib="8" flow="626.09" occupancy="10.74" speed="8.12" harmonicMeanSpeed="8.10" length="5.00" nVehEntered="8"/>
+    <interval begin="0.00" end="46.00" id="det_3" nVehContrib="9" flow="704.35" occupancy="13.31" speed="7.80" harmonicMeanSpeed="7.35" length="5.00" nVehEntered="9"/>
+</detector>
