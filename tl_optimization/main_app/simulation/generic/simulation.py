@@ -54,6 +54,21 @@ def initiate():
 
     # traci starts sumo as a subprocess and then this script connects and runs
     path = os.getcwd() + "\main_app\simulation\generic"
-    traci.start([sumoBinary, "-c", path+"\sumo.sumocfg", "--tripinfo-output", path+"tripinfo.xml"])
+    traci.start([sumoBinary, "-c", path+"\sumo.sumocfg", "--tripinfo-output", path+"tripinfo.xml", "-S", "-Q"])
+    run()
+
+if __name__ == "__main__":
+    
+    options = get_options()
+
+    # check binary
+    if options.nogui:
+        sumoBinary = checkBinary('sumo')
+    else:
+        sumoBinary = checkBinary('sumo-gui')
+
+    # traci starts sumo as a subprocess and then this script connects and runs
+    path = os.getcwd() + "\main_app\simulation\generic"
+    traci.start([sumoBinary, "-c", path+"\sumo.sumocfg", "--tripinfo-output", path+"tripinfo.xml", "-S", "-Q"])
     run()
 

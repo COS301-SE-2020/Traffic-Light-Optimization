@@ -70,8 +70,8 @@ def visualize_intersection(request):
     intersection_type = ""
     road_information = ""
     traffic_lights = ""
-    simulation = GenerateNetwork(type=intersection_type, roads=road_information, lights=traffic_lights)
-    #simulation.create_network()
+    simulation = GenerateNetwork(type=intersection_type, roads_in=road_information,roads_out=road_information, lights=traffic_lights)
+    simulation.create_network()
 
     # Data for UI 
     data_input = {
