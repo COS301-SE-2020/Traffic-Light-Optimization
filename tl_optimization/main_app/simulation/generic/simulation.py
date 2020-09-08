@@ -32,10 +32,11 @@ def run():
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
         print(step)
-        det_vehs = traci.inductionloop.getLastStepVehicleIDs("det_0")
-        det_vehs1 = traci.inductionloop.getLastStepVehicleIDs("det_1")
-        det_vehs2 = traci.inductionloop.getLastStepVehicleIDs("det_2")
+        #det_vehs = traci.inductionloop.getLastStepVehicleIDs("det_0")
+        #det_vehs1 = traci.inductionloop.getLastStepVehicleIDs("det_1")
+        #det_vehs2 = traci.inductionloop.getLastStepVehicleIDs("det_2")
         traci.gui.screenshot("View #0", path+"\image"+str(step)+".png")
+        #traci.gui.screenshot("View #0", "images/"+str(step)+".png")
         step += 1
 
     traci.close()
@@ -54,11 +55,12 @@ def initiate():
 
     # traci starts sumo as a subprocess and then this script connects and runs
     path = os.getcwd() + "\main_app\simulation\generic"
-    traci.start([sumoBinary, "-c", path+"\sumo.sumocfg", "--tripinfo-output", path+"tripinfo.xml", "-S", "-Q"])
+    traci.start([sumoBinary, "-c", path+"\\sumo.sumocfg", "--tripinfo-output", path+"\\tripinfo.xml", "-S", "-Q"])
+    #traci.start([sumoBinary, "-c", "sumo.sumocfg", "--tripinfo-output", "tripinfo.xml", "-S", "-Q"])
     run()
 
+
 if __name__ == "__main__":
-    
     options = get_options()
 
     # check binary
@@ -68,7 +70,6 @@ if __name__ == "__main__":
         sumoBinary = checkBinary('sumo-gui')
 
     # traci starts sumo as a subprocess and then this script connects and runs
-    path = os.getcwd() + "\main_app\simulation\generic"
-    traci.start([sumoBinary, "-c", path+"\sumo.sumocfg", "--tripinfo-output", path+"tripinfo.xml", "-S", "-Q"])
+    traci.start([sumoBinary, "-c", "sumo.sumocfg", "--tripinfo-output", "tripinfo.xml", "-S", "-Q"])
     run()
 

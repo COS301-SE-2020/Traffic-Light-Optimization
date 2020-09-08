@@ -67,10 +67,16 @@ def visualize_intersection(request):
     # intersection = get_list_or_404( Intersection , pk=intersection_id)
 
     # create visualization/simulation - SUMO
-    intersection_type = ""
-    road_information = ""
-    traffic_lights = ""
-    simulation = GenerateNetwork(type=intersection_type, roads_in=road_information,roads_out=road_information, lights=traffic_lights)
+    intersection_type = "tleft"
+    in_data = [{'name': 'r89', 'capacity': 23, 'speed': 86, 'position': 'A', 'lanes': 1, 'rate':100},
+                {'name': 'r475', 'capacity': 12, 'speed': 32, 'position': 'B', 'lanes': 1, 'rate':100},
+                {'name': 'jack7865', 'capacity': 65, 'speed': 32, 'position': 'C', 'lanes': 1, 'rate':100}]
+
+    out_data = [{'name': 'r505', 'capacity': 24, 'speed': 30, 'position': 'A', 'lanes': 1},
+                {'name': 'wegeg', 'capacity': 32, 'speed': 7, 'position': 'B', 'lanes': 1},
+                {'name': 'u758', 'capacity': 78, 'speed': 45, 'position': 'C', 'lanes': 1}]
+    traffic_lights = []
+    simulation = GenerateNetwork( type=intersection_type, roads_in=in_data, roads_out=out_data, lights=traffic_lights )
     simulation.create_network()
 
     # Data for UI 

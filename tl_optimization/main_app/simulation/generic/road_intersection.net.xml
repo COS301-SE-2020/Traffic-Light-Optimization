@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 09/06/20 02:04:23 by Eclipse SUMO netconvert Version 1.6.0
+<!-- generated on 09/08/20 02:45:37 by Eclipse SUMO netconvert Version 1.6.0
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
 
     <input>
@@ -80,8 +80,8 @@
         <lane id=":C_0_0" index="0" speed="3.65" length="4.67" shape="-1.60,0.00 -0.80,-1.20 0.00,-1.60 0.80,-1.20 1.60,0.00"/>
     </edge>
 
-    <edge id="inA" from="A" to="0" priority="1" length="23.00">
-        <lane id="inA_0" index="0" speed="86.00" length="23.00" shape="-1.60,1000.00 -1.60,507.20">
+    <edge id="inA" from="A" to="0" priority="1" length="23.50">
+        <lane id="inA_0" index="0" speed="86.00" length="23.50" shape="-1.60,1000.00 -1.60,507.20">
             <neigh lane="outA_0"/>
         </lane>
     </edge>
@@ -95,8 +95,8 @@
             <neigh lane="outC_0"/>
         </lane>
     </edge>
-    <edge id="outA" from="0" to="A" priority="1" length="23.00">
-        <lane id="outA_0" index="0" speed="30.00" length="23.00" shape="1.60,507.20 1.60,1000.00">
+    <edge id="outA" from="0" to="A" priority="1" length="23.50">
+        <lane id="outA_0" index="0" speed="30.00" length="23.50" shape="1.60,507.20 1.60,1000.00">
             <neigh lane="inA_0"/>
         </lane>
     </edge>

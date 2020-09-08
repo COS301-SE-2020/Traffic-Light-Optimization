@@ -1,8 +1,11 @@
+import os
 import re
 import lxml.etree
 import lxml.builder
 import subprocess
-#from .simulation import *
+from threading import Thread
+from .simulation import *
+from django.conf import settings
 
 
 
@@ -48,7 +51,11 @@ class GenerateNetwork:
         print("------------------------------------------------------------------------------------------------------------")
 
         # Save XML information to file ......
-        handle1=open('intersection.nod.xml','r+')
+        path = os.getcwd() + '\main_app\simulation\generic'
+        file = path + '\intersection.nod.xml'
+        #file = 'intersection.nod.xml'
+        handle1=open(file,'r+')
+        handle1.truncate(0)
         handle1.write( the_doc )
         handle1.close()
 
@@ -122,7 +129,11 @@ class GenerateNetwork:
         print("------------------------------------------------------------------------------------------------------------")
 
         # Save XML information to file ......
-        handle1=open('roads.edg.xml','r+')
+        path = os.getcwd() + '\main_app\simulation\generic'
+        file = path + '\\roads.edg.xml'
+        #file = 'roads.edg.xml'
+        handle1=open(file,'r+')
+        handle1.truncate(0)
         handle1.write( the_doc )
         handle1.close()
 
@@ -159,7 +170,11 @@ class GenerateNetwork:
         print("------------------------------------------------------------------------------------------------------------")
 
         # Save XML information to file .........
-        handle1=open('traffic.rou.xml','r+')
+        path = os.getcwd() + '\main_app\simulation\generic'
+        file = path + '\\traffic.rou.xml'
+        #file = 'traffic.rou.xml'
+        handle1=open(file,'r+')
+        handle1.truncate(0)
         handle1.write(the_doc )
         handle1.close()
 
@@ -168,9 +183,27 @@ class GenerateNetwork:
         self.intersection_nodes()
         self.road_edges()
         self.cars_particles()
-        #initiate()
-        #subprocess.Popen('python .\simulation.py',shell=True) .......................................................................
+
         
+        # Delete all previous images before adding new once to directory
+        p = settings.MEDIA_ROOT + "\\simulation\\"
+        #p = os.getcwd() +'\\images\\'              # for individual testing
+        for f in os.listdir(p):
+            print(f)
+            if f.endswith('.png'):
+                f = p+f
+                os.remove(f)
+        # Relative path for subprocess ( calling terminal in python)
+        path = os.getcwd() + '\main_app\simulation\generic'
+        nodes = path + '\intersection.nod.xml'
+        edges = path + '\roads.edg.xml'
+        output = path + '\road_intersection.net.xml'
+        netcon = 'netconvert --node-files='+nodes+' --edge-files='+edges+' --opposites.guess.fix-lengths --output-file='+output
+        #netcon = 'netconvert --node-files=intersection.nod.xml --edge-files=roads.edg.xml --opposites.guess.fix-lengths --output-file=road_intersection.net.xml'
+        subprocess.run(netcon,shell=True)
+        Thread(target=initiate).start()
+        
+         
 
 if __name__ == "__main__":
     
@@ -178,19 +211,19 @@ if __name__ == "__main__":
                 {'name': 'r475', 'capacity': 12, 'speed': 32, 'position': 'B', 'lanes': 1, 'rate':100},
                 {'name': 'jack7865', 'capacity': 65, 'speed': 32, 'position': 'C', 'lanes': 1, 'rate':100}]
 
-    out_data = [{'name': 'r505', 'capacity': 0, 'speed': 30, 'position': 'A', 'lanes': 1},
+    out_data = [{'name': 'r505', 'capacity': 24, 'speed': 30, 'position': 'A', 'lanes': 1},
                 {'name': 'wegeg', 'capacity': 32, 'speed': 7, 'position': 'B', 'lanes': 1},
                 {'name': 'u758', 'capacity': 78, 'speed': 45, 'position': 'C', 'lanes': 1}]
 
     simulation = GenerateNetwork( type="tleft", roads_in=in_data, roads_out=out_data  )
     # Create Nodes 
-    simulation.intersection_nodes()
+    #simulation.intersection_nodes()
 
     # Create Edges
-    simulation.road_edges()
+    #simulation.road_edges()
 
     # Create Vehicles
-    simulation.cars_particles()
+    #simulation.cars_particles()
 
     # Create Network
-    #simulation.create_network()
+    simulation.create_network()
