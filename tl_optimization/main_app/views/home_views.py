@@ -33,18 +33,20 @@ def home_(request ):
     return home(request,1)
 
 def home(request, intersection_id ):
-    # Prepare the intersections list --------------------------------------
+    # Different intersections list --------------------------------------
     intersection_list = Intersection.objects.get_queryset().order_by('id')
     paginator = Paginator(intersection_list, 7) # Show 25 contacts per page.
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-
+    # New Intersection form ----------------------------------------------- 
     intersection_form = IntersectionForm()
+    # Update road information --------------------------------------------
+    
     road_form = RoadForm()
     # Prepare data for the simulation --------------------------------------
     intersection_info = get_object_or_404( Intersection, pk=intersection_id)
     roads_in, roads_out = read_road( intersection_id )
-    #print( road_list )
+    
     
     # Data passed to the User Interface ------------------------------------
     data_input = {

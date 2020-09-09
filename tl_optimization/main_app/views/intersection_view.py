@@ -30,6 +30,35 @@ def create_intersection(request):
             new_intersection = form_intersection.save()
             new_intersection.network_id = get_object_or_404( Network, pk=1)
             new_intersection.save()
+
+            # Add default roads to this intersection
+            dist, spd, lan = 20, 10, 1
+            if new_intersection.intersection_type != "T-Up":
+                Road.objects.create( 
+                    intersection_in=new_intersection, road_name="inA",  position="A", road_distance=dist, average_speed=spd, num_lanes=lan ) 
+                Road.objects.create(
+                    intersection_out=new_intersection, road_name="outA", position="A", road_distance=dist, average_speed=spd, num_lanes=lan )
+
+            if new_intersection.intersection_type != "T-Right":   
+                Road.objects.create( 
+                    intersection_in=new_intersection , road_name="inB", position="B", road_distance=dist, average_speed=spd, num_lanes=lan )
+                Road.objects.create( 
+                    intersection_out=new_intersection , road_name="outB", position="B", road_distance=dist, average_speed=spd, num_lanes=lan )
+            
+            if new_intersection.intersection_type != "T-Down":
+                Road.objects.create( 
+                    intersection_in=new_intersection, road_name="inC", position="C", road_distance=dist, average_speed=spd, num_lanes=lan )
+                Road.objects.create( 
+                    intersection_out=new_intersection, road_name="outC", position="C", road_distance=dist, average_speed=spd, num_lanes=lan )
+
+            if new_intersection.intersection_type != "T-Left":
+                Road.objects.create( 
+                    intersection_in=new_intersection, road_name="inD", position="D", road_distance=dist, average_speed=spd, num_lanes=lan )
+                Road.objects.create( 
+                    intersection_out=new_intersection, road_name="outD", position="D", road_distance=dist, average_speed=spd, num_lanes=lan )
+
+            
+
             return HttpResponseRedirect(reverse('home', args=(new_intersection.id, ))) 
     return HttpResponseRedirect(reverse('home_'))
 

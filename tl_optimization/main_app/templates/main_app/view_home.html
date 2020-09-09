@@ -89,6 +89,17 @@
                         <div class="list-group">
                             <span class="current list-group-item bg-primary" style="text-align:center;">
                                 <b> Intersection Info </b><br>
+                                {% if intersection_info.intersection_type == "T-Up" %}
+                                    <img src="{% static 'images/t_up.png' %}" width="220" height="150">
+                                {% elif intersection_info.intersection_type == "T-Down" %}
+                                    <img src="{% static 'images/t_down.png' %}" width="220" height="150">
+                                {% elif intersection_info.intersection_type == "T-Left" %}
+                                    <img src="{% static 'images/t_left.png' %}" width="220" height="150">
+                                {% elif intersection_info.intersection_type == "T-Right" %}
+                                    <img src="{% static 'images/t_right.png' %}" width="220" height="150">
+                                {% else %}
+                                    <img src="{% static 'images/cross_inter.png' %}" width="220" height="150">
+                                {% endif %}
                             </span>
                             {% include 'main_app/view_road.html'%}
                         </div>  

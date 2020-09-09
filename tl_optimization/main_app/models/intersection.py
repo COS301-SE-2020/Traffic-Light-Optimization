@@ -26,6 +26,14 @@ class Intersection(models.Model):
     right_of_way = models.TextField( blank=True )
     configuration = models.TextField( blank=True )
 
+    A, B, C, D, E = 'Cross', 'T-Up','T-Down','T-Left','T-Right'
+    POSITION_CHOICE = [ (A,'Cross'), (B,'T-Up'), (C,'T-Down'), (D,'T-Left'), (E,'T-Right')]
+    intersection_type = models.CharField(
+        max_length=7,
+        choices=POSITION_CHOICE,
+        default=A,
+    )
+
 
     def get_absolute_url(self):
         return reverse('home', args=(self.id,))
