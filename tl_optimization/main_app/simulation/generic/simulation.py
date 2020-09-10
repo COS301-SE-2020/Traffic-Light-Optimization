@@ -42,6 +42,14 @@ def run():
     traci.close()
     sys.stdout.flush()
 
+# Puause the traCi Simulation
+def pause():
+    pass
+
+# Stop the traCi simulation
+def stop():
+    pass 
+
 
 # main entry point
 def initiate():

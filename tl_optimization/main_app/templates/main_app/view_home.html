@@ -66,9 +66,12 @@
                             <div class="col-sm-6">
                                 <nav class="navbar navbar-expand bg-info navbar-dark ">
                                     <div id="btn-group btn-group-sm">
-                                        <button type="button" class="btn btn-outline-primary"> <i class="fa fa-play"></i> play</button>
-                                        <button type="button" class="btn btn-outline-primary"> <i class="fa fa-pause"></i> pause</button> 
-                                        <button type="button" class="btn btn-outline-primary"> <i class="fa fa-stop"></i> stop</button>
+                                        <button type="button" class="btn btn-outline-primary" onclick="play()"> 
+                                            <i class="fa fa-play"></i> play</button>
+                                        <button type="button" class="btn btn-outline-primary" onclick="pause()"> 
+                                            <i class="fa fa-pause"></i> pause</button> 
+                                        <button type="button" class="btn btn-outline-primary" onclick="stop()"> 
+                                            <i class="fa fa-stop"></i> stop</button>
                                         <a type="button" class="btn btn-outline-secondary" 
                                             href="{% url 'update_delete_intersection' intersection_info.id %}"> 
                                             <i class="fa fa-trash"></i> 
@@ -98,7 +101,7 @@
                                 {% elif intersection_info.intersection_type == "T-Right" %}
                                     <img src="{% static 'images/t_right.png' %}" width="220" height="150">
                                 {% else %}
-                                    <img src="{% static 'images/cross_inter.png' %}" width="220" height="150">
+                                    <img src="{% static 'images/cross_inter.png' %}" width="150" height="150">
                                 {% endif %}
                             </span>
                             {% include 'main_app/view_road.html'%}

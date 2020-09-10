@@ -196,8 +196,8 @@ class GenerateNetwork:
         # Relative path for subprocess ( calling terminal in python)
         path = os.getcwd() + '\main_app\simulation\generic'
         nodes = path + '\intersection.nod.xml'
-        edges = path + '\roads.edg.xml'
-        output = path + '\road_intersection.net.xml'
+        edges = path + '\\roads.edg.xml'
+        output = path + '\\road_intersection.net.xml'
         netcon = 'netconvert --node-files='+nodes+' --edge-files='+edges+' --opposites.guess.fix-lengths --output-file='+output
         #netcon = 'netconvert --node-files=intersection.nod.xml --edge-files=roads.edg.xml --opposites.guess.fix-lengths --output-file=road_intersection.net.xml'
         subprocess.run(netcon,shell=True)

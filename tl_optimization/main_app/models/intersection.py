@@ -26,6 +26,11 @@ class Intersection(models.Model):
     right_of_way = models.TextField( blank=True )
     configuration = models.TextField( blank=True )
 
+    intersection_nodes = models.FileField(upload_to='config/intersection/nodes/', null=True, blank=True)
+    roads_edges = models.FileField(upload_to='config/intersection/edges/', null=True, blank=True)
+    vehicles_routes = models.FileField(upload_to='config/intersection/routes/', null=True, blank=True)
+    intersection_network = models.FileField(upload_to='config/intersection/network/', null=True, blank=True)
+
     A, B, C, D, E = 'Cross', 'T-Up','T-Down','T-Left','T-Right'
     POSITION_CHOICE = [ (A,'Cross'), (B,'T-Up'), (C,'T-Down'), (D,'T-Left'), (E,'T-Right')]
     intersection_type = models.CharField(
