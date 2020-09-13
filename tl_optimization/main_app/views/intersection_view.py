@@ -19,7 +19,8 @@ import plotly.express as px
 from ..forms import *
 from ..models import *
 
-
+from .road_views import *
+from ..simulation.generic.generate_network import *
     
 # Create Intersection ..............................................................................................
 def create_intersection(request):
@@ -32,7 +33,7 @@ def create_intersection(request):
             new_intersection.save()
 
             # Add default roads to this intersection
-            dist, spd, lan = 20, 10, 1
+            dist, spd, lan = 80, 10, 1
             if new_intersection.intersection_type != "T-Up":
                 Road.objects.create( 
                     intersection_in=new_intersection, road_name="inA",  position="A", road_distance=dist, average_speed=spd, num_lanes=lan ) 
@@ -57,8 +58,19 @@ def create_intersection(request):
                 Road.objects.create( 
                     intersection_out=new_intersection, road_name="outD", position="D", road_distance=dist, average_speed=spd, num_lanes=lan )
 
-            
-
+            # Create the simulation files from default settings
+            in_ , out_ = read_road( new_intersection.id )
+            in_data = [ r.road_info() for r in in_ ]
+            out_data = [ r.road_info() for r in out_ ]
+            for road in in_data:
+                road.update({'rate':100})
+            traffic_lights = []
+            inter_object = get_object_or_404( Intersection, pk=new_intersection.id)
+            print( inter_object.id )
+            print( "......................" )
+            simulation = GenerateNetwork( intersection_obj=inter_object, roads_in=in_data, roads_out=out_data, lights=traffic_lights )
+            #simulation.create_network()
+            simulation.create_simulation_configurations()
             return HttpResponseRedirect(reverse('home', args=(new_intersection.id, ))) 
     return HttpResponseRedirect(reverse('home_'))
 
@@ -114,6 +126,23 @@ def forecast_intersection( date):
 # Calculate the time for each day ...................................................................................
 def optimize_intersection( request , intersection_id):
     return HttpResponseRedirect(reverse('home', args=(intersection_id, )))
+
+def update_simulation_info( request , intersection_id):
+    # get intersection
+    intersection = get_object_or_404( Intersection, pk=intersection_id)
+
+    # Create the simulation files from updated Road settings
+    in_data, out_data = read_road( intersection.id )
+    in_data = [ r.road_info() for r in in_data ]
+    out_data = [ r.road_info() for r in out_data ]
+    for road in in_data:
+        road.update({'rate':100})
+    traffic_lights = []
+    simulation = GenerateNetwork( intersection_obj=intersection, roads_in=in_data, roads_out=out_data, lights=traffic_lights )
+    #simulation.create_network()
+    simulation.create_simulation_configurations()
+
+    return HttpResponseRedirect(reverse('home', args=( intersection_id, ))) 
 
 
 

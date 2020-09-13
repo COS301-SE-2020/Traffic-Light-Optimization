@@ -45,9 +45,9 @@ class RoadForm(ModelForm):
             #'intersection_in': forms.TextInput(attrs={'class': 'form-control'}),
             #'intersection_out': forms.TextInput(attrs={'class': 'form-control'}),
             'road_name': forms.TextInput(attrs={'class': 'form-control form-control-sm'}),
-            'road_distance': forms.NumberInput(attrs={'class': 'form-control form-control-sm'}),
-            'average_speed': forms.NumberInput(attrs={'class': 'form-control form-control-sm'}),
-            'num_lanes': forms.NumberInput(attrs={'class': 'form-control form-control-sm'}),
+            'road_distance': forms.NumberInput(attrs={'class': 'form-control form-control-sm','min':'20' ,'max':'50'}),
+            'average_speed': forms.NumberInput(attrs={'class': 'form-control form-control-sm','min':'10' ,'max':'120'}),
+            'num_lanes': forms.NumberInput(attrs={'class': 'form-control form-control-sm','min':'0' ,'max':'10'}),
         }
         '''
         intersection_in = customModelChoiceField( 

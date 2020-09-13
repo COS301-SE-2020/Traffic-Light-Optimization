@@ -1,11 +1,12 @@
-{% if intersection_info.id > 19 %}
+{% if intersection_info.id > 100 %}
     <img 
         id="myImg" 
         onload="loadImage()"
-        width="700" 
-        height="500"
+        class="img-fluid"
+       
     >
 {% else %}
+ <!--width="700" height="500" -->
 <b>Roads</b> <br>
     <b>In:</b>
     {% if road_list_in %}

@@ -6,14 +6,18 @@ import subprocess
 from threading import Thread
 from .simulation import *
 from django.conf import settings
+from django.core.files.base import ContentFile
+from django.core.files import File
+
 
 
 
 class GenerateNetwork:
 
-    def __init__(self,type="cross-road", roads_in=[], roads_out=[], lights=[] ):
+    def __init__(self, intersection_obj=None , roads_in=[], roads_out=[], lights=[] ):
         super().__init__()
-        self.type = type
+        self.object =  intersection_obj
+        self.type = intersection_obj.intersection_type
         self.roads_in = roads_in
         self.roads_out = roads_out
         self.lights = lights 
@@ -26,13 +30,13 @@ class GenerateNetwork:
 
         # Create the xml tree based on the type of intersection ....
         arrayOfNodes = []
-        if self.type != "tup":
+        if self.type != "T-Up":
             arrayOfNodes.append( Node(id="A", x="0.0", y="+500.0", type="priority") )
-        if self.type != "tdown":
+        if self.type != "T-Down":
             arrayOfNodes.append( Node(id="C", x="0.0", y="-500.0", type="priority"), )
-        if self.type != "tleft":
+        if self.type != "T-Left":
             arrayOfNodes.append( Node(id="D", x="-500.0", y="0.0", type="priority"), )
-        if self.type != "tright":   
+        if self.type != "T-Right":   
             arrayOfNodes.append( Node(id="B", x="+500.0", y="0.0", type="priority"), )
 
         the_doc = Nodes( Node(id="0", x="0.0", y="0.0", type="traffic_light"), 
@@ -58,6 +62,11 @@ class GenerateNetwork:
         handle1.truncate(0)
         handle1.write( the_doc )
         handle1.close()
+
+        # Write to the file on db
+        filename = "inter_"+ str(self.object.id) + ".nod.xml"
+        self.object.intersection_nodes.delete()
+        self.object.intersection_nodes.save( filename , ContentFile( the_doc ) )
 
 
     # Edges (roads/streets): generate the .edg.xml file .............................................................................
@@ -137,6 +146,11 @@ class GenerateNetwork:
         handle1.write( the_doc )
         handle1.close()
 
+        # Write to the file on db
+        filename = "inter_"+ str(self.object.id) + ".edg.xml"
+        self.object.road_edges.delete()
+        self.object.road_edges.save( filename , ContentFile( the_doc ) )
+
     
     # Vehicles (trips): generate the .rou.xml file ...................................................................................
     def cars_particles(self):
@@ -178,6 +192,11 @@ class GenerateNetwork:
         handle1.write(the_doc )
         handle1.close()
 
+        # Write to the file on db
+        filename = "inter_"+ str(self.object.id) + ".rou.xml"
+        self.object.vehicle_routes.delete()
+        self.object.vehicle_routes.save( filename , ContentFile( the_doc ) )
+
     # Creates the intersection
     def create_network(self):
         self.intersection_nodes()
@@ -193,16 +212,58 @@ class GenerateNetwork:
             if f.endswith('.png'):
                 f = p+f
                 os.remove(f)
+
         # Relative path for subprocess ( calling terminal in python)
         path = os.getcwd() + '\main_app\simulation\generic'
         nodes = path + '\intersection.nod.xml'
+        nodes = self.object.intersection_nodes.url
         edges = path + '\\roads.edg.xml'
+        edges = self.object.road_edges.url
         output = path + '\\road_intersection.net.xml'
         netcon = 'netconvert --node-files='+nodes+' --edge-files='+edges+' --opposites.guess.fix-lengths --output-file='+output
         #netcon = 'netconvert --node-files=intersection.nod.xml --edge-files=roads.edg.xml --opposites.guess.fix-lengths --output-file=road_intersection.net.xml'
         subprocess.run(netcon,shell=True)
-        Thread(target=initiate).start()
-        
+
+        # Write to the file on db
+        the_doc = open(output)
+        filename = "inter_"+ str(self.object.id) + ".net.xml"
+        self.object.intersection_network.delete()
+        self.object.intersection_network.save( filename , File( the_doc ) )
+
+        # Start simulation process
+        #Thread(target=initiate).start()
+
+    def create_simulation_configurations(self):
+
+        # Generating the .net.xml file for simulation
+        self.create_network()
+
+        # Creating configuration file for intersection simulation 
+        E = lxml.builder.ElementMaker()
+        Config = E.configuration
+        Input = E.input
+        Net = E.netfile
+        Rout = E.routefiles
+
+        the_doc = Config( 
+            Input(
+                Net( value=str(self.object.intersection_network.url) ),
+                Rout( value=str(self.object.vehicle_routes.url) ),
+            )
+         )
+
+        the_doc = re.sub('routefiles', 'route-files', lxml.etree.tostring(the_doc, pretty_print=True).decode('utf-8'))
+        the_doc = re.sub('netfile', 'net-file', the_doc)
+
+        # Print the xml information ............
+        print("------------------------------------------------------------------------------------------------------------")
+        print( the_doc )
+        print("------------------------------------------------------------------------------------------------------------")
+
+        # Write to the file on db
+        filename = "inter_"+ str(self.object.id) + ".sumocfg"
+        self.object.intersection_simulation.delete()
+        self.object.intersection_simulation.save( filename , ContentFile( the_doc ) )
          
 
 if __name__ == "__main__":

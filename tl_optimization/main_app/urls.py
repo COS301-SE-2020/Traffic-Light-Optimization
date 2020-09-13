@@ -30,10 +30,12 @@ urlpatterns = [
     # path('intersection/<int:intersection_id>/visualization', views.visualize_intersection, name="visualize_intersection"),
     path('intersection/visualization', views.visualize_intersection, name="visualize_intersection"),
     path('intersection/<int:intersection_id>/simulation', views.simulate_intersection, name="simulate_intersection"),
+    path('intersection/simulation/<int:intersection_id>/', views.update_simulation_info, name="update_simulation" ),
 
     # Road controllers 
     path('road/<int:intersection_id>/', views.add_road, name="add_road" ),
-    path('road/<int:intersection_id>/<int:road_id>/', views.update_delete_road, name="update_delete_road" ),
+    path('intersection/road/<int:intersection_id>/', views.update_delete_road, name="update_delete_road" ),
+
 
     
 ]

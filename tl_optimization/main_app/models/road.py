@@ -55,6 +55,7 @@ class Road(models.Model):
     def road_info(self):
 
         info = {
+            "id": self.id,
             "name": self.road_name ,
             "capacity": self.road_distance,
             "speed": self.average_speed,

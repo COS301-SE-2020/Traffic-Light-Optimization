@@ -38,49 +38,24 @@ def home(request, intersection_id ):
     paginator = Paginator(intersection_list, 7) # Show 25 contacts per page.
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+
     # New Intersection form ----------------------------------------------- 
     intersection_form = IntersectionForm()
-    # Update road information --------------------------------------------
-    
-    road_form = RoadForm()
+
     # Prepare data for the simulation --------------------------------------
     intersection_info = get_object_or_404( Intersection, pk=intersection_id)
     roads_in, roads_out = read_road( intersection_id )
-    
-    roads_in_copy = [ road.road_info() for road in roads_in ]
-    roads_out_copy = [ road.road_info() for road in roads_out ]
-    #print(roads_in_copy)
+    #Thread(target=initiate).start() 
 
-    rate = {'rate':100}
-    for road in roads_in_copy:
-        road.update({'rate':100})
-    print(roads_in_copy)
+    # Update road information --------------------------------------------
+    rforms_in = [ RoadForm(instance=get_object_or_404( Road, pk=r.road_info().get("id"))) for r in roads_in]
+    rforms_out = [ RoadForm(instance=get_object_or_404( Road, pk=r.road_info().get("id"))) for r in roads_out]
+    count = [ v for v in range(len(rforms_out))]
+    road_forms = zip(rforms_in,rforms_out,count)
+    road_form = RoadForm()
+
     # Calling the simulator -------------------------------------------
-    if intersection_info.id > 19 :
-        intersection_type = "tleft"
-        in_data = [{'name': 'r89', 'capacity': 23, 'speed': 86, 'position': 'A', 'lanes': 1, 'rate':100},
-                    {'name': 'r475', 'capacity': 12, 'speed': 32, 'position': 'B', 'lanes': 1, 'rate':100},
-                    {'name': 'jack7865', 'capacity': 65, 'speed': 32, 'position': 'C', 'lanes': 1, 'rate':100}]
 
-        out_data = [{'name': 'r505', 'capacity': 24, 'speed': 30, 'position': 'A', 'lanes': 1},
-                    {'name': 'wegeg', 'capacity': 32, 'speed': 7, 'position': 'B', 'lanes': 1},
-                    {'name': 'u758', 'capacity': 78, 'speed': 45, 'position': 'C', 'lanes': 1}]
-                    
-        intersection_type = "cross"
-        if intersection_info.intersection_type == "T-Up":
-            intersection_type = "tup"
-        if intersection_info.intersection_type == "T-Down":
-            intersection_type = "tdown"
-        if intersection_info.intersection_type == "T-Left":
-            intersection_type = "tleft"
-        if intersection_info.intersection_type == "T-Right":
-            intersection_type = "tright"
-        in_data = roads_in_copy
-        out_data = roads_out_copy
-        
-        traffic_lights = []
-        simulation = GenerateNetwork( type=intersection_type, roads_in=in_data, roads_out=out_data, lights=traffic_lights )
-        simulation.create_network()
     # Data passed to the User Interface ------------------------------------
     data_input = {
         #'current_intersection': intersection_id,
@@ -90,6 +65,7 @@ def home(request, intersection_id ):
         'road_list_in': roads_in,
         'road_list_out': roads_out,
         'road_form': road_form ,
+        'road_forms': road_forms,
     }
     return render(request, 'main_app/view_home.html', data_input )
 
