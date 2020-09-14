@@ -1,0 +1,14 @@
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+  <flow id="A_B" begin="0" end="100" vehsPerHour="100" from="inA" to="outB"/>
+  <flow id="A_C" begin="0" end="100" vehsPerHour="100" from="inA" to="outC"/>
+  <flow id="A_D" begin="0" end="100" vehsPerHour="100" from="inA" to="outD"/>
+  <flow id="B_A" begin="0" end="100" vehsPerHour="100" from="inB" to="outA"/>
+  <flow id="B_C" begin="0" end="100" vehsPerHour="100" from="inB" to="outC"/>
+  <flow id="B_D" begin="0" end="100" vehsPerHour="100" from="inB" to="outD"/>
+  <flow id="C_A" begin="0" end="100" vehsPerHour="100" from="inC" to="outA"/>
+  <flow id="C_B" begin="0" end="100" vehsPerHour="100" from="inC" to="outB"/>
+  <flow id="C_D" begin="0" end="100" vehsPerHour="100" from="inC" to="outD"/>
+  <flow id="D_A" begin="0" end="100" vehsPerHour="100" from="inD" to="outA"/>
+  <flow id="D_B" begin="0" end="100" vehsPerHour="100" from="inD" to="outB"/>
+  <flow id="D_C" begin="0" end="100" vehsPerHour="100" from="inD" to="outC"/>
+</routes>

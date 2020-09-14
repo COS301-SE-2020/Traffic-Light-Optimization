@@ -1,5 +1,13 @@
-
-    <b>Roads</b> <br>
+{% if intersection_info.id > 19 %}
+    <img 
+        id="myImg" 
+        onload="loadImage()"
+        class="img-fluid"
+       
+    >
+{% else %}
+ <!--width="700" height="500" -->
+<b>Roads</b> <br>
     <b>In:</b>
     {% if road_list_in %}
         {% for road in road_list_in %}
@@ -18,6 +26,37 @@
     {% else %}
         { empty } <br>
     {% endif %}
-    <b>Traffic Data</b> <br>
-
-
+{% endif %}
+<script>
+    i = 0;
+    var player;
+    var timer_is_on = 0;
+    function loadImage(){
+        document.getElementById("myImg").src ="{{ MEDIA_URL }}" + "simulation/image"+i.toString()+".png";
+    }
+    function task() {
+        if( i == 100 ){
+            stop()
+        }else{
+            i = i + 1
+            document.getElementById("myImg").src ="{{ MEDIA_URL }}" + "simulation/image"+i.toString()+".png";
+            player = setTimeout(task, 500 );
+        }
+    }
+    function play() {
+        if( !timer_is_on){
+            timer_is_on = 1;
+            task();
+        }
+    }
+    function pause(){
+        clearTimeout(player);
+        timer_is_on = 0;
+    }
+    function stop(){
+        clearTimeout(player);
+        timer_is_on = 0;
+        i = 0;
+        document.getElementById("myImg").src ="{{ MEDIA_URL }}" + "simulation/image"+i.toString()+".png";
+    }
+</script>

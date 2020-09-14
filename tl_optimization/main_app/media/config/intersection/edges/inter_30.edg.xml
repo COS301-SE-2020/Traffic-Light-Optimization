@@ -1,0 +1,22 @@
+<edges xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/edges_file.xsd">
+  <edge id="inA" from="A" to="0" priority="1" numLanes="1" speed="10" length="20">
+    <neigh lane="outA_0"/>
+  </edge>
+  <edge id="outA" from="0" to="A" priority="1" numLanes="1" speed="10" length="20">
+    <neigh lane="inA_0"/>
+  </edge>
+  <edge id="inB" from="B" to="0" priority="1" numLanes="1" speed="10" length="20">
+    <neigh lane="outB_0"/>
+  </edge>
+  <edge id="outB" from="0" to="B" priority="1" numLanes="1" speed="10" length="20">
+    <neigh lane="inB_0"/>
+  </edge>
+  <edge id="inD" from="D" to="0" priority="1" numLanes="1" speed="10" length="20">
+    <neigh lane="outD_0"/>
+  </edge>
+  <edge id="outD" from="0" to="D" priority="1" numLanes="1" speed="10" length="20">
+    <neigh lane="inD_0"/>
+  </edge>
+  <edge id="inA" from="A" to="0" priority="1" numLanes="1" speed="10" length="20"/>
+  <edge id="inA" from="A" to="0" priority="1" numLanes="1" speed="10" length="20"/>
+</edges>

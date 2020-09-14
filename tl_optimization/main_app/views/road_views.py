@@ -11,6 +11,7 @@ from ..models import *
 
 # Create Road .....................................................................................................................
 def add_road(request, intersection_id):
+    print("1. Attempt to add single road")
     if request.method == 'POST':
         # perform required operations
         form_road = RoadForm(request.POST)
@@ -54,14 +55,34 @@ def read_road( intersection_id):
 
 
 # Update/Delete Road ...............................................................................................................
-def update_delete_road(request, intersection_id, road_id):
-    road = get_object_or_404( Road, pk=road_id)
+def update_delete_road(request, intersection_id):
+    
     if request.method == 'POST':
-        form_road = RoadForm(request.POST, instance=road)
-        if form_road.is_valid():
-            form_road.save()
-            return HttpResponseRedirect(reverse('home', args=(intersection_id, )))
+        print("1. [post works]")
+        print( request.POST )
+        count = 0
+        roads_in, roads_out = read_road( intersection_id )
+        for r_in, r_out in zip( roads_in, roads_out ):
+            print( count )
+            if str(count) == str(request.POST.get("position")):
+                #print(request.POST.get("num_lanes"))
+                lanes = request.POST.getlist("num_lanes")
+                distance = request.POST.getlist("road_distance")
+                speed = request.POST.getlist("average_speed")
+
+                r_in.num_lanes = lanes[0]
+                r_in.road_distance = distance[0]
+                r_in.average_speed = speed[0]
+                r_in.save()
+                r_out.num_lanes = lanes[1]
+                r_out.road_distance = distance[1]
+                r_out.average_speed = speed[1]
+                r_out.save()
+                break
+            count += 1
+
+        return HttpResponseRedirect(reverse('update_simulation', args=(intersection_id, )))
+
         # Write appropriate error message ...... 
-        return HttpResponseRedirect(reverse('home', args=(intersection_id, )))
-    road.delete()
+        #return HttpResponseRedirect(reverse('home', args=(intersection_id, )))
     return HttpResponseRedirect(reverse('home', args=( intersection_id, ))) 
