@@ -1,4 +1,5 @@
 <!-- Nav tabs -->
+{% load static %}
 <ul class="nav nav-tabs nav-justified" role="tablist">
     <li class="nav-item">
         <a class="nav-link active" data-toggle="tab" href="#home"> Roads </a>
@@ -13,129 +14,117 @@
 
 <!-- Tab panes -->
 <div class="tab-content">
-    <!-- New Road Tab ****************************************************************************************-->
+    <!-- Update Road Info Tab ****************************************************************************************-->
     <div id="home" class="container tab-pane active"><br>
-        <span class="badge badge-warning"><h7> Add New Road </h7></span><br><br>
-        
-        <form action="{% url 'add_road' intersection_info.id %}" method="post">
-            {% csrf_token %}
-            
-            <span class="badge badge-light">
-                <!-- br> <br ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-                <br>
-                <div class="form-check-inline">
-                    <label class="form-check-label">
-                        Position
-                    </label>
-                </div>
-                <div class="form-check-inline">
-                    <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="position" value="A"> A
-                    </label>
-                </div>
-                <div class="form-check-inline">
-                    <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="position" value="B" > B
-                    </label>
-                </div>
-                <div class="form-check-inline">
-                    <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="position" value="C"> C
-                    </label>
-                </div>
-                <div class="form-check-inline">
-                    <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="position" value="D" > D
-                    </label>
-                </div>
-                <br><br><br>
-                <!-- br> <br +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-                <div class="form-check-inline">
-                    <label class="form-check-label">
-                        Road direction
-                    </label>
-                </div>
-                <div class="form-check-inline">
-                    <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="direction" value="in"> In
-                    </label>
-                </div>
-                <div class="form-check-inline">
-                    <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="direction" value="out" > Out
-                    </label>
-                </div>
-                <br><br>
-            </span>
-            <!-- br> <br ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-            <br> <br>
-            <div class="input-group mb-3 input-group-sm">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"> name </span>
-                </div>
-                {{ road_form.road_name}}
-            </div>
-            <div class="input-group mb-3 input-group-sm">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">Speed</span>
-                </div>
-                {{ road_form.average_speed}}
-                <div class="input-group-append">
-                    <span class="input-group-text">km/h</span>
-                </div>
-            </div>
-            <div class="input-group mb-3 input-group-sm">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">Length</span>
-                </div>
-                {{ road_form.road_distance}}
-                <div class="input-group-append">
-                    <span class="input-group-text">m</span>
-                </div>
-            </div>
-            
-            <br>
-            <button type="submit" class="btn btn-primary btn-primary-sm" style="text-align:left;"> Create </button>
-        </form>
+        <!-- Choose intersection side ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+        <!--<table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th><button type="button" class="btn btn-outline-dark"> A </button></th>
+                    <th><button type="button" class="btn btn-outline-dark"> B </button></th>
+                    <th><button type="button" class="btn btn-outline-dark"> C </button></th>
+                    {% if intersection_info.intersection_type == "Cross" %}
+                    <th><button type="button" class="btn btn-outline-dark"> D </button></th>
+                    {% endif %}
+                </tr>
+            </thead>
+        </table>-->
+        <ul class="nav nav-pills nav-fill" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link btn btn-outline-secondary active" data-toggle="pill" href="#side0">A</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link btn btn-outline-secondary" data-toggle="pill" href="#side1">B</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link btn btn-outline-secondary" data-toggle="pill" href="#side2">C</a>
+            </li>
+            {% if intersection_info.intersection_type == "Cross" %}
+            <li class="nav-item">
+                <a class="nav-link btn btn-outline-secondary" data-toggle="pill" href="#side3">D</a>
+            </li>
+            {% endif %}
+        </ul><br>
+        <div class="tab-content">
+        {% for r_in_form, r_out_form, count in road_forms%}
+        <div id="side{{ count }}" class="container tab-pane {% if count == 0 %} active {%endif%}">
+            <form action="{% url 'update_delete_road' intersection_info.id %}" method="post">
+                {% csrf_token %}
+                <!-- br> <br ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+                
+                <table class="table">
+                    <thead >
+                    <tr>
+                        <th>Road</th><th>in</th><th>out</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Lanes</td>
+                        <td>{{ r_in_form.num_lanes}}</td>
+                        <td>{{ r_out_form.num_lanes}}</td>
+                    </tr>
+                    <tr>
+                        <td>length</td>
+                        <td>{{ r_in_form.road_distance}}</td>
+                        <td>{{ r_out_form.road_distance}}</td>
+                    </tr>
+                    <tr>
+                        <td>speed</td>
+                        <td>{{ r_in_form.average_speed}}</td>
+                        <td>{{ r_out_form.average_speed}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <input type="hidden" id="position{{count}}" name="position" value="{{count}}">
+                <button type="submit" class="btn btn-primary btn-primary-sm" style="text-align:left;"> Update </button>
+            </form>
+        </div>
+        {%endfor%}
+        </div>
     </div>
+
+
     <!-- Traffic manipulation *************************************************************************************-->
     <div id="menu1" class="container tab-pane fade"><br>
-        <span class="badge badge-warning"><h7> Cars Per Second </h7></span><br>
-        <p>The number of cars moving into the intersection  </p>
+        <span class="badge badge-warning"><h7> Cars Per hour </h7></span><br>
+        <p>The number of cars moving into the intersection per hour </p>
         <form action="" method="post">
             {% if road_list_in %}
                 {% for road in road_list_in %}
-                    <label for="{{ road.road_name }}"><b>{{ road.road_name }}</b> [0-2]</label><br>
+                    <label for="{{ road.road_name }}"><b>{{ road.road_name }}</b> [300]</label><br>
                     <input type="range" id="{{ road.road_name }}" name="{{ road.road_name }}" min="0" max="2" step="0.1"><br>
                 {% endfor %}
+                <br>
+                <p><button type="submit" class="btn btn-primary">Update</button></p>
             {% else %}
                 <b> No roads going into intersection </b> <br>
             {% endif %}
-            <br>
-            <p><button type="submit" class="btn btn-primary">Update</button></p>
+            
         </form>
         
     </div>
     <!-- Intersection Optimizer Tab *******************************************************************************-->
     <div id="menu2" class="container tab-pane fade"><br>
-        <span class="badge badge-warning"><h7> 1 - Time Series Data </h7></span> <br><br>
+        <span class="badge badge-dark"><h7> 1 - Time Series Data Forecasting </h7></span> <br><br>
+            <p>Using historic traffic data to predict</p>
             <form action="{% url 'home' intersection_info.id %}" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <input type="file" class="form-control-file border" name="historic_data">
                 </div>
-                <button type="submit" class="btn btn-primary btn-primary-sm" style="text-align:left;"> Upload </button>
+                <div class="btn-group d-flex">
+                    <button type="submit" class="btn btn-primary btn-primary-sm" style="text-align:left;"> Upload </button>
+                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#forecastModal"> View Results </button>
+                </div>
             </form>
 
         <hr>
-        <span class="badge badge-warning"><h7> 2 - Data Forecasting </h7></span><br><br>
-        <p>Using historic traffic data to predict future traffic for this intersection.</p>
-        <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#forecastModal"> View Results </button>
-
-        <hr>
-        <span class="badge badge-warning"><h7> 3 - Traffic Light Optimizer </h7></span><br><br>
+        <span class="badge badge-dark"><h7> 2 - Traffic Light Optimizer </h7></span><br><br>
         <p> Optimizer traffic light timing on predicted traffic.</p>
-        <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#optimizerModal"> View Results </button>
-        
+        <div class="btn-group d-flex">
+            <button type="button" class="btn btn-primary btn-primary-sm" style="text-align:left;"> Optimize </button>
+            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#optimizerModal"> View Results </button>
+        </div>
         
     </div>
 </div>

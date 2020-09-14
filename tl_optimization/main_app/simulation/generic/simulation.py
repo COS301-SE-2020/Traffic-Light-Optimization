@@ -16,6 +16,7 @@ else:
 from sumolib import checkBinary  # Checks for the binary in environ vars
 import traci
 
+
 # Setting options for running SUMO
 def get_options():
     opt_parser = optparse.OptionParser()
@@ -32,18 +33,23 @@ def run():
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
         print(step)
-        det_vehs = traci.inductionloop.getLastStepVehicleIDs("det_0")
-        det_vehs1 = traci.inductionloop.getLastStepVehicleIDs("det_1")
-        det_vehs2 = traci.inductionloop.getLastStepVehicleIDs("det_2")
         traci.gui.screenshot("View #0", path+"\image"+str(step)+".png")
         step += 1
 
     traci.close()
     sys.stdout.flush()
 
+# Puause the traCi Simulation
+def pause():
+    pass
+
+# Stop the traCi simulation
+def stop():
+    traci.close() 
+
 
 # main entry point
-def initiate():
+def initiate( intersection_id ):
     options = get_options()
 
     # check binary
@@ -54,6 +60,27 @@ def initiate():
 
     # traci starts sumo as a subprocess and then this script connects and runs
     path = os.getcwd() + "\main_app\simulation\generic"
-    traci.start([sumoBinary, "-c", path+"\sumo.sumocfg", "--tripinfo-output", path+"tripinfo.xml"])
+    sumocfg = os.getcwd() + "\main_app\media\config\intersection\simulation\inter_"+str(intersection_id)+".sumocfg"
+    tripinfo = os.getcwd() + "\main_app\media\config\intersection\\tripinfo\inter_"+str(intersection_id)+".xml"
+    print(sumocfg)
+    print(tripinfo)
+    traci.start([sumoBinary, "-c", sumocfg , "--tripinfo-output", tripinfo, "-S", "-Q"])
+    #traci.start([sumoBinary, "-c", path+"\\sumo.sumocfg", "--tripinfo-output", path+"\\tripinfo.xml", "-S", "-Q"])
+    #traci.start([sumoBinary, "-c", "sumo.sumocfg", "--tripinfo-output", "tripinfo.xml", "-S", "-Q"])
+    #traci.start([sumoBinary, "-c", str(intersection.intersection_simulation.url), "--tripinfo-output", "tripinfo.xml", "-S", "-Q"])
+    run()
+
+
+if __name__ == "__main__":
+    options = get_options()
+
+    # check binary
+    if options.nogui:
+        sumoBinary = checkBinary('sumo')
+    else:
+        sumoBinary = checkBinary('sumo-gui')
+
+    # traci starts sumo as a subprocess and then this script connects and runs
+    traci.start([sumoBinary, "-c", "sumo.sumocfg", "--tripinfo-output", "tripinfo.xml", "-S", "-Q"])
     run()
 

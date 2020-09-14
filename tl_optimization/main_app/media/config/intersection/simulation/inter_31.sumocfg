@@ -1,0 +1,6 @@
+<configuration>
+  <input>
+    <net-file value="/media/config/intersection/network/inter_31.net.xml"/>
+    <route-files value="/media/config/intersection/routes/inter_31.rou.xml"/>
+  </input>
+</configuration>

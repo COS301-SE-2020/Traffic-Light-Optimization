@@ -32,9 +32,10 @@ class Road(models.Model):
         related_name='%(class)s_out'
     )
 
-    road_name = models.CharField( max_length=50, unique=True)
+    road_name = models.CharField( max_length=50)
     road_distance = models.IntegerField(default=0)
     average_speed = models.IntegerField(default=0)
+    num_lanes = models.IntegerField(default=1)
 
     A, B, C, D = 'A', 'B','C','D'
     POSITION_CHOICE = [ (A,'A'), (B,'B'), (C,'C'), (D,'D'),]
@@ -54,9 +55,11 @@ class Road(models.Model):
     def road_info(self):
 
         info = {
+            "id": self.id,
             "name": self.road_name ,
-            "capaicty": self.road_distance,
+            "capacity": self.road_distance,
             "speed": self.average_speed,
-            "position": self.position
+            "position": self.position,
+            "lanes": self.num_lanes,
         }
         return info
