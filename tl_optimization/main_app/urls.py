@@ -19,7 +19,7 @@ urlpatterns = [
     path('network/<int:network_id>/<int:road_id>/', views.road_controller, name='road'),
     
     path('', views.upload, name='index'),
-    path('simulation/', views.simulation, name='simulation'),
+    path('simulation/', views.simulate_intersection, name='simulation'),
 
     # Intersection controllers
     path('intersection/', views.create_intersection, name="create_intersection" ),

@@ -215,16 +215,21 @@ class GenerateNetwork:
 
         # Relative path for subprocess ( calling terminal in python)
         path = os.getcwd() + '\main_app\simulation\generic'
+        path = os.getcwd() + '\main_app\media\config\intersection'
         nodes = path + '\intersection.nod.xml'
-        nodes = self.object.intersection_nodes.url
+        nodes = '"'+path + '\\nodes\inter_'+ str(self.object.id) + '.nod.xml'+'"'
+        #nodes = self.object.intersection_nodes.url
         edges = path + '\\roads.edg.xml'
-        edges = self.object.road_edges.url
-        output = path + '\\road_intersection.net.xml'
+        edges = '"'+path + '\\edges\inter_'+ str(self.object.id) + '.edg.xml'+'"'
+        #edges = self.object.road_edges.url
+        output = '"'+ os.getcwd() + '\main_app\simulation\generic\\road_intersection.net.xml'+'"'
+        print( nodes )
         netcon = 'netconvert --node-files='+nodes+' --edge-files='+edges+' --opposites.guess.fix-lengths --output-file='+output
         #netcon = 'netconvert --node-files=intersection.nod.xml --edge-files=roads.edg.xml --opposites.guess.fix-lengths --output-file=road_intersection.net.xml'
         subprocess.run(netcon,shell=True)
 
         # Write to the file on db
+        output = os.getcwd() + '\main_app\simulation\generic\\road_intersection.net.xml'
         the_doc = open(output)
         filename = "inter_"+ str(self.object.id) + ".net.xml"
         self.object.intersection_network.delete()
@@ -245,10 +250,14 @@ class GenerateNetwork:
         Net = E.netfile
         Rout = E.routefiles
 
+        path = os.getcwd() + '\main_app\media\config\intersection'
+        network = path + '\\network\inter_'+ str(self.object.id) + '.net.xml'
+        edges = path + '\\routes\inter_'+ str(self.object.id) + '.rou.xml'
+
         the_doc = Config( 
             Input(
-                Net( value=str(self.object.intersection_network.url) ),
-                Rout( value=str(self.object.vehicle_routes.url) ),
+                Net( value=network ),
+                Rout( value=edges ),
             )
          )
 

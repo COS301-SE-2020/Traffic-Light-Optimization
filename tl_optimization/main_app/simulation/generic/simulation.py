@@ -16,6 +16,7 @@ else:
 from sumolib import checkBinary  # Checks for the binary in environ vars
 import traci
 
+
 # Setting options for running SUMO
 def get_options():
     opt_parser = optparse.OptionParser()
@@ -48,7 +49,7 @@ def stop():
 
 
 # main entry point
-def initiate( intersection ):
+def initiate( intersection_id ):
     options = get_options()
 
     # check binary
@@ -59,7 +60,12 @@ def initiate( intersection ):
 
     # traci starts sumo as a subprocess and then this script connects and runs
     path = os.getcwd() + "\main_app\simulation\generic"
-    traci.start([sumoBinary, "-c", path+"\\sumo.sumocfg", "--tripinfo-output", path+"\\tripinfo.xml", "-S", "-Q"])
+    sumocfg = os.getcwd() + "\main_app\media\config\intersection\simulation\inter_"+str(intersection_id)+".sumocfg"
+    tripinfo = os.getcwd() + "\main_app\media\config\intersection\\tripinfo\inter_"+str(intersection_id)+".xml"
+    print(sumocfg)
+    print(tripinfo)
+    traci.start([sumoBinary, "-c", sumocfg , "--tripinfo-output", tripinfo, "-S", "-Q"])
+    #traci.start([sumoBinary, "-c", path+"\\sumo.sumocfg", "--tripinfo-output", path+"\\tripinfo.xml", "-S", "-Q"])
     #traci.start([sumoBinary, "-c", "sumo.sumocfg", "--tripinfo-output", "tripinfo.xml", "-S", "-Q"])
     #traci.start([sumoBinary, "-c", str(intersection.intersection_simulation.url), "--tripinfo-output", "tripinfo.xml", "-S", "-Q"])
     run()

@@ -3,13 +3,15 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, get_list_or_404, render
 from django.urls import reverse
 from django.core.paginator import Paginator
-
+from threading import Thread
 
 # Views requirements .........
 from ..forms import *
 from ..models import *
 from .road_views import *
 
+# Simulation module
+from ..simulation.generic import *
 # Import optimizer module ............
 #from ..optimizer.time_series_forecast import Time_Series_Forecast
 #from ..optimizer.intersection_optimizer import *
@@ -21,6 +23,9 @@ from plotly.offline import plot
 from plotly.graph_objs import Scatter
 from plotly.graph_objs import Bar 
 import plotly.express as px
+
+# Global Variable ..........................
+GLOBAL_stop_threads = True
 
 # Testing response ....................................................
 def index(request):
@@ -45,7 +50,8 @@ def home(request, intersection_id ):
     # Prepare data for the simulation --------------------------------------
     intersection_info = get_object_or_404( Intersection, pk=intersection_id)
     roads_in, roads_out = read_road( intersection_id )
-    #Thread(target=initiate).start() 
+    Simulation = Thread(target=initiate,args=(intersection_id,) )
+    Simulation.start() 
 
     # Update road information --------------------------------------------
     rforms_in = [ RoadForm(instance=get_object_or_404( Road, pk=r.road_info().get("id"))) for r in roads_in]
