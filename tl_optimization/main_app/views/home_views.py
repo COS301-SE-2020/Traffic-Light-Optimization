@@ -34,13 +34,14 @@ def index(request):
 # Home view .............................................................
 def home_(request ):
     intersection_list = Intersection.objects.get_queryset().order_by('id')
-    int_id = intersection_list[0].id
-    return home(request,1)
+    intersection = intersection_list[0]
+    int_id = intersection.id
+    return home(request,int_id)
 
 def home(request, intersection_id ):
     # Different intersections list --------------------------------------
     intersection_list = Intersection.objects.get_queryset().order_by('id')
-    paginator = Paginator(intersection_list, 7) # Show 25 contacts per page.
+    paginator = Paginator(intersection_list, 7) # Show 7 intersections per page.
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 

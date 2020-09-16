@@ -87,16 +87,26 @@
 
     <!-- Traffic manipulation *************************************************************************************-->
     <div id="menu1" class="container tab-pane fade"><br>
-        <span class="badge badge-warning"><h7> Cars Per hour </h7></span><br>
-        <p>The number of cars moving into the intersection per hour </p>
-        <form action="" method="post">
+        <span class="badge badge-warning"><h7> Cars Per Minute </h7></span><br>
+        <p>Number of cars moving in per minute </p>
+        <form action="{% url 'update_road_rate' intersection_info.id %}" method="post">
+            {% csrf_token %}
             {% if road_list_in %}
                 {% for road in road_list_in %}
-                    <label for="{{ road.road_name }}"><b>{{ road.road_name }}</b> [300]</label><br>
-                    <input type="range" id="{{ road.road_name }}" name="{{ road.road_name }}" min="0" max="2" step="0.1"><br>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><b>{{ road.road_name }}</b> [10-300]</span>
+                        </div>
+                        <input type="number" id="{{ road.road_name }}" class="form-control" value="{{road.rate}}" name="{{ road.road_name }}" min="10" max="300" step="5"><br>
+                    </div>
+                    
                 {% endfor %}
                 <br>
-                <p><button type="submit" class="btn btn-primary">Update</button></p>
+                <p></p>
+                <div class="btn-group d-flex">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#forecastModal"> Optimization Results </button>
+                </div>
             {% else %}
                 <b> No roads going into intersection </b> <br>
             {% endif %}
@@ -109,12 +119,13 @@
         <span class="badge badge-dark"><h7> 1 - Time Series Data Forecasting </h7></span> <br><br>
             <p>Using historic traffic data to predict</p>
             <form action="{% url 'home' intersection_info.id %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
                 <div class="form-group">
                     <input type="file" class="form-control-file border" name="historic_data">
                 </div>
                 <div class="btn-group d-flex">
                     <button type="submit" class="btn btn-primary btn-primary-sm" style="text-align:left;"> Upload </button>
-                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#forecastModal"> View Results </button>
+                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#optimizerModal"> View Results </button>
                 </div>
             </form>
 
@@ -122,8 +133,7 @@
         <span class="badge badge-dark"><h7> 2 - Traffic Light Optimizer </h7></span><br><br>
         <p> Optimizer traffic light timing on predicted traffic.</p>
         <div class="btn-group d-flex">
-            <button type="button" class="btn btn-primary btn-primary-sm" style="text-align:left;"> Optimize </button>
-            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#optimizerModal"> View Results </button>
+            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#optimizerModal"> Optimization Results </button>
         </div>
         
     </div>
@@ -174,7 +184,7 @@
                 {%endfor%}
                 -->
                 <hr>
-                <h5> Results </h5>
+                <h2> Graph </h2>
                 <!--
                 {{ optimizer.results }}
                 {% autoescape off %}

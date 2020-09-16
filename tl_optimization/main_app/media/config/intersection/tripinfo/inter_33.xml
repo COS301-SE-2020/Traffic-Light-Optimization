@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 09/14/20 10:58:11 by Eclipse SUMO GUI Version 1.6.0
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="C:\Users\TLOU%20LEBELO\Documents\GitHub\Traffic-Light-Optimization\tl_optimization\main_app\media\config\intersection\network\inter_33.net.xml"/>
+        <route-files value="C:\Users\TLOU%20LEBELO\Documents\GitHub\Traffic-Light-Optimization\tl_optimization\main_app\media\config\intersection\routes\inter_33.rou.xml"/>
+    </input>
+
+    <output>
+        <tripinfo-output value="C:\Users\TLOU%20LEBELO\Documents\GitHub\Traffic-Light-Optimization\tl_optimization\main_app\media\config\intersection\tripinfo\inter_33.xml"/>
+    </output>
+
+    <traci_server>
+        <remote-port value="61142"/>
+    </traci_server>
+
+</configuration>
+-->
+
+<tripinfos xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/tripinfo_file.xsd">
+    <tripinfo id="C_A.0" depart="0.00" departLane="inC_0" departPos="5.10" departSpeed="0.00" departDelay="0.00" arrival="21.00" arrivalLane="outA_0" arrivalPos="80.00" arrivalSpeed="10.22" duration="21.00" routeLength="175.70" waitingTime="0.00" waitingCount="0" stopTime="0.00" timeLoss="3.31" rerouteNo="0" devices="tripinfo_C_A.0 routing_C_A.0" vType="DEFAULT_VEHTYPE" speedFactor="1.03" vaporized=""/>

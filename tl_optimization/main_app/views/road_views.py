@@ -75,7 +75,7 @@ def update_delete_road(request, intersection_id):
                 r_in.average_speed = speed[0]
                 r_in.save()
                 r_out.num_lanes = lanes[1]
-                r_out.road_distance = distance[1]
+                r_out.road_distance = distance[0]
                 r_out.average_speed = speed[1]
                 r_out.save()
                 break
@@ -83,6 +83,15 @@ def update_delete_road(request, intersection_id):
 
         return HttpResponseRedirect(reverse('update_simulation', args=(intersection_id, )))
 
-        # Write appropriate error message ...... 
-        #return HttpResponseRedirect(reverse('home', args=(intersection_id, )))
+    # Write appropriate error message ...... 
+    #return HttpResponseRedirect(reverse('home', args=(intersection_id, )))
+    return HttpResponseRedirect(reverse('home', args=( intersection_id, ))) 
+
+def update_road_rate(request, intersection_id):
+    if request.method == 'POST':
+        roads_in, roads_out = read_road( intersection_id )
+        for road in roads_in:
+            road.rate = request.POST.get(str(road.road_name))
+            road.save()
+        return HttpResponseRedirect(reverse('update_simulation', args=(intersection_id, )))
     return HttpResponseRedirect(reverse('home', args=( intersection_id, ))) 

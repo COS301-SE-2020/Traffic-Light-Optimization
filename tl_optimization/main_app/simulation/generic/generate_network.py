@@ -27,17 +27,38 @@ class GenerateNetwork:
         E = lxml.builder.ElementMaker()
         Nodes = E.nodes
         Node = E.node
-
+        # Setting the nodes position based on the length of the roads ...
+        #y_nodes = [ for r in self.roads_in]
         # Create the xml tree based on the type of intersection ....
         arrayOfNodes = []
         if self.type != "T-Up":
-            arrayOfNodes.append( Node(id="A", x="0.0", y="+500.0", type="priority") )
+            r = {}
+            for rin in self.roads_in:
+                if rin.get("position") == "A":
+                    r = rin
+            y_val = "+" + str(r.get("capacity"))
+            arrayOfNodes.append( Node(id="A", x="0.0", y=y_val, type="priority") )
         if self.type != "T-Down":
-            arrayOfNodes.append( Node(id="C", x="0.0", y="-500.0", type="priority"), )
+            r = {}
+            for rin in self.roads_in:
+                if rin.get("position") == "C":
+                    r = rin
+            y_val = "-" + str(r.get("capacity"))
+            arrayOfNodes.append( Node(id="C", x="0.0", y=y_val, type="priority"), )
         if self.type != "T-Left":
-            arrayOfNodes.append( Node(id="D", x="-500.0", y="0.0", type="priority"), )
+            r = {}
+            for rin in self.roads_in:
+                if rin.get("position") == "D":
+                    r = rin
+            x_val = "-" + str(r.get("capacity"))
+            arrayOfNodes.append( Node(id="D", x=x_val, y="0.0", type="priority"), )
         if self.type != "T-Right":   
-            arrayOfNodes.append( Node(id="B", x="+500.0", y="0.0", type="priority"), )
+            r = {}
+            for rin in self.roads_in:
+                if rin.get("position") == "B":
+                    r = rin
+            x_val = "+" + str(r.get("capacity"))
+            arrayOfNodes.append( Node(id="B", x=x_val, y="0.0", type="priority"), )
 
         the_doc = Nodes( Node(id="0", x="0.0", y="0.0", type="traffic_light"), 
                             xsi="http://www.w3.org/2001/XMLSchema-instance" ,
@@ -163,16 +184,20 @@ class GenerateNetwork:
         for roadin in self.roads_in:
             for roadout in self.roads_out:
                 if roadout.get("position") != roadin.get("position"):
-                    
-                    idVal = str(roadin.get("position")) + "_" + str(roadout.get("position"))
-                    begin_t = "0"
-                    end_t = "100"
-                    cars_hour = str(roadin.get("rate"))
-                    from_ = "in" + str(roadin.get("position"))
-                    to_ = "out" + str(roadout.get("position"))
-                    
-                    edg = Flow(id=idVal, begin=begin_t , end=end_t, vehsPerHour=cars_hour, from_=from_, to=to_ )
-                    the_doc.append( edg )
+                    RATE = roadin.get("rate") / ( int(roadin.get("rate")/60)+1)
+                    for i in range(int(roadin.get("rate")/60) + 1):
+
+                        idVal = str(roadin.get("position")) + "_" + str(roadout.get("position")) + "_"+ str(i)
+                        begin_t = "0"
+                        end_t = "150"
+                        #cars_hour = str(roadin.get("rate"))
+                        cars_hour = str( RATE / (60*(len(self.roads_out)-1)))
+                        from_ = "in" + str(roadin.get("position"))
+                        to_ = "out" + str(roadout.get("position"))
+                        
+                        #edg = Flow(id=idVal, begin=begin_t , end=end_t, vehsPerHour=cars_hour, from_=from_, to=to_ )
+                        edg = Flow(id=idVal, begin=begin_t , end=end_t, probability=cars_hour, from_=from_, to=to_ )
+                        the_doc.append( edg )
 
 
         the_doc = re.sub('xsi', 'xmlns:xsi', lxml.etree.tostring(the_doc, pretty_print=True).decode('utf-8'))
@@ -205,8 +230,8 @@ class GenerateNetwork:
 
         
         # Delete all previous images before adding new once to directory
-        p = settings.MEDIA_ROOT + "\\simulation\\"
         #p = os.getcwd() +'\\images\\'              # for individual testing
+        p = settings.MEDIA_ROOT + "\\simulation\\"
         for f in os.listdir(p):
             print(f)
             if f.endswith('.png'):
@@ -224,7 +249,7 @@ class GenerateNetwork:
         #edges = self.object.road_edges.url
         output = '"'+ os.getcwd() + '\main_app\simulation\generic\\road_intersection.net.xml'+'"'
         print( nodes )
-        netcon = 'netconvert --node-files='+nodes+' --edge-files='+edges+' --opposites.guess.fix-lengths --output-file='+output
+        netcon = 'netconvert --node-files='+nodes+' --edge-files='+edges+' --output-file='+output
         #netcon = 'netconvert --node-files=intersection.nod.xml --edge-files=roads.edg.xml --opposites.guess.fix-lengths --output-file=road_intersection.net.xml'
         subprocess.run(netcon,shell=True)
 
