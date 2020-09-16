@@ -1,9 +1,10 @@
+{% load static %}
 {% if intersection_info.id > 19 %}
     <img 
         id="myImg" 
+        src="{% static 'images/loading.gif' %}"
         onload="loadImage()"
         class="img-fluid"
-       
     >
 {% else %}
  <!--width="700" height="500" -->
@@ -32,14 +33,14 @@
     var player;
     var timer_is_on = 0;
     function loadImage(){
-        document.getElementById("myImg").src ="{{ MEDIA_URL }}" + "simulation/image"+i.toString()+".png";
+        document.getElementById("myImg").src ="{{ MEDIA_URL }}" + "simulation/inter{{intersection_info.id}}/image"+i.toString()+".png";
     }
     function task() {
         if( i == 100 ){
             stop()
         }else{
             i = i + 1
-            document.getElementById("myImg").src ="{{ MEDIA_URL }}" + "simulation/image"+i.toString()+".png";
+            document.getElementById("myImg").src ="{{ MEDIA_URL }}" + "simulation/inter{{intersection_info.id}}/image"+i.toString()+".png";
             player = setTimeout(task, 500 );
         }
     }
@@ -57,6 +58,6 @@
         clearTimeout(player);
         timer_is_on = 0;
         i = 0;
-        document.getElementById("myImg").src ="{{ MEDIA_URL }}" + "simulation/image"+i.toString()+".png";
+        document.getElementById("myImg").src ="{{ MEDIA_URL }}" + "simulation/inter{{intersection_info.id}}/image"+i.toString()+".png";
     }
 </script>

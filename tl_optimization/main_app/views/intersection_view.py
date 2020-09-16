@@ -62,8 +62,8 @@ def create_intersection(request):
             in_ , out_ = read_road( new_intersection.id )
             in_data = [ r.road_info() for r in in_ ]
             out_data = [ r.road_info() for r in out_ ]
-            for road in in_data:
-                road.update({'rate':100})
+            '''for road in in_data:
+                road.update({'rate':100})'''
             traffic_lights = []
             inter_object = get_object_or_404( Intersection, pk=new_intersection.id)
             print( inter_object.id )

@@ -26,17 +26,20 @@ def get_options():
 
 
 # contains TraCI control loop
-def run():
+def run(traci_connection, intersection_id):
     step = 0
-    path = settings.MEDIA_ROOT + "\simulation"
-    
-    while traci.simulation.getMinExpectedNumber() > 0:
-        traci.simulationStep()
+    path = settings.MEDIA_ROOT + "\simulation\inter"+ str(intersection_id)
+    if not os.path.isdir(path):
+        os.mkdir(path)
+
+    traci_connection.gui.setZoom( "View #0", 100 )
+    while traci_connection.simulation.getMinExpectedNumber() > 0:
+        traci_connection.simulationStep()
         print(step)
-        traci.gui.screenshot("View #0", path+"\image"+str(step)+".png")
+        traci_connection.gui.screenshot("View #0", path+"\image"+str(step)+".png", width=1000, height=800)
         step += 1
 
-    traci.close()
+    traci_connection.close()
     sys.stdout.flush()
 
 # Puause the traCi Simulation
@@ -64,11 +67,21 @@ def initiate( intersection_id ):
     tripinfo = os.getcwd() + "\main_app\media\config\intersection\\tripinfo\inter_"+str(intersection_id)+".xml"
     print(sumocfg)
     print(tripinfo)
-    traci.start([sumoBinary, "-c", sumocfg , "--tripinfo-output", tripinfo, "-S", "-Q"])
+    try:
+        traci.start([sumoBinary, "-c", sumocfg , "--tripinfo-output", tripinfo], label=str(intersection_id))
+        traci_connection = traci.getConnection(str(intersection_id))
+        run(traci_connection,intersection_id)
+    except:
+        print("********************************* >> Something went wrong")
+        traci_connection = traci.getConnection(str(intersection_id))
+        traci_connection.close()
+        #traci.start([sumoBinary, "-c", sumocfg , "--tripinfo-output", tripinfo], label=str(intersection_id))
+        #traci_connection = traci.getConnection(str(intersection_id))
+    
+    
     #traci.start([sumoBinary, "-c", path+"\\sumo.sumocfg", "--tripinfo-output", path+"\\tripinfo.xml", "-S", "-Q"])
     #traci.start([sumoBinary, "-c", "sumo.sumocfg", "--tripinfo-output", "tripinfo.xml", "-S", "-Q"])
     #traci.start([sumoBinary, "-c", str(intersection.intersection_simulation.url), "--tripinfo-output", "tripinfo.xml", "-S", "-Q"])
-    run()
 
 
 if __name__ == "__main__":

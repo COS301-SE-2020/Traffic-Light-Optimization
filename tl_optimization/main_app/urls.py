@@ -35,6 +35,7 @@ urlpatterns = [
     # Road controllers 
     path('road/<int:intersection_id>/', views.add_road, name="add_road" ),
     path('intersection/road/<int:intersection_id>/', views.update_delete_road, name="update_delete_road" ),
+    path('intersection/traffic/<int:intersection_id>/', views.update_road_rate, name="update_road_rate" ),
 
 
     
