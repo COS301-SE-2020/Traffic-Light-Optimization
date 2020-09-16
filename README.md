@@ -5,7 +5,7 @@ The aim of this project is to develop a virtual traffic network which can model 
 The main target is to be able to optimize the traffic flow through a well calculated timing of traffic light changing. This 
 would be archived by the use of AI operations working on time series data.
 
-### Team Alpha website •[Home]( http://ec2-18-220-217-86.us-east-2.compute.amazonaws.com)
+### Team Alpha website •[Home]( http://ec2-18-220-217-86.us-east-2.compute.amazonaws.com/home/)
 
 ### Team Alpha
 1. TK Lebelo u15209190@tuks.co.za • [Linkedin](https://www.linkedin.com/in/tlou-lebelo-359a30141/) • [Github.io](https://kgatishi.github.io/)
