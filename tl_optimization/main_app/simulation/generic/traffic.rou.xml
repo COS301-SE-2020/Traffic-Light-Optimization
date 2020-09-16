@@ -1,8 +1,26 @@
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
-  <flow id="A_B" begin="0" end="100" vehsPerHour="100" from="inA" to="outB"/>
-  <flow id="A_C" begin="0" end="100" vehsPerHour="100" from="inA" to="outC"/>
-  <flow id="B_A" begin="0" end="100" vehsPerHour="100" from="inB" to="outA"/>
-  <flow id="B_C" begin="0" end="100" vehsPerHour="100" from="inB" to="outC"/>
-  <flow id="C_A" begin="0" end="100" vehsPerHour="100" from="inC" to="outA"/>
-  <flow id="C_B" begin="0" end="100" vehsPerHour="100" from="inC" to="outB"/>
+  <flow id="A_B_0" begin="0" end="150" probability="0.2777777777777778" from="inA" to="outB"/>
+  <flow id="A_B_1" begin="0" end="150" probability="0.2777777777777778" from="inA" to="outB"/>
+  <flow id="A_C_0" begin="0" end="150" probability="0.2777777777777778" from="inA" to="outC"/>
+  <flow id="A_C_1" begin="0" end="150" probability="0.2777777777777778" from="inA" to="outC"/>
+  <flow id="A_D_0" begin="0" end="150" probability="0.2777777777777778" from="inA" to="outD"/>
+  <flow id="A_D_1" begin="0" end="150" probability="0.2777777777777778" from="inA" to="outD"/>
+  <flow id="B_A_0" begin="0" end="150" probability="0.2777777777777778" from="inB" to="outA"/>
+  <flow id="B_A_1" begin="0" end="150" probability="0.2777777777777778" from="inB" to="outA"/>
+  <flow id="B_C_0" begin="0" end="150" probability="0.2777777777777778" from="inB" to="outC"/>
+  <flow id="B_C_1" begin="0" end="150" probability="0.2777777777777778" from="inB" to="outC"/>
+  <flow id="B_D_0" begin="0" end="150" probability="0.2777777777777778" from="inB" to="outD"/>
+  <flow id="B_D_1" begin="0" end="150" probability="0.2777777777777778" from="inB" to="outD"/>
+  <flow id="C_A_0" begin="0" end="150" probability="0.2777777777777778" from="inC" to="outA"/>
+  <flow id="C_A_1" begin="0" end="150" probability="0.2777777777777778" from="inC" to="outA"/>
+  <flow id="C_B_0" begin="0" end="150" probability="0.2777777777777778" from="inC" to="outB"/>
+  <flow id="C_B_1" begin="0" end="150" probability="0.2777777777777778" from="inC" to="outB"/>
+  <flow id="C_D_0" begin="0" end="150" probability="0.2777777777777778" from="inC" to="outD"/>
+  <flow id="C_D_1" begin="0" end="150" probability="0.2777777777777778" from="inC" to="outD"/>
+  <flow id="D_A_0" begin="0" end="150" probability="0.2777777777777778" from="inD" to="outA"/>
+  <flow id="D_A_1" begin="0" end="150" probability="0.2777777777777778" from="inD" to="outA"/>
+  <flow id="D_B_0" begin="0" end="150" probability="0.2777777777777778" from="inD" to="outB"/>
+  <flow id="D_B_1" begin="0" end="150" probability="0.2777777777777778" from="inD" to="outB"/>
+  <flow id="D_C_0" begin="0" end="150" probability="0.2777777777777778" from="inD" to="outC"/>
+  <flow id="D_C_1" begin="0" end="150" probability="0.2777777777777778" from="inD" to="outC"/>
 </routes>

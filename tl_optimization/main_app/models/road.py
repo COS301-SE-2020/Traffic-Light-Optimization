@@ -36,6 +36,7 @@ class Road(models.Model):
     road_distance = models.IntegerField(default=0)
     average_speed = models.IntegerField(default=0)
     num_lanes = models.IntegerField(default=1)
+    rate = models.IntegerField(default=20)
 
     A, B, C, D = 'A', 'B','C','D'
     POSITION_CHOICE = [ (A,'A'), (B,'B'), (C,'C'), (D,'D'),]
