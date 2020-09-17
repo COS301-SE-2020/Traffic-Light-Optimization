@@ -1,0 +1,8 @@
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+  <flow id="A_C_0" begin="0" end="150" probability="0.25" from="inA" to="outC"/>
+  <flow id="A_D_0" begin="0" end="150" probability="0.25" from="inA" to="outD"/>
+  <flow id="C_A_0" begin="0" end="150" probability="0.4166666666666667" from="inC" to="outA"/>
+  <flow id="C_D_0" begin="0" end="150" probability="0.4166666666666667" from="inC" to="outD"/>
+  <flow id="D_A_0" begin="0" end="150" probability="0.4583333333333333" from="inD" to="outA"/>
+  <flow id="D_C_0" begin="0" end="150" probability="0.4583333333333333" from="inD" to="outC"/>
+</routes>

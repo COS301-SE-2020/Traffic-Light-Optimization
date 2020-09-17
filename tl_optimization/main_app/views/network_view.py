@@ -169,7 +169,7 @@ def intersection_controller(request, network_id, intersection_id):
         )
         form_road.fields['intersection_out'] = customModelChoiceField( 
             intersection_entries_for_network , 
-            empty_label="" , 
+            empty_label="" ,
             required=False,
             widget=forms.Select(attrs={'class':'form-control'})
         )

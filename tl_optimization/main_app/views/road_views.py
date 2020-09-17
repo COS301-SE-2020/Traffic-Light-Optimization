@@ -87,6 +87,7 @@ def update_delete_road(request, intersection_id):
     #return HttpResponseRedirect(reverse('home', args=(intersection_id, )))
     return HttpResponseRedirect(reverse('home', args=( intersection_id, ))) 
 
+# Update the cars per minute rate ...............................................................................................
 def update_road_rate(request, intersection_id):
     if request.method == 'POST':
         roads_in, roads_out = read_road( intersection_id )

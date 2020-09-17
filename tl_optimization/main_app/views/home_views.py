@@ -19,10 +19,11 @@ from ..simulation.generic.generate_network import *
 
 # External libraries .................
 import pandas as pd
-from plotly.offline import plot
-from plotly.graph_objs import Scatter
-from plotly.graph_objs import Bar 
 import plotly.express as px
+import plotly.offline as opy
+import plotly.graph_objs as go
+import random
+import json
 
 # Global Variable ..........................
 GLOBAL_stop_threads = True
@@ -61,9 +62,51 @@ def home(request, intersection_id ):
     road_forms = zip(rforms_in,rforms_out,count)
     road_form = RoadForm()
 
-    # Calling the simulator -------------------------------------------
+    # Data graphing For Forecasting -------------------------------------------
+    x = [i for i in range(24)]
+    y1 = [ random.randint(150, 400) for i in x]
+    trace1 = go.Scatter(x=x, y=y1,  mode="lines",  name='Road A', line={'color': 'red', 'width': 1})
+    y2 = [ random.randint(150, 400) for i in x]
+    trace2 = go.Scatter(x=x, y=y2,  mode="lines",  name='Road B', line={'color': 'blue', 'width': 1})
+    y3 = [ random.randint(150, 400) for i in x]
+    trace3 = go.Scatter(x=x, y=y3,  mode="lines",  name='Road C', line={'color': 'green', 'width': 1})
+    y4 = [ random.randint(150, 400) for i in x]
+    trace4 = go.Scatter(x=x, y=y4,  mode="lines",  name='Road D', line={'color': 'yellow', 'width': 1})
+    data= [trace1,trace2,trace3,trace4]
+    layout= go.Layout( xaxis={'title':'Time (Hour)'}, yaxis={'title':'No. of Cars'})
+    figure= go.Figure(data=data,layout=layout)
+    forecast_div = opy.plot(figure, output_type='div', include_plotlyjs=False , show_link=False, link_text="")
 
-    # Data passed to the User Interface ------------------------------------
+    # Data graphing for Traffic light optimization ---------------------------
+    
+    roadA = [ json.dumps({'Red':random.randint(4, 25), 'Yellow':4 ,'Green':random.randint(4, 15)}) for r in range(24)]
+    roadB = [ json.dumps({'Red':random.randint(4, 25), 'Yellow':4 ,'Green':random.randint(4, 15)}) for r in range(24)]
+    roadC = [ json.dumps({'Red':random.randint(4, 25), 'Yellow':4 ,'Green':random.randint(4, 15)}) for r in range(24)]
+    roadD = [ json.dumps({'Red':random.randint(4, 25), 'Yellow':4 ,'Green':random.randint(4, 15)}) for r in range(24)]
+    lights_table = go.Table(
+                columnwidth = [80,250],
+                header=dict(values=[["Time"],["RoadA"],["RoadB"],["RoadC"],["RoadD"]]), 
+                cells=dict(values=[x,roadA,roadB,roadC,roadD]))
+                #cells=dict(values=[[100, 90 ,80, 90], [95, 85, 75, 95]]))
+
+    data = [lights_table]
+    figure= go.Figure(data=data)
+    optimization_div = opy.plot(figure, output_type='div', include_plotlyjs=False , show_link=False, link_text="")
+
+    roadA, roadB, roadC, roadD = [],[],[],[]
+    roadA.append( json.dumps({'Red':random.randint(4, 25), 'Yellow':4 ,'Green':random.randint(4, 15)}) )
+    roadB.append( json.dumps({'Red':random.randint(4, 25), 'Yellow':4 ,'Green':random.randint(4, 15)}) )
+    roadC.append( json.dumps({'Red':random.randint(4, 25), 'Yellow':4 ,'Green':random.randint(4, 15)}) )
+    roadD.append( json.dumps({'Red':random.randint(4, 25), 'Yellow':4 ,'Green':random.randint(4, 15)}) )
+    lights = go.Table(
+                columnwidth = [80,250],
+                header=dict(values=[["Time"],["RoadA"],["RoadB"],["RoadC"],["RoadD"]]), 
+                cells=dict(values=[["current"],roadA,roadB,roadC,roadD]))
+    data = [lights]
+    figure= go.Figure(data=data)
+    optimer_div = opy.plot(figure, output_type='div', include_plotlyjs=False , show_link=False, link_text="")
+
+    # Data passed to the User Interface --------------------------------------
     data_input = {
         #'current_intersection': intersection_id,
         'page_obj': page_obj ,
@@ -73,6 +116,9 @@ def home(request, intersection_id ):
         'road_list_out': roads_out,
         'road_form': road_form ,
         'road_forms': road_forms,
+        'forecast_div': forecast_div,
+        'optimization_div': optimization_div,
+        'optimer_div': optimer_div,
     }
     return render(request, 'main_app/view_home.html', data_input )
 
