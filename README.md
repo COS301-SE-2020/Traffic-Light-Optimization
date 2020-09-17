@@ -5,6 +5,8 @@ The aim of this project is to develop a virtual traffic network which can model 
 The main target is to be able to optimize the traffic flow through a well calculated timing of traffic light changing. This 
 would be archived by the use of AI operations working on time series data.
 
+### Team Alpha website •[Home]( http://ec2-18-220-217-86.us-east-2.compute.amazonaws.com/home/)
+
 ### Team Alpha
 1. TK Lebelo u15209190@tuks.co.za • [Linkedin](https://www.linkedin.com/in/tlou-lebelo-359a30141/) • [Github.io](https://kgatishi.github.io/)
 2. R Rammbuda u16207948@tuks.co.za • [Linkedin](http://www.linkedin.com/in/rammbuda-rilwele-842b11127) • [Github.io](https://u16207948.github.io/index.html)
@@ -39,4 +41,5 @@ For this project we are using [Clubhouse](https://app.clubhouse.io/cos-301-alpha
 ## Demo Videos
 Demo 1: https://drive.google.com/file/d/1F8qVx4_bfQVT08R4-TQUvBwW8aZFH4bK/view?usp=sharing \
 Demo 2: https://drive.google.com/file/d/14pRw9N3YMTnpxqOg1PZLMJw0H0ablBns/view?usp=sharing \
-Demo 3: https://drive.google.com/file/d/1ZhAESwHBxH_WxgEx2dzWjjrhdGOF95tI/view?usp=sharing
+Demo 3: https://drive.google.com/file/d/1ZhAESwHBxH_WxgEx2dzWjjrhdGOF95tI/view?usp=sharing \
+Demo 4: https://drive.google.com/file/d/18DtGNHILNuduRt0PF0SaL88U2kcc4io_/view?usp=sharing
