@@ -105,7 +105,7 @@
                 <p></p>
                 <div class="btn-group d-flex">
                     <button type="submit" class="btn btn-primary">Update</button>
-                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#forecastModal"> Optimization Results </button>
+                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#optimerModal"> Optimization Results </button>
                 </div>
             {% else %}
                 <b> No roads going into intersection </b> <br>
@@ -125,7 +125,7 @@
                 </div>
                 <div class="btn-group d-flex">
                     <button type="submit" class="btn btn-primary btn-primary-sm" style="text-align:left;"> Upload </button>
-                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#optimizerModal"> View Results </button>
+                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#forecastModal"> View Results </button>
                 </div>
             </form>
 
@@ -141,7 +141,7 @@
 
 <!-- The Modal  for Data forecasting -->
 <div class="modal fade" id="forecastModal">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
       
             <!-- Modal Header -->
@@ -152,11 +152,13 @@
             
             <!-- Modal body -->
             <div class="modal-body">
-                <h5> Data </h5>
+                
+                <!--<h5> Graphed Results </h5> -->
                 <!--{{forecast.data }}  -->
-                <hr>
-                <h5> Results </h5>
                 <!--{{forecast.results }}  -->
+                {% autoescape off %}
+                {{ forecast_div }}
+                {% endautoescape %}
             </div>
 
         </div>
@@ -176,23 +178,47 @@
             
             <!-- Modal body -->
             <div class="modal-body">
-                <h5> Data </h5>
                 
-                <!--
-                    {%for road in optimizer.data%}
+                <!--<h5> Data </h5>
+                {%for road in optimizer.data%}
                     {{road }} <br>
-                {%endfor%}
-                -->
-                <hr>
-                <h2> Graph </h2>
-                <!--
-                {{ optimizer.results }}
+                {%endfor%}-->
+
+                <h2> Graph Data </h2>
+    
+                <!--{{ optimizer.results }}-->
                 {% autoescape off %}
-                {{ plot_div }}
+                {{ optimization_div }}
                 {% endautoescape %}
-                -->
+            
             </div>
             
+        </div>
+    </div>
+</div>
+
+<!-- The Modal  for Data forecasting -->
+<div class="modal fade" id="optimerModal">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+      
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title"> Forecast Traffic Data </h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            
+            <!-- Modal body -->
+            <div class="modal-body">
+                
+                <!--<h5> Graphed Results </h5> -->
+                <!--{{forecast.data }}  -->
+                <!--{{forecast.results }}  -->
+                {% autoescape off %}
+                {{ optimer_div }}
+                {% endautoescape %}
+            </div>
+
         </div>
     </div>
 </div>

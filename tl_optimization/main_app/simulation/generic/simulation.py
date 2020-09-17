@@ -68,13 +68,14 @@ def initiate( intersection_id ):
     print(sumocfg)
     print(tripinfo)
     try:
-        traci.start([sumoBinary, "-c", sumocfg , "--tripinfo-output", tripinfo], label=str(intersection_id))
+        traci.start([sumoBinary, "-c", sumocfg , "--tripinfo-output", tripinfo, "-S", "-Q"], label=str(intersection_id))
         traci_connection = traci.getConnection(str(intersection_id))
         run(traci_connection,intersection_id)
     except:
         print("********************************* >> Something went wrong")
         traci_connection = traci.getConnection(str(intersection_id))
         traci_connection.close()
+        sys.stdout.flush()
         #traci.start([sumoBinary, "-c", sumocfg , "--tripinfo-output", tripinfo], label=str(intersection_id))
         #traci_connection = traci.getConnection(str(intersection_id))
     
