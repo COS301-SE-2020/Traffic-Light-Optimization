@@ -4,6 +4,7 @@ import os
 import sys
 import optparse
 from django.conf import settings
+import threading
 
 # we need to import some python modules from the $SUMO_HOME/tools directory
 if 'SUMO_HOME' in os.environ:
@@ -62,14 +63,16 @@ def initiate( intersection_id ):
         sumoBinary = checkBinary('sumo-gui')
 
     # traci starts sumo as a subprocess and then this script connects and runs
+    threadId = threading.get_native_id()
+
     path = os.getcwd() + "\main_app\simulation\generic"
     sumocfg = os.getcwd() + "\main_app\media\config\intersection\simulation\inter_"+str(intersection_id)+".sumocfg"
-    tripinfo = os.getcwd() + "\main_app\media\config\intersection\\tripinfo\inter_"+str(intersection_id)+".xml"
+    tripinfo = os.getcwd() + "\main_app\media\config\intersection\\tripinfo\inter_"+str(intersection_id)+"_"+str(threadId)+".xml"
     print(sumocfg)
     print(tripinfo)
     try:
-        traci.start([sumoBinary, "-c", sumocfg , "--tripinfo-output", tripinfo, "-S", "-Q"], label=str(intersection_id))
-        traci_connection = traci.getConnection(str(intersection_id))
+        traci.start([sumoBinary, "-c", sumocfg , "--tripinfo-output", tripinfo, "-S", "-Q"], label=str(threadId))
+        traci_connection = traci.getConnection(str(threadId))
         run(traci_connection,intersection_id)
     except:
         print("********************************* >> Something went wrong")

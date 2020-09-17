@@ -37,28 +37,28 @@ class GenerateNetwork:
                 if rin.get("position") == "A":
                     r = rin
             y_val = "+" + str(r.get("capacity"))
-            arrayOfNodes.append( Node(id="A", x="0.0", y=y_val, type="priority") )
+            arrayOfNodes.append( Node(id="A", x="0.0", y="+45", type="priority") )
         if self.type != "T-Down":
             r = {}
             for rin in self.roads_in:
                 if rin.get("position") == "C":
                     r = rin
             y_val = "-" + str(r.get("capacity"))
-            arrayOfNodes.append( Node(id="C", x="0.0", y=y_val, type="priority"), )
+            arrayOfNodes.append( Node(id="C", x="0.0", y="-45", type="priority"), )
         if self.type != "T-Left":
             r = {}
             for rin in self.roads_in:
                 if rin.get("position") == "D":
                     r = rin
             x_val = "-" + str(r.get("capacity"))
-            arrayOfNodes.append( Node(id="D", x=x_val, y="0.0", type="priority"), )
+            arrayOfNodes.append( Node(id="D", x="-45", y="0.0", type="priority"), )
         if self.type != "T-Right":   
             r = {}
             for rin in self.roads_in:
                 if rin.get("position") == "B":
                     r = rin
             x_val = "+" + str(r.get("capacity"))
-            arrayOfNodes.append( Node(id="B", x=x_val, y="0.0", type="priority"), )
+            arrayOfNodes.append( Node(id="B", x="+45", y="0.0", type="priority"), )
 
         the_doc = Nodes( Node(id="0", x="0.0", y="0.0", type="traffic_light"), 
                             xsi="http://www.w3.org/2001/XMLSchema-instance" ,
@@ -259,6 +259,7 @@ class GenerateNetwork:
         filename = "inter_"+ str(self.object.id) + ".net.xml"
         self.object.intersection_network.delete()
         self.object.intersection_network.save( filename , File( the_doc ) )
+        the_doc.close()
 
         # Start simulation process
         #Thread(target=initiate).start()

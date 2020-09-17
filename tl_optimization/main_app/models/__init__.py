@@ -3,3 +3,4 @@ from .intersection import Intersection
 from .road import Road
 from .traffic_light import TrafficLight
 from .artefact import Artefact
+from .day_forecast import DayForecast

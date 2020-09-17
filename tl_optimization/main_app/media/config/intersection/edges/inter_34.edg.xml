@@ -11,10 +11,10 @@
   <edge id="outC" from="0" to="C" priority="1" numLanes="1" speed="10" length="50">
     <neigh lane="inC_2"/>
   </edge>
-  <edge id="inD" from="D" to="0" priority="1" numLanes="1" speed="10" length="80">
-    <neigh lane="outD_0"/>
+  <edge id="inD" from="D" to="0" priority="1" numLanes="1" speed="10" length="50">
+    <neigh lane="outD_1"/>
   </edge>
-  <edge id="outD" from="0" to="D" priority="1" numLanes="1" speed="10" length="80">
+  <edge id="outD" from="0" to="D" priority="1" numLanes="2" speed="10" length="50">
     <neigh lane="inD_0"/>
   </edge>
 </edges>

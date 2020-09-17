@@ -40,6 +40,7 @@ class Intersection(models.Model):
         default=A,
     )
 
+    forecast_count = models.IntegerField(default=0)
 
     def get_absolute_url(self):
         return reverse('home', args=(self.id,))

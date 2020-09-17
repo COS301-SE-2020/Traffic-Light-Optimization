@@ -55,44 +55,65 @@ def home(request, intersection_id ):
     Simulation = Thread(target=initiate,args=(intersection_id,) )
     Simulation.start() 
 
-    # Update road information --------------------------------------------
+    # Update road information ---------------------------------------------------------
     rforms_in = [ RoadForm(instance=get_object_or_404( Road, pk=r.road_info().get("id"))) for r in roads_in]
     rforms_out = [ RoadForm(instance=get_object_or_404( Road, pk=r.road_info().get("id"))) for r in roads_out]
     count = [ v for v in range(len(rforms_out))]
     road_forms = zip(rforms_in,rforms_out,count)
     road_form = RoadForm()
 
-    # Data graphing For Forecasting -------------------------------------------
-    x = [i for i in range(24)]
-    y1 = [ random.randint(150, 400) for i in x]
-    trace1 = go.Scatter(x=x, y=y1,  mode="lines",  name='Road A', line={'color': 'red', 'width': 1})
-    y2 = [ random.randint(150, 400) for i in x]
-    trace2 = go.Scatter(x=x, y=y2,  mode="lines",  name='Road B', line={'color': 'blue', 'width': 1})
-    y3 = [ random.randint(150, 400) for i in x]
-    trace3 = go.Scatter(x=x, y=y3,  mode="lines",  name='Road C', line={'color': 'green', 'width': 1})
-    y4 = [ random.randint(150, 400) for i in x]
-    trace4 = go.Scatter(x=x, y=y4,  mode="lines",  name='Road D', line={'color': 'yellow', 'width': 1})
-    data= [trace1,trace2,trace3,trace4]
-    layout= go.Layout( xaxis={'title':'Time (Hour)'}, yaxis={'title':'No. of Cars'})
-    figure= go.Figure(data=data,layout=layout)
-    forecast_div = opy.plot(figure, output_type='div', include_plotlyjs=False , show_link=False, link_text="")
+    # Data graphing For Forecasting ---------------------------------------------------
+    forecast_div = None
+    forecast_div_ = []
+    optimization_div = None
+    optimization_div_ = []
 
-    # Data graphing for Traffic light optimization ---------------------------
+    if intersection_info.forecast_count > 0 :
+        y_forecast = [ get_object_or_404(DayForecast,road_id=r.id) for r in roads_in]
+        y_forecast = [ d_forecast.forecast_info() for d_forecast in y_forecast]
+        x = [i for i in range(24)]
+        #y1 = [ random.randint(150, 400) for i in x]
+        y1 = y_forecast[0]
+        trace1 = go.Scatter(x=x, y=y1,  mode="lines",  name='Road A', line={'color': 'red', 'width': 1})
+        #y2 = [ random.randint(150, 400) for i in x]
+        y2 = y_forecast[1]
+        trace2 = go.Scatter(x=x, y=y2,  mode="lines",  name='Road B', line={'color': 'blue', 'width': 1})
+        #y3 = [ random.randint(150, 400) for i in x]
+        y3 = y_forecast[2]
+        trace3 = go.Scatter(x=x, y=y3,  mode="lines",  name='Road C', line={'color': 'green', 'width': 1})
+        data = [trace1,trace2,trace3]
+        if intersection_info.intersection_type == "Cross":
+            #y4 = [ random.randint(150, 400) for i in x]
+            y4 = y_forecast[3]
+            trace4 = go.Scatter(x=x, y=y4,  mode="lines",  name='Road D', line={'color': 'yellow', 'width': 1})
+            data= [trace1,trace2,trace3,trace4]
+        layout= go.Layout( xaxis={'title':'Time (Hour)'}, yaxis={'title':'No. of Cars'})
+        figure= go.Figure(data=data,layout=layout)
+        forecast_div = opy.plot(figure, output_type='div', include_plotlyjs=False , show_link=False, link_text="")
+        forecast_div_ = roads_in[:]
+        print("**********************************************")
+        print(forecast_div_)
+
+    # Data graphing for Traffic light optimization ------------------------------------
     
-    roadA = [ json.dumps({'Red':random.randint(4, 25), 'Yellow':4 ,'Green':random.randint(4, 15)}) for r in range(24)]
-    roadB = [ json.dumps({'Red':random.randint(4, 25), 'Yellow':4 ,'Green':random.randint(4, 15)}) for r in range(24)]
-    roadC = [ json.dumps({'Red':random.randint(4, 25), 'Yellow':4 ,'Green':random.randint(4, 15)}) for r in range(24)]
-    roadD = [ json.dumps({'Red':random.randint(4, 25), 'Yellow':4 ,'Green':random.randint(4, 15)}) for r in range(24)]
-    lights_table = go.Table(
-                columnwidth = [80,250],
-                header=dict(values=[["Time"],["RoadA"],["RoadB"],["RoadC"],["RoadD"]]), 
-                cells=dict(values=[x,roadA,roadB,roadC,roadD]))
-                #cells=dict(values=[[100, 90 ,80, 90], [95, 85, 75, 95]]))
+        roadA = [ json.dumps({'Red':random.randint(4, 25), 'Yellow':4 ,'Green':random.randint(4, 15)}) for r in range(24)]
+        roadB = [ json.dumps({'Red':random.randint(4, 25), 'Yellow':4 ,'Green':random.randint(4, 15)}) for r in range(24)]
+        roadC = [ json.dumps({'Red':random.randint(4, 25), 'Yellow':4 ,'Green':random.randint(4, 15)}) for r in range(24)]
+        roadD = [ json.dumps({'Red':random.randint(4, 25), 'Yellow':4 ,'Green':random.randint(4, 15)}) for r in range(24)]
+        lights_table = go.Table(
+                    columnwidth = [80,250],
+                    header=dict(values=[["Time"],["RoadA"],["RoadB"],["RoadC"],["RoadD"]]), 
+                    cells=dict(values=[x,roadA,roadB,roadC,roadD]))
+                    #cells=dict(values=[[100, 90 ,80, 90], [95, 85, 75, 95]]))
 
-    data = [lights_table]
-    figure= go.Figure(data=data)
-    optimization_div = opy.plot(figure, output_type='div', include_plotlyjs=False , show_link=False, link_text="")
+        data = [lights_table]
+        figure= go.Figure(data=data)
+        optimization_div = opy.plot(figure, output_type='div', include_plotlyjs=False , show_link=False, link_text="")
+        optimization_div_ = roads_in[:]
+        print("**********************************************")
+        print(optimization_div_)
 
+    # Data graphing for Traffic light ------------------------------------
     roadA, roadB, roadC, roadD = [],[],[],[]
     roadA.append( json.dumps({'Red':random.randint(4, 25), 'Yellow':4 ,'Green':random.randint(4, 15)}) )
     roadB.append( json.dumps({'Red':random.randint(4, 25), 'Yellow':4 ,'Green':random.randint(4, 15)}) )
@@ -105,6 +126,9 @@ def home(request, intersection_id ):
     data = [lights]
     figure= go.Figure(data=data)
     optimer_div = opy.plot(figure, output_type='div', include_plotlyjs=False , show_link=False, link_text="")
+
+    print( forecast_div_ )
+    print( optimization_div_ )
 
     # Data passed to the User Interface --------------------------------------
     data_input = {
@@ -119,6 +143,8 @@ def home(request, intersection_id ):
         'forecast_div': forecast_div,
         'optimization_div': optimization_div,
         'optimer_div': optimer_div,
+        'forecast_div_': forecast_div_ ,
+        'optimization_div_': optimization_div_ ,
     }
     return render(request, 'main_app/view_home.html', data_input )
 
