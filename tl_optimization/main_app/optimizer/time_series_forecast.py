@@ -37,21 +37,33 @@ class Time_Series_Forecast:
             y.append(seq_y)
         return array(X), array(y)
 
-    def prepare_data(self):
+    def prepare_data(self, data = []):
         # define input sequence
-        in_seq1 = array([10, 20, 30, 40, 50, 60, 70, 80, 90])
-        in_seq2 = array([15, 25, 35, 45, 55, 65, 75, 85, 95])
-        out_seq = array([in_seq1[i]+in_seq2[i] for i in range(len(in_seq1))])
+        if len(data):
+            in_seq1 = array([10, 20, 30, 40, 50, 60, 70, 80, 90])
+            in_seq2 = array([15, 25, 35, 45, 55, 65, 75, 85, 95])
+            out_seq = array([in_seq1[i]+in_seq2[i] for i in range(len(in_seq1))])
 
-        # convert to [rows, columns] structure
-        in_seq1 = in_seq1.reshape((len(in_seq1), 1))
-        in_seq2 = in_seq2.reshape((len(in_seq2), 1))
-        out_seq = out_seq.reshape((len(out_seq), 1))
+            # convert to [rows, columns] structure
+            in_seq1 = in_seq1.reshape((len(in_seq1), 1))
+            in_seq2 = in_seq2.reshape((len(in_seq2), 1))
+            out_seq = out_seq.reshape((len(out_seq), 1))
+            
+            # horizontally stack columns
+            self.dataset = hstack((in_seq1, in_seq2, out_seq))
+            # choose a number of time steps
+            self.n_steps_in, self.n_steps_out = 3, 2
+        else:
+            seqArray = [ array(road_data) for road_data in data]
+            # convert to [rows, columns] structure
+            seqReshaped = [ seq.reshape((len(seq), 1)) for seq in seqArray ]
+            if len( data ) == 2:
+                self.dataset = hstack((seqReshaped[0], seqReshaped[1]))
+            elif len( data ) == 3:
+                self.dataset = hstack((seqReshaped[0], seqReshaped[1], seqReshaped[2]))
+            else:
+                self.dataset = hstack((seqReshaped[0], seqReshaped[1], seqReshaped[2], seqReshaped[3]))
         
-        # horizontally stack columns
-        self.dataset = hstack((in_seq1, in_seq2, out_seq))
-        # choose a number of time steps
-        self.n_steps_in, self.n_steps_out = 3, 2
         # covert into input/output
         self.X, self.y = self.split_sequences( self.dataset, self.n_steps_in, self.n_steps_out)
         # the dataset knows the number of features, e.g. 2

@@ -33,7 +33,7 @@ def create_intersection(request):
             new_intersection.save()
 
             # Add default roads to this intersection
-            dist, spd, lan = 80, 10, 1
+            dist, spd, lan = 40, 10, 1
             if new_intersection.intersection_type != "T-Up":
                 Road.objects.create( 
                     intersection_in=new_intersection, road_name="inA",  position="A", road_distance=dist, average_speed=spd, num_lanes=lan ) 
@@ -104,12 +104,12 @@ def upload_historic_data(request, intersection_id ):
             for road in roads_in:
                 if road.road_name in csv_road_names:
                     count = count + 1
-            if( len(roads_in) == count ):
+            '''if( len(roads_in) == count ):
                 intersection = get_object_or_404( Intersection, pk=intersection_id)
                 intersection.upload_historic_data( data_file )
                 intersection.train_model()
                 intersection.forecast_traffic()
-                intersection.optimize_traffic_lights()
+                intersection.optimize_traffic_lights()'''
         # Error 
 
     return HttpResponseRedirect(reverse('home', args=(intersection_id, ))) 
@@ -127,6 +127,7 @@ def forecast_intersection( date):
 def optimize_intersection( request , intersection_id):
     return HttpResponseRedirect(reverse('home', args=(intersection_id, )))
 
+# update_simulation_info ...........................................................................................
 def update_simulation_info( request , intersection_id):
     # get intersection
     intersection = get_object_or_404( Intersection, pk=intersection_id)
@@ -135,8 +136,8 @@ def update_simulation_info( request , intersection_id):
     in_data, out_data = read_road( intersection.id )
     in_data = [ r.road_info() for r in in_data ]
     out_data = [ r.road_info() for r in out_data ]
-    for road in in_data:
-        road.update({'rate':100})
+    '''for road in in_data:
+        road.update({'rate':100})'''
     traffic_lights = []
     simulation = GenerateNetwork( intersection_obj=intersection, roads_in=in_data, roads_out=out_data, lights=traffic_lights )
     #simulation.create_network()

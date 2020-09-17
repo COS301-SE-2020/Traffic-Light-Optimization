@@ -62,5 +62,6 @@ class Road(models.Model):
             "speed": self.average_speed,
             "position": self.position,
             "lanes": self.num_lanes,
+            "rate": self.rate,
         }
         return info
