@@ -34,6 +34,9 @@ The user manual can be found in the [repository](documentation/tech.pdf).
 ### Coding Standards Document
 The coding standards document can be found in the [repository](documentation/Demo2_Coding_Standards.pdf).
 
+### Testing policy Document
+The testing policy document can be found in the [repository](documentation/Team_Alpha.pdf).
+
 ## Project Management Tool
 For this project we are using [Clubhouse](https://app.clubhouse.io/cos-301-alpha).
 ![Screenshot of the tasks we have for demo 2](https://i.imgur.com/7x0d5D3.png)
