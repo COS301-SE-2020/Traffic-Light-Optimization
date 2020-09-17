@@ -30,18 +30,23 @@ def run():
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
         print(step)
-
         det_vehs = traci.inductionloop.getLastStepVehicleIDs("det_0")
         det_vehs1 = traci.inductionloop.getLastStepVehicleIDs("det_1")
         det_vehs2 = traci.inductionloop.getLastStepVehicleIDs("det_2")
+        traci.gui.screenshot("View #0", "images/"+str(step)+".png")
 
-        for veh in det_vehs:
-            print(veh)
+        #for veh in det_vehs:
+            #print(veh)
             #traci.vehicle.changeLane(veh, 2, 25)
 
-        # if step == 100:
-        #     traci.vehicle.changeTarget("1", "e9")
-        #     traci.vehicle.changeTarget("3", "e9")
+        #traci.trafficlight.setRedYellowGreenState('gneJ11','GGggrrrrGGggrrrr')
+        #print(traci.inductionloop.getRedYellowGreenState())
+
+            #traci.simulationStep()
+            #traci.gui.screenshot("View #0", "images/"+str(i)+".png")
+            #traci.trafficlight.setRedYellowGreenState('gneJ11','GGggrrrrGGggrrrr')
+
+
 
         step += 1
 
@@ -60,7 +65,6 @@ if __name__ == "__main__":
         sumoBinary = checkBinary('sumo-gui')
 
     # traci starts sumo as a subprocess and then this script connects and runs
-    
     traci.start([sumoBinary, "-c", "sumo.sumocfg",
                              "--tripinfo-output", "tripinfo.xml","-S", "-Q" ])
     run()
@@ -71,4 +75,3 @@ if __name__ == "__main__":
 
   #-G, --game   Start the GUI in gaming mode
   #-S, --start    Start the simulation after loading
-
