@@ -8,9 +8,9 @@
         <a class="nav-link" data-toggle="tab" href="#menu1"> Traffic </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#menu2"> Optimizer </a>
+        <a class="nav-link" data-toggle="tab" href="#menu2"> Forecast </a>
     </li>
-  </ul>
+</ul>
 
 <!-- Tab panes -->
 <div class="tab-content">
@@ -105,7 +105,7 @@
                 <p></p>
                 <div class="btn-group d-flex">
                     <button type="submit" class="btn btn-primary">Update</button>
-                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#optimerModal"> Optimization Results </button>
+                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#optimerModal"> Traffic Light Timing </button>
                 </div>
             {% else %}
                 <b> No roads going into intersection </b> <br>
@@ -117,8 +117,8 @@
     <!-- Intersection Optimizer Tab *******************************************************************************-->
     <div id="menu2" class="container tab-pane fade"><br>
         <span class="badge badge-dark"><h7> 1 - Time Series Data Forecasting </h7></span> <br><br>
-            <p>Using historic traffic data to predict</p>
-            <form action="{% url 'home' intersection_info.id %}" method="post" enctype="multipart/form-data">
+            <p>Upload historic traffic data for intersection</p>
+            <form action="{% url 'upload_historic_data' intersection_info.id %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-group">
                     <input type="file" class="form-control-file border" name="historic_data">
@@ -130,10 +130,10 @@
             </form>
 
         <hr>
-        <span class="badge badge-dark"><h7> 2 - Traffic Light Optimizer </h7></span><br><br>
-        <p> Optimizer traffic light timing on predicted traffic.</p>
+        <span class="badge badge-dark"><h7> 2 - Optimized Traffic Light Timing </h7></span><br>
+        <!--<p> Optimizer traffic light timing.</p>-->
         <div class="btn-group d-flex">
-            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#optimizerModal"> Optimization Results </button>
+            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#optimizerModal"> Traffic Light Timing </button>
         </div>
         
     </div>
@@ -156,9 +156,14 @@
                 <!--<h5> Graphed Results </h5> -->
                 <!--{{forecast.data }}  -->
                 <!--{{forecast.results }}  -->
-                {% autoescape off %}
-                {{ forecast_div }}
-                {% endautoescape %}
+                {% if forecast_div_ %}
+                    {% autoescape off %}
+                    {{ forecast_div }}
+                    {% endautoescape %}
+                {%else%}
+                    <h3> Required:</h3> <br><br>
+                    <p>Upload historic traffic data for intersection</p>
+                {%endif%}
             </div>
 
         </div>
@@ -172,7 +177,7 @@
       
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title"> Optimized Traffic Lights  </h4>
+                <h4 class="modal-title"> Optimized Traffic Lights Timing  </h4>
                 <button type="button" class="close" data-dismiss="modal">×</button>
             </div>
             
@@ -183,13 +188,16 @@
                 {%for road in optimizer.data%}
                     {{road }} <br>
                 {%endfor%}-->
-
-                <h2> Graph Data </h2>
     
                 <!--{{ optimizer.results }}-->
-                {% autoescape off %}
-                {{ optimization_div }}
-                {% endautoescape %}
+                {% if optimization_div_ %}
+                    {% autoescape off %}
+                    {{ optimization_div }}
+                    {% endautoescape %}
+                {%else%}
+                    <h3> Required:</h3> <br><br>
+                    <span class="badge badge-dark"><h7> 1 - Time Series Data Forecasting </h7></span>
+                {%endif%}
             
             </div>
             

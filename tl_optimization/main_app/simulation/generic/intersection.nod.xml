@@ -1,6 +1,6 @@
 <nodes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/nodes_file.xsd">
   <node id="0" x="0.0" y="0.0" type="traffic_light"/>
-  <node id="C" x="0.0" y="-40" type="priority"/>
-  <node id="D" x="-40" y="0.0" type="priority"/>
-  <node id="B" x="+40" y="0.0" type="priority"/>
+  <node id="A" x="0.0" y="+30" type="priority"/>
+  <node id="C" x="0.0" y="-30" type="priority"/>
+  <node id="D" x="-30" y="0.0" type="priority"/>
 </nodes>

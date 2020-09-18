@@ -5,6 +5,7 @@
         src="{% static 'images/loading.gif' %}"
         onload="loadImage()"
         class="img-fluid"
+        onError="this.onerror=null;this.src='{% static 'images/loading.gif' %}';"
     >
 {% else %}
  <!--width="700" height="500" -->
@@ -36,7 +37,7 @@
         document.getElementById("myImg").src ="{{ MEDIA_URL }}" + "simulation/inter{{intersection_info.id}}/image"+i.toString()+".png";
     }
     function task() {
-        if( i == 100 ){
+        if( i == 900 ){
             stop()
         }else{
             i = i + 1

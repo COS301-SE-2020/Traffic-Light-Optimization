@@ -35,26 +35,30 @@ def create_intersection(request):
             # Add default roads to this intersection
             dist, spd, lan = 40, 10, 1
             if new_intersection.intersection_type != "T-Up":
-                Road.objects.create( 
+                r_in = Road.objects.create( 
                     intersection_in=new_intersection, road_name="inA",  position="A", road_distance=dist, average_speed=spd, num_lanes=lan ) 
+                DayForecast.objects.create(road_id=r_in)
                 Road.objects.create(
                     intersection_out=new_intersection, road_name="outA", position="A", road_distance=dist, average_speed=spd, num_lanes=lan )
 
             if new_intersection.intersection_type != "T-Right":   
-                Road.objects.create( 
+                r_in = Road.objects.create( 
                     intersection_in=new_intersection , road_name="inB", position="B", road_distance=dist, average_speed=spd, num_lanes=lan )
+                DayForecast.objects.create(road_id=r_in)
                 Road.objects.create( 
                     intersection_out=new_intersection , road_name="outB", position="B", road_distance=dist, average_speed=spd, num_lanes=lan )
             
             if new_intersection.intersection_type != "T-Down":
-                Road.objects.create( 
+                r_in = Road.objects.create( 
                     intersection_in=new_intersection, road_name="inC", position="C", road_distance=dist, average_speed=spd, num_lanes=lan )
+                DayForecast.objects.create(road_id=r_in)
                 Road.objects.create( 
                     intersection_out=new_intersection, road_name="outC", position="C", road_distance=dist, average_speed=spd, num_lanes=lan )
 
             if new_intersection.intersection_type != "T-Left":
-                Road.objects.create( 
+                r_in = Road.objects.create( 
                     intersection_in=new_intersection, road_name="inD", position="D", road_distance=dist, average_speed=spd, num_lanes=lan )
+                DayForecast.objects.create(road_id=r_in)
                 Road.objects.create( 
                     intersection_out=new_intersection, road_name="outD", position="D", road_distance=dist, average_speed=spd, num_lanes=lan )
 
@@ -93,8 +97,23 @@ def upload_historic_data(request, intersection_id ):
         # Open data in pandas 
         df = pd.read_csv(data_file, header=None)
         headers = df[0]
+        if not df.empty :
+            flag = False
+            intersection_info = get_object_or_404( Intersection, pk=intersection_id)
+            for road in Road.objects.filter(intersection_in=intersection_id):
+                if DayForecast.objects.filter(road_id=road).exists():
+                    intersection_info.forecast_count += 1 
+                    intersection_info.save()
+                    flag = True
+                    break
+                else:
+                    DayForecast.objects.create(road_id=road)
+            if not flag:
+                intersection_info.forecast_count += 1 
+                intersection_info.save()
 
         # Get roads to validate data 
+        '''
         roads = read_road( intersection_id )
         roads_in = roads.roads_in
         # Validate headers
@@ -104,7 +123,8 @@ def upload_historic_data(request, intersection_id ):
             for road in roads_in:
                 if road.road_name in csv_road_names:
                     count = count + 1
-            '''if( len(roads_in) == count ):
+                    
+            if( len(roads_in) == count ):
                 intersection = get_object_or_404( Intersection, pk=intersection_id)
                 intersection.upload_historic_data( data_file )
                 intersection.train_model()
