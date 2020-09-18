@@ -26,7 +26,7 @@ The Deployment diagram: [Demo3](documentation/deploymentDiagram.jpg).
 
 
 ### User Manual
-The user manual can be found in the [repository](documentation/Demo2_UserManual.pdf).
+The user manual can be found in the [repository](documentation/Demo4-UserManual.pdf).
 
 ### Technology requirement
 The user manual can be found in the [repository](documentation/tech.pdf).
