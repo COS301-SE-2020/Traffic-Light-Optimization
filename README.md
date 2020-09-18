@@ -19,23 +19,23 @@ SRS documentation: [Demo3](documentation/SRS_Demo3.pdf).\
 Alternatively, the raw documentation can be viewed on [Overleaf](https://www.overleaf.com/read/prybbnksrcry).
 
 ### Architecture
-The architectural design [Demo4](documentation/Demo4-architecture.jpg).
+The architectural design: [repository](documentation/Demo4-architecture.jpg).
 
 ### Deployment
-The Deployment diagram: [Demo3](documentation/deploymentDiagram.jpg).
+The Deployment diagram: [repository](documentation/deploymentDiagram.jpg).
 
 
 ### User Manual
-The user manual can be found in the [repository](documentation/Demo4-UserManual.pdf).
+The user manual document: [repository](documentation/Demo4_UserManual.pdf).
 
 ### Technology requirement
-The user manual can be found in the [repository](documentation/tech.pdf).
+The user manual document: [repository](documentation/tech.pdf).
 
 ### Coding Standards Document
-The coding standards document can be found in the [repository](documentation/Demo2_Coding_Standards.pdf).
+The coding standards document: [repository](documentation/Demo2_Coding_Standards.pdf).
 
 ### Testing policy Document
-The testing policy document can be found in the [repository](documentation/Team_Alpha.pdf).
+The testing policy document: [repository](documentation/Team_Alpha.pdf).
 
 ## Project Management Tool
 For this project we are using [Clubhouse](https://app.clubhouse.io/cos-301-alpha).
