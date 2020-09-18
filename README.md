@@ -19,7 +19,7 @@ SRS documentation: [Demo3](documentation/SRS_Demo3.pdf).\
 Alternatively, the raw documentation can be viewed on [Overleaf](https://www.overleaf.com/read/prybbnksrcry).
 
 ### Architecture
-The architectural design [repository](documentation/Demo3_architecture_update.jpg).
+The architectural design [Demo4](documentation/Demo4-architecture.jpg).
 
 ### Deployment
 The Deployment diagram: [Demo3](documentation/deploymentDiagram.jpg).
