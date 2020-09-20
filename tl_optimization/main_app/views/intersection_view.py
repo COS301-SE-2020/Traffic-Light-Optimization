@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, get_list_or_404, render
 from django.urls import reverse
 from django.core.paginator import Paginator
+import json
 
 # External libraries .................
 import pandas as pd
@@ -62,19 +63,17 @@ def create_intersection(request):
                 Road.objects.create( 
                     intersection_out=new_intersection, road_name="outD", position="D", road_distance=dist, average_speed=spd, num_lanes=lan )
 
-            # Create the simulation files from default settings
+            # Create SUMO simulation files from default settings
             in_ , out_ = read_road( new_intersection.id )
             in_data = [ r.road_info() for r in in_ ]
             out_data = [ r.road_info() for r in out_ ]
-            '''for road in in_data:
-                road.update({'rate':100})'''
             traffic_lights = []
             inter_object = get_object_or_404( Intersection, pk=new_intersection.id)
-            print( inter_object.id )
-            print( "......................" )
             simulation = GenerateNetwork( intersection_obj=inter_object, roads_in=in_data, roads_out=out_data, lights=traffic_lights )
-            #simulation.create_network()
-            simulation.create_simulation_configurations()
+            traffic_lights_states = simulation.create_simulation_configurations()
+            new_intersection.traffic_light_phases = json.dumps(traffic_lights_states)
+            new_intersection.save()
+
             return HttpResponseRedirect(reverse('home', args=(new_intersection.id, ))) 
     return HttpResponseRedirect(reverse('home_'))
 
@@ -156,15 +155,16 @@ def update_simulation_info( request , intersection_id):
     in_data, out_data = read_road( intersection.id )
     in_data = [ r.road_info() for r in in_data ]
     out_data = [ r.road_info() for r in out_data ]
-    '''for road in in_data:
-        road.update({'rate':100})'''
     traffic_lights = []
     simulation = GenerateNetwork( intersection_obj=intersection, roads_in=in_data, roads_out=out_data, lights=traffic_lights )
-    #simulation.create_network()
-    simulation.create_simulation_configurations()
+    traffic_lights_states = simulation.create_simulation_configurations()
+    intersection.traffic_light_phases = json.dumps(traffic_lights_states)
+    intersection.save()
 
     return HttpResponseRedirect(reverse('home', args=( intersection_id, ))) 
 
+#def traffic_lights_states(states):
 
+    
 
     

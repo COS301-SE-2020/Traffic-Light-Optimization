@@ -1,10 +1,14 @@
+# Python pip libraries required ...........
 import os
 import re
 import lxml.etree
 import lxml.builder
 import subprocess
+from bs4 import BeautifulSoup 
 from threading import Thread
-from .simulation import *
+
+
+# Django imports required ....................
 from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.files import File
@@ -20,7 +24,7 @@ class GenerateNetwork:
         self.type = intersection_obj.intersection_type
         self.roads_in = roads_in
         self.roads_out = roads_out
-        self.lights = lights 
+        self.traffic_lights_configuration = lights 
     
     # Nodes (intersections/junctions): Generate the .nod.xml file ................................................................
     def intersection_nodes(self):
@@ -233,7 +237,7 @@ class GenerateNetwork:
         #p = os.getcwd() +'\\images\\'              # for individual testing
         p = settings.MEDIA_ROOT + "\\simulation\\"
         for f in os.listdir(p):
-            print(f)
+            #print(f)
             if f.endswith('.png'):
                 f = p+f
                 os.remove(f)
@@ -260,8 +264,39 @@ class GenerateNetwork:
         self.object.intersection_network.delete()
         self.object.intersection_network.save( filename , File( the_doc ) )
         the_doc.close()
-
+        
         # Start simulation process
+        with open(output, 'r') as f: 
+            data = f.read() 
+        Bs_data = BeautifulSoup(data, "xml")
+        phases = Bs_data.find_all('phase')
+        #traffic_lights_configuration = [ { "duration": phase.get('duration'), "state": str(phase.get('state')) } for phase in phases]
+        phase = phases[0]
+        state = phase.get('state')
+        off = len(state) % len(self.roads_in) 
+        
+        highest, side = 0, ""
+        if off:
+            for road in self.roads_in:
+                if road.get('lanes') > highest:
+                    side = road.get('position')
+                    highest = road.get('lanes')
+
+        traffic_lights_configuration = []
+        iter = int(len(state) / len(self.roads_in))
+        for phase in phases:
+            start, end = 0 , iter
+            state = str(phase.get('state'))
+            temp = { "duration": phase.get('duration'), "state": str(phase.get('state')) }
+            for road in self.roads_in:
+                if road.get('position') == side:
+                    end += 1
+                temp[road.get('position')] = state[start:end]
+                start = end
+                end += iter
+            traffic_lights_configuration.append(temp)
+        self.traffic_lights_configuration = traffic_lights_configuration
+        #print(self.traffic_lights_configuration)
         #Thread(target=initiate).start()
 
     def create_simulation_configurations(self):

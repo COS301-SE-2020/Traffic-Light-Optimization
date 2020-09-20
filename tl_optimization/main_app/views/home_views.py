@@ -16,6 +16,7 @@ from ..simulation.generic import *
 #from ..optimizer.time_series_forecast import Time_Series_Forecast
 #from ..optimizer.intersection_optimizer import *
 from ..simulation.generic.generate_network import *
+from ..simulation.generic.simulation import *
 
 # External libraries .................
 import pandas as pd
@@ -52,8 +53,8 @@ def home(request, intersection_id ):
     # Prepare data for the simulation --------------------------------------
     intersection_info = get_object_or_404( Intersection, pk=intersection_id)
     roads_in, roads_out = read_road( intersection_id )
-    Simulation = Thread(target=initiate,args=(intersection_id,) )
-    Simulation.start() 
+    #Simulation = Thread(target=initiate,args=(intersection_id,) )
+    #Simulation.start() 
 
     # Update road information ---------------------------------------------------------
     rforms_in = [ RoadForm(instance=get_object_or_404( Road, pk=r.road_info().get("id"))) for r in roads_in]
@@ -91,44 +92,54 @@ def home(request, intersection_id ):
         figure= go.Figure(data=data,layout=layout)
         forecast_div = opy.plot(figure, output_type='div', include_plotlyjs=False , show_link=False, link_text="")
         forecast_div_ = roads_in[:]
-        print("**********************************************")
-        print(forecast_div_)
+        #print("**********************************************")
+        #print(forecast_div_)
 
     # Data graphing for Traffic light optimization ------------------------------------
     
         roadA = [ json.dumps({'Red':random.randint(4, 25), 'Yellow':4 ,'Green':random.randint(4, 15)}) for r in range(24)]
         roadB = [ json.dumps({'Red':random.randint(4, 25), 'Yellow':4 ,'Green':random.randint(4, 15)}) for r in range(24)]
         roadC = [ json.dumps({'Red':random.randint(4, 25), 'Yellow':4 ,'Green':random.randint(4, 15)}) for r in range(24)]
-        roadD = [ json.dumps({'Red':random.randint(4, 25), 'Yellow':4 ,'Green':random.randint(4, 15)}) for r in range(24)]
+        values_head = [["Time"],["RoadA"],["RoadB"],["RoadC"]]
+        values_ = [x,roadA,roadB,roadC]
+        if intersection_info.intersection_type == "Cross":
+            roadD = [ json.dumps({'Red':random.randint(4, 25), 'Yellow':4 ,'Green':random.randint(4, 15)}) for r in range(24)]
+            values_head = [["Time"],["RoadA"],["RoadB"],["RoadC"],["RoadD"]]
+            values_ = [x,roadA,roadB,roadC,roadD]
         lights_table = go.Table(
                     columnwidth = [80,250],
-                    header=dict(values=[["Time"],["RoadA"],["RoadB"],["RoadC"],["RoadD"]]), 
-                    cells=dict(values=[x,roadA,roadB,roadC,roadD]))
+                    header=dict(values=values_head), 
+                    cells=dict(values=values_))
                     #cells=dict(values=[[100, 90 ,80, 90], [95, 85, 75, 95]]))
 
         data = [lights_table]
         figure= go.Figure(data=data)
         optimization_div = opy.plot(figure, output_type='div', include_plotlyjs=False , show_link=False, link_text="")
         optimization_div_ = roads_in[:]
-        print("**********************************************")
-        print(optimization_div_)
+        #print("**********************************************")
+        #print(optimization_div_)
 
     # Data graphing for Traffic light ------------------------------------
     roadA, roadB, roadC, roadD = [],[],[],[]
     roadA.append( json.dumps({'Red':random.randint(4, 25), 'Yellow':4 ,'Green':random.randint(4, 15)}) )
     roadB.append( json.dumps({'Red':random.randint(4, 25), 'Yellow':4 ,'Green':random.randint(4, 15)}) )
     roadC.append( json.dumps({'Red':random.randint(4, 25), 'Yellow':4 ,'Green':random.randint(4, 15)}) )
-    roadD.append( json.dumps({'Red':random.randint(4, 25), 'Yellow':4 ,'Green':random.randint(4, 15)}) )
+    headvalues = [["Time"],["RoadA"],["RoadB"],["RoadC"]]
+    cellvalues = [["current"],roadA,roadB,roadC]
+    if intersection_info.intersection_type == "Cross":
+        roadD.append( json.dumps({'Red':random.randint(4, 25), 'Yellow':4 ,'Green':random.randint(4, 15)}) )
+        headvalues = [["Time"],["RoadA"],["RoadB"],["RoadC"],["RoadD"]]
+        cellvalues = [["current"],roadA,roadB,roadC,roadD]
     lights = go.Table(
                 columnwidth = [80,250],
-                header=dict(values=[["Time"],["RoadA"],["RoadB"],["RoadC"],["RoadD"]]), 
-                cells=dict(values=[["current"],roadA,roadB,roadC,roadD]))
+                header=dict(values=headvalues), 
+                cells=dict(values=cellvalues))
     data = [lights]
     figure= go.Figure(data=data)
     optimer_div = opy.plot(figure, output_type='div', include_plotlyjs=False , show_link=False, link_text="")
 
-    print( forecast_div_ )
-    print( optimization_div_ )
+    #print( forecast_div_ )
+    #print( optimization_div_ )
 
     # Data passed to the User Interface --------------------------------------
     data_input = {
