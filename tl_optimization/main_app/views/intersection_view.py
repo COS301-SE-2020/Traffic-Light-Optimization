@@ -70,9 +70,13 @@ def create_intersection(request):
             traffic_lights = []
             inter_object = get_object_or_404( Intersection, pk=new_intersection.id)
             simulation = GenerateNetwork( intersection_obj=inter_object, roads_in=in_data, roads_out=out_data, lights=traffic_lights )
-            traffic_lights_states = simulation.create_simulation_configurations()
-            new_intersection.traffic_light_phases = json.dumps(traffic_lights_states)
-            new_intersection.save()
+            simulation.create_simulation_configurations()
+
+            print("# Traffic Lights ----------------------------------------------------------------")
+            tl_array = inter_object.traffic_light_phases
+            print(tl_array)
+            tl_phases = json.loads(tl_array)
+            print(tl_phases)
 
             return HttpResponseRedirect(reverse('home', args=(new_intersection.id, ))) 
     return HttpResponseRedirect(reverse('home_'))
@@ -157,13 +161,12 @@ def update_simulation_info( request , intersection_id):
     out_data = [ r.road_info() for r in out_data ]
     traffic_lights = []
     simulation = GenerateNetwork( intersection_obj=intersection, roads_in=in_data, roads_out=out_data, lights=traffic_lights )
-    traffic_lights_states = simulation.create_simulation_configurations()
-    intersection.traffic_light_phases = json.dumps(traffic_lights_states)
-    intersection.save()
+    simulation.create_simulation_configurations()
+    #intersection.traffic_light_phases = json.dumps(traffic_lights_states)
+    #intersection.save()
 
     return HttpResponseRedirect(reverse('home', args=( intersection_id, ))) 
 
-#def traffic_lights_states(states):
 
     
 

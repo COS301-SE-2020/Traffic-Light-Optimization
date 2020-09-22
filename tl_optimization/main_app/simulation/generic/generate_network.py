@@ -6,7 +6,7 @@ import lxml.builder
 import subprocess
 from bs4 import BeautifulSoup 
 from threading import Thread
-
+import json
 
 # Django imports required ....................
 from django.conf import settings
@@ -296,6 +296,8 @@ class GenerateNetwork:
                 end += iter
             traffic_lights_configuration.append(temp)
         self.traffic_lights_configuration = traffic_lights_configuration
+        self.object.traffic_light_phases = json.dumps(traffic_lights_configuration)
+        self.object.save()
         #print(self.traffic_lights_configuration)
         #Thread(target=initiate).start()
 
