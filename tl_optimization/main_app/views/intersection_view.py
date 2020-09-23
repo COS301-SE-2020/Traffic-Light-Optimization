@@ -13,7 +13,7 @@ from plotly.graph_objs import Bar
 import plotly.express as px
 
 # Import optimizer module ............
-#from ..optimizer.time_series_forecast import Time_Series_Forecast
+from ..optimizer.time_series_forecast import Time_Series_Forecast
 #from ..optimizer.intersection_optimizer import *
 
 # Views requirements .................
@@ -115,20 +115,26 @@ def upload_historic_data(request, intersection_id ):
                 intersection_info.forecast_count += 1 
                 intersection_info.save()
 
-        # Get roads to validate data 
-        '''
-        roads = read_road( intersection_id )
-        roads_in = roads.roads_in
-        # Validate headers
-        if len(roads_in) > 1 :
-            csv_road_names = headers[1:]
-            count = 0
-            for road in roads_in:
-                if road.road_name in csv_road_names:
-                    count = count + 1
-                    
+            # Get roads to validate data 
+            roads_in, roads_out = read_road( intersection_id )
+            # Validate headers
+            if len(roads_in) > 1 :
+                csv_road_names = headers[1:]
+                count = 0
+                for road in roads_in:
+                    if road.road_name in csv_road_names:
+                        count = count + 1
+            
             if( len(roads_in) == count ):
+                # Convert data to arrays
+                df = pd.read_csv(data_file)
+                traffic_list = []
+                for r in roads_in:
+                    traffic_list.append( df[r.position].tolist() )
                 intersection = get_object_or_404( Intersection, pk=intersection_id)
+                forecast_intersection(intersection.intersection_name, traffic_list )
+                
+                '''
                 intersection.upload_historic_data( data_file )
                 intersection.train_model()
                 intersection.forecast_traffic()
@@ -138,12 +144,10 @@ def upload_historic_data(request, intersection_id ):
     return HttpResponseRedirect(reverse('home', args=(intersection_id, ))) 
    
 # Forecast the uploaded data .......................................................................................
-def forecast_intersection( date):
-    tsf_services = Time_Series_Forecast()
-    data = tsf_services.prepare_data()
-    tsf_services.forecast_model()
-    results = tsf_services.prediction()
-    return data , results
+def forecast_intersection( name="", data=[]):
+    tsf_services = Time_Series_Forecast(intersection_name=name, data=data, n_steps_in=24, n_steps_out=24 )
+    results = tsf_services.predict_traffic()
+    print(results)
 
 
 # Calculate the time for each day ...................................................................................
@@ -152,7 +156,7 @@ def optimize_intersection( request , intersection_id):
 
 # update_simulation_info ...........................................................................................
 def update_simulation_info( request , intersection_id):
-    # get intersection
+
     intersection = get_object_or_404( Intersection, pk=intersection_id)
 
     # Create the simulation files from updated Road settings
