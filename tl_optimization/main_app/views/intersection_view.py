@@ -96,10 +96,11 @@ def update_delete_intersection(request, intersection_id):
 def upload_historic_data(request, intersection_id ):
 
     if request.method == 'POST':
-        data_file = request.FILES['historic_data']
+        data_file = request.FILES.get('historic_data')
+        if data_file is None:
+            return HttpResponseRedirect(reverse('home', args=(intersection_id, ))) 
         # Open data in pandas 
-        df = pd.read_csv(data_file, header=None)
-        headers = df[0]
+        df = pd.read_csv(data_file)
         if not df.empty :
             flag = False
             intersection_info = get_object_or_404( Intersection, pk=intersection_id)
@@ -118,21 +119,25 @@ def upload_historic_data(request, intersection_id ):
             # Get roads to validate data 
             roads_in, roads_out = read_road( intersection_id )
             # Validate headers
+            print("Validate headers")
             if len(roads_in) > 1 :
-                csv_road_names = headers[1:]
+                csv_road_names = list(df.columns)
+                print(csv_road_names)
                 count = 0
                 for road in roads_in:
-                    if road.road_name in csv_road_names:
+                    if road.position in csv_road_names:
                         count = count + 1
-            
-            if( len(roads_in) == count ):
-                # Convert data to arrays
-                df = pd.read_csv(data_file)
-                traffic_list = []
-                for r in roads_in:
-                    traffic_list.append( df[r.position].tolist() )
-                intersection = get_object_or_404( Intersection, pk=intersection_id)
-                forecast_intersection(intersection.intersection_name, traffic_list )
+                print("......................................")
+                if( len(roads_in) == count ):
+                    print("Convert data to arrays")
+                    # Convert data to arrays
+                    #df = pd.read_csv(data_file)
+                    traffic_list = []
+                    for r in roads_in:
+                        traffic_list.append( df[r.position].tolist() )
+                    intersection = get_object_or_404( Intersection, pk=intersection_id)
+                    print("......................................")
+                    forecast_intersection(intersection.intersection_name, traffic_list )
                 
                 '''
                 intersection.upload_historic_data( data_file )
@@ -145,9 +150,12 @@ def upload_historic_data(request, intersection_id ):
    
 # Forecast the uploaded data .......................................................................................
 def forecast_intersection( name="", data=[]):
+    print("forecast_intersection >>>>>>>>>>>>>>>>>>>>>>>>>>>")
     tsf_services = Time_Series_Forecast(intersection_name=name, data=data, n_steps_in=24, n_steps_out=24 )
+    print("Time_Series_Forecast >>>>>>>>>>>>>>>>>>>>>>>>>>>>")
     results = tsf_services.predict_traffic()
-    print(results)
+    print("tsf_services.predict_traffic() >>>>>>>>>>>>>>>>>>")
+    #print(results)
 
 
 # Calculate the time for each day ...................................................................................

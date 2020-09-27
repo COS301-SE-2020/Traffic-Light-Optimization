@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.core.paginator import Paginator
 from threading import Thread
 import json
+from django.conf import settings
 
 
 # Views requirements .........
@@ -27,6 +28,7 @@ import plotly.offline as opy
 import plotly.graph_objs as go
 import random
 import json
+import csv
 
 # Global Variable ..........................
 GLOBAL_stop_threads = True
@@ -137,7 +139,7 @@ def home(request, intersection_id ):
         if "D" in check_headers:
             headV.append(["D"])
             cellV.append([ phase.get("D") for phase in tl_phases])
-        lights = go.Table(columnwidth = [80,250],header=dict(values=headV), cells=dict(values=cellV))
+        lights = go.Table(columnwidth = [80,250],header=dict(values=headV), cells=dict(values=cellV), export_format='csv')
         data = [lights]
         figure= go.Figure(data=data)
         optimer_div = opy.plot(figure, output_type='div', include_plotlyjs=False , show_link=False, link_text="")
@@ -191,5 +193,39 @@ def visualize_intersection(request):
 # Simulation information for the intersection .......................................................................
 def simulate_intersection(request, intersection_id ):
     return HttpResponseRedirect(reverse('home', args=(intersection_id, )))
+
+
+def download_traffic_light_csv(request, intersection_id):
+    intersection_info = get_object_or_404( Intersection, pk=intersection_id)
+    tl_array = intersection_info.traffic_light_phases
+    if not tl_array:
+        optimer_div = "Error: No lights saved!!"
+    else:
+        tl_phases = json.loads(tl_array)
+        check_headers = tl_phases[0]
+        headV = ["Phase","Time(s)"]
+        cellV = [[ i+1 for i in range(len(tl_phases))] , [ phase.get("duration") for phase in tl_phases]]
+        if "A" in check_headers:
+            headV.append("A")
+            cellV.append([ phase.get("A") for phase in tl_phases])
+        if "B" in check_headers:
+            headV.append("B")
+            cellV.append([ phase.get("B") for phase in tl_phases])
+        if "C" in check_headers:
+            headV.append("C")
+            cellV.append([ phase.get("C") for phase in tl_phases])
+        if "D" in check_headers:
+            headV.append("D")
+            cellV.append([ phase.get("D") for phase in tl_phases])
+        filepath = settings.MEDIA_ROOT
+        writer=csv.writer(open(filepath,'wb'))
+        writer.writerow([headV])
+        count = cellV[0]
+        for iter in len(count):
+            row = [ road[iter] for road in cellV ]
+            writer.writerow([row])
+        
+    return HttpResponseRedirect(reverse('home', args=(intersection_id, )))
+
     
 

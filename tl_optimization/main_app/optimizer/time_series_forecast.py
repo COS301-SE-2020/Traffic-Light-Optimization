@@ -18,11 +18,12 @@ class Time_Series_Forecast:
         super().__init__()
         self.intersection_name = intersection_name
         self.model_location = "/trained_models/" + intersection_name 
-        self.data = dataset
+        self.data = data
         self.testdata = []
         self.dataset = []
         self.n_steps_in = n_steps_in
         self.n_steps_out = n_steps_out
+        print("Constructor >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
 
     def split_sequences(self, sequences, n_steps_in, n_steps_out):
         X, y = list(), list()
@@ -37,6 +38,7 @@ class Time_Series_Forecast:
             seq_x, seq_y = sequences[i:end_ix, :], sequences[end_ix:out_end_ix, :]
             X.append(seq_x)
             y.append(seq_y)
+        print("Split_sequences >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
         return array(X), array(y)
 
     def prepare_data(self):
@@ -61,11 +63,11 @@ class Time_Series_Forecast:
             seqReshaped = [ seq.reshape((len(seq), 1)) for seq in seqArray ]
             if len( self.data ) == 2:
                 self.dataset = hstack((seqReshaped[0], seqReshaped[1]))
-            elif len( data ) == 3:
+            elif len( self.data ) == 3:
                 self.dataset = hstack((seqReshaped[0], seqReshaped[1], seqReshaped[2]))
             else:
                 self.dataset = hstack((seqReshaped[0], seqReshaped[1], seqReshaped[2], seqReshaped[3]))
-        
+        print("Prepare_data >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
         # covert into input/output
         self.X, self.y = self.split_sequences( self.dataset, self.n_steps_in, self.n_steps_out)
         # the dataset knows the number of features, e.g. 2
@@ -84,7 +86,8 @@ class Time_Series_Forecast:
         self.model.compile(optimizer='adam', loss='mse')
         # fit model
         self.model.fit(self.X, self.y, epochs=300, verbose=0)
-        self.model.save(self.model_location)
+        #self.model.save(self.model_location)
+        print("Forecast_model >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
         return self.model
 
     # demonstrate prediction ......................................................................
@@ -97,6 +100,7 @@ class Time_Series_Forecast:
         x_input = x_input.reshape((1, self.n_steps_in, self.n_features))
         yhat = self.model.predict(x_input, verbose=0)
         print(yhat)
+        print("Prediction >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
         return yhat
 
 
@@ -108,14 +112,17 @@ class Time_Series_Forecast:
 
         # Prepare data ..................
         self.prepare_data()
-    
+        print("-------------------------------------------------------")
+
         # Training the Forecast Model .... 
         self.forecast_model()
+        print("-------------------------------------------------------")
 
         # Predict traffic ................
-        self.prediction()
-
-        return 
+        results = self.prediction()
+        print("-------------------------------------------------------")
+        print( results )
+        return results
 
 if __name__ == "__main__":
     
