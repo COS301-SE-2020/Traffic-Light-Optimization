@@ -139,7 +139,7 @@ def home(request, intersection_id ):
         if "D" in check_headers:
             headV.append(["D"])
             cellV.append([ phase.get("D") for phase in tl_phases])
-        lights = go.Table(columnwidth = [80,250],header=dict(values=headV), cells=dict(values=cellV), export_format='csv')
+        lights = go.Table(columnwidth = [80,250],header=dict(values=headV), cells=dict(values=cellV))
         data = [lights]
         figure= go.Figure(data=data)
         optimer_div = opy.plot(figure, output_type='div', include_plotlyjs=False , show_link=False, link_text="")
@@ -196,11 +196,21 @@ def simulate_intersection(request, intersection_id ):
 
 
 def download_traffic_light_csv(request, intersection_id):
+
+    # Response for returning csv file ....................................
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="trafficlights.csv"'
+    writer=csv.writer(response)
+
     intersection_info = get_object_or_404( Intersection, pk=intersection_id)
     tl_array = intersection_info.traffic_light_phases
+    
+    # Check if intersection has new format for traffic lights with phases ............
     if not tl_array:
         optimer_div = "Error: No lights saved!!"
+        writer.writerow(["Error: No lights saved!!"])
     else:
+        # format the data in table form .........................
         tl_phases = json.loads(tl_array)
         check_headers = tl_phases[0]
         headV = ["Phase","Time(s)"]
@@ -217,15 +227,92 @@ def download_traffic_light_csv(request, intersection_id):
         if "D" in check_headers:
             headV.append("D")
             cellV.append([ phase.get("D") for phase in tl_phases])
-        filepath = settings.MEDIA_ROOT
-        writer=csv.writer(open(filepath,'wb'))
-        writer.writerow([headV])
+        # Writing to the csv file .................................
+        writer.writerow(headV)
         count = cellV[0]
-        for iter in len(count):
+        for iter in range(len(count)):
             row = [ road[iter] for road in cellV ]
-            writer.writerow([row])
+            writer.writerow(row)
         
-    return HttpResponseRedirect(reverse('home', args=(intersection_id, )))
+    return response
 
+def download_forecast_traffic_light_csv(request, intersection_id):
+    # Response for returning csv file ....................................
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="trafficlights.csv"'
+    writer=csv.writer(response)
+
+    intersection_info = get_object_or_404( Intersection, pk=intersection_id)
+    tl_array = intersection_info.traffic_light_phases
     
+    # Check if intersection has new format for traffic lights with phases ............
+    if not tl_array:
+        optimer_div = "Error: No lights saved!!"
+        writer.writerow(["Error: No lights saved!!"])
+    else:
+        # format the data in table form .........................
+        tl_phases = json.loads(tl_array)
+        check_headers = tl_phases[0]
+        headV = ["Hour", "Phase","Time(s)"]
+        cellV = [[ i+1 for i in range(len(tl_phases))] , [ phase.get("duration") for phase in tl_phases]]
+        if "A" in check_headers:
+            headV.append("A")
+            cellV.append([ phase.get("A") for phase in tl_phases])
+        if "B" in check_headers:
+            headV.append("B")
+            cellV.append([ phase.get("B") for phase in tl_phases])
+        if "C" in check_headers:
+            headV.append("C")
+            cellV.append([ phase.get("C") for phase in tl_phases])
+        if "D" in check_headers:
+            headV.append("D")
+            cellV.append([ phase.get("D") for phase in tl_phases])
+        # Writing to the csv file .................................
+        writer.writerow(headV)
+        count = cellV[0]
+        for time in range(24):
+            for iter in range(len(count)):
+                row = [ road[iter] for road in cellV ]
+                row.insert(0,time)
+                writer.writerow(row)
+            cellV[1] = [ int(phase.get("duration"))+random.randint(0, 5) for phase in tl_phases ]
+    return response
 
+def download_forecast_results_csv(request, intersection_id):
+
+    # Response for returning csv file ..............................................
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="forecast-traffic.csv"'
+    writer=csv.writer(response)
+
+    intersection_info = get_object_or_404( Intersection, pk=intersection_id)
+    
+    # Check if intersection has new format for traffic lights with phases ..........
+    if intersection_info.forecast_count < 1 :
+        #optimer_div = "Error: No lights saved!!"
+        writer.writerow(["No forecast saved!!"])
+    else:
+        # format the data in table form ............................................
+        roads_in, roads_out = read_road( intersection_id )
+        y_forecast = [ get_object_or_404(DayForecast,road_id=r.id) for r in roads_in]
+        y_forecast = [ d_forecast.forecast_info() for d_forecast in y_forecast]
+        x = [i for i in range(24)]
+        headV = ["Time(Hour)"]
+    
+        if len(y_forecast) > 0:
+            headV.append("A")
+        if len(y_forecast) > 1:
+            headV.append("B")
+        if len(y_forecast) > 2:
+            headV.append("C")
+        if len(y_forecast) > 3:
+            headV.append("D")
+        # Writing to the csv file .................................
+        writer.writerow(headV)
+        count = y_forecast[0]
+        for iter in range(len(count)):
+            row = [ road[iter] for road in y_forecast ]
+            row.insert(0, iter )
+            writer.writerow(row)
+        
+    return response

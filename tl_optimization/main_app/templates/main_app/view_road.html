@@ -165,14 +165,19 @@
                     <p>Upload historic traffic data for intersection</p>
                 {%endif%}
             </div>
-
+            <div class="modal-footer">
+                <form action="{% url 'download_forecast_results_csv' intersection_info.id %}" method="post">
+                    {% csrf_token %}
+                    <button id="download_tl" type="submit" class="btn btn-outline-primary">Download CSV</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
 
 <!-- The Modal  for Optimizer -->
 <div class="modal fade" id="optimizerModal">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
         <div class="modal-content">
       
             <!-- Modal Header -->
@@ -200,12 +205,17 @@
                 {%endif%}
             
             </div>
-            
+            <div class="modal-footer">
+                <form action="{% url 'download_forecast_traffic_light_csv' intersection_info.id %}" method="post">
+                    {% csrf_token %}
+                    <button id="download_tl" type="submit" class="btn btn-outline-primary">Download CSV </button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
 
-<!-- The Modal  for Data forecasting -->
+<!-- The Modal  for Traffic Timing -->
 <div class="modal fade" id="optimerModal">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
@@ -226,7 +236,12 @@
                 {{ optimer_div }}
                 {% endautoescape %}
             </div>
-
+            <div class="modal-footer">
+                <form action="{% url 'download_traffic_light_csv' intersection_info.id %}" method="post">
+                    {% csrf_token %}
+                    <button id="download_tl" type="submit" class="btn btn-outline-primary">Download CSV </button>
+                </form>
+            </div>
         </div>
     </div>
 </div>

@@ -25,6 +25,10 @@ urlpatterns = [
     path('intersection/', views.create_intersection, name="create_intersection" ),
     path('intersection/<int:intersection_id>/', views.update_delete_intersection, name="update_delete_intersection" ),
     path('intersection/<int:intersection_id>/upload', views.upload_historic_data, name="upload_historic_data"),
+    path('intersection/<int:intersection_id>/trafficlights', views.download_traffic_light_csv, name="download_traffic_light_csv"),
+    path('intersection/<int:intersection_id>/forecast', views.download_forecast_results_csv, name="download_forecast_results_csv"),
+    path('intersection/<int:intersection_id>/forecasttrafficlights', views.download_forecast_traffic_light_csv, name="download_forecast_traffic_light_csv"),
+    
 
     # Intersection Simulation 
     # path('intersection/<int:intersection_id>/visualization', views.visualize_intersection, name="visualize_intersection"),
