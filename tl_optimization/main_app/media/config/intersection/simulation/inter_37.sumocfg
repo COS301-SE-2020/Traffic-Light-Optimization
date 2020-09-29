@@ -1,0 +1,6 @@
+<configuration>
+  <input>
+    <net-file value="C:\Users\TLOU LEBELO\Documents\GitHub\Traffic-Light-Optimization\tl_optimization\main_app\media\config\intersection\network\inter_37.net.xml"/>
+    <route-files value="C:\Users\TLOU LEBELO\Documents\GitHub\Traffic-Light-Optimization\tl_optimization\main_app\media\config\intersection\routes\inter_37.rou.xml"/>
+  </input>
+</configuration>

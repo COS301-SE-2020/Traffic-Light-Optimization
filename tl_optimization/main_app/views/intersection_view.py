@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, get_list_or_404, render
 from django.urls import reverse
 from django.core.paginator import Paginator
+import json
 
 # External libraries .................
 import pandas as pd
@@ -12,7 +13,7 @@ from plotly.graph_objs import Bar
 import plotly.express as px
 
 # Import optimizer module ............
-#from ..optimizer.time_series_forecast import Time_Series_Forecast
+from ..optimizer.time_series_forecast import Time_Series_Forecast
 #from ..optimizer.intersection_optimizer import *
 
 # Views requirements .................
@@ -62,19 +63,21 @@ def create_intersection(request):
                 Road.objects.create( 
                     intersection_out=new_intersection, road_name="outD", position="D", road_distance=dist, average_speed=spd, num_lanes=lan )
 
-            # Create the simulation files from default settings
+            # Create SUMO simulation files from default settings
             in_ , out_ = read_road( new_intersection.id )
             in_data = [ r.road_info() for r in in_ ]
             out_data = [ r.road_info() for r in out_ ]
-            '''for road in in_data:
-                road.update({'rate':100})'''
             traffic_lights = []
             inter_object = get_object_or_404( Intersection, pk=new_intersection.id)
-            print( inter_object.id )
-            print( "......................" )
             simulation = GenerateNetwork( intersection_obj=inter_object, roads_in=in_data, roads_out=out_data, lights=traffic_lights )
-            #simulation.create_network()
             simulation.create_simulation_configurations()
+
+            print("# Traffic Lights ----------------------------------------------------------------")
+            tl_array = inter_object.traffic_light_phases
+            print(tl_array)
+            tl_phases = json.loads(tl_array)
+            print(tl_phases)
+
             return HttpResponseRedirect(reverse('home', args=(new_intersection.id, ))) 
     return HttpResponseRedirect(reverse('home_'))
 
@@ -93,10 +96,11 @@ def update_delete_intersection(request, intersection_id):
 def upload_historic_data(request, intersection_id ):
 
     if request.method == 'POST':
-        data_file = request.FILES['historic_data']
+        data_file = request.FILES.get('historic_data')
+        if data_file is None:
+            return HttpResponseRedirect(reverse('home', args=(intersection_id, ))) 
         # Open data in pandas 
-        df = pd.read_csv(data_file, header=None)
-        headers = df[0]
+        df = pd.read_csv(data_file)
         if not df.empty :
             flag = False
             intersection_info = get_object_or_404( Intersection, pk=intersection_id)
@@ -112,20 +116,30 @@ def upload_historic_data(request, intersection_id ):
                 intersection_info.forecast_count += 1 
                 intersection_info.save()
 
-        # Get roads to validate data 
-        '''
-        roads = read_road( intersection_id )
-        roads_in = roads.roads_in
-        # Validate headers
-        if len(roads_in) > 1 :
-            csv_road_names = headers[1:]
-            count = 0
-            for road in roads_in:
-                if road.road_name in csv_road_names:
-                    count = count + 1
-                    
-            if( len(roads_in) == count ):
-                intersection = get_object_or_404( Intersection, pk=intersection_id)
+            # Get roads to validate data 
+            roads_in, roads_out = read_road( intersection_id )
+            # Validate headers
+            print("Validate headers")
+            if len(roads_in) > 1 :
+                csv_road_names = list(df.columns)
+                print(csv_road_names)
+                count = 0
+                for road in roads_in:
+                    if road.position in csv_road_names:
+                        count = count + 1
+                print("......................................")
+                if( len(roads_in) == count ):
+                    print("Convert data to arrays")
+                    # Convert data to arrays
+                    #df = pd.read_csv(data_file)
+                    traffic_list = []
+                    for r in roads_in:
+                        traffic_list.append( df[r.position].tolist() )
+                    intersection = get_object_or_404( Intersection, pk=intersection_id)
+                    print("......................................")
+                    forecast_intersection(intersection.intersection_name, traffic_list )
+                
+                '''
                 intersection.upload_historic_data( data_file )
                 intersection.train_model()
                 intersection.forecast_traffic()
@@ -135,12 +149,13 @@ def upload_historic_data(request, intersection_id ):
     return HttpResponseRedirect(reverse('home', args=(intersection_id, ))) 
    
 # Forecast the uploaded data .......................................................................................
-def forecast_intersection( date):
-    tsf_services = Time_Series_Forecast()
-    data = tsf_services.prepare_data()
-    tsf_services.forecast_model()
-    results = tsf_services.prediction()
-    return data , results
+def forecast_intersection( name="", data=[]):
+    print("forecast_intersection >>>>>>>>>>>>>>>>>>>>>>>>>>>")
+    tsf_services = Time_Series_Forecast(intersection_name=name, data=data, n_steps_in=24, n_steps_out=24 )
+    print("Time_Series_Forecast >>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+    results = tsf_services.predict_traffic()
+    print("tsf_services.predict_traffic() >>>>>>>>>>>>>>>>>>")
+    #print(results)
 
 
 # Calculate the time for each day ...................................................................................
@@ -149,22 +164,22 @@ def optimize_intersection( request , intersection_id):
 
 # update_simulation_info ...........................................................................................
 def update_simulation_info( request , intersection_id):
-    # get intersection
+
     intersection = get_object_or_404( Intersection, pk=intersection_id)
 
     # Create the simulation files from updated Road settings
     in_data, out_data = read_road( intersection.id )
     in_data = [ r.road_info() for r in in_data ]
     out_data = [ r.road_info() for r in out_data ]
-    '''for road in in_data:
-        road.update({'rate':100})'''
     traffic_lights = []
     simulation = GenerateNetwork( intersection_obj=intersection, roads_in=in_data, roads_out=out_data, lights=traffic_lights )
-    #simulation.create_network()
     simulation.create_simulation_configurations()
+    #intersection.traffic_light_phases = json.dumps(traffic_lights_states)
+    #intersection.save()
 
     return HttpResponseRedirect(reverse('home', args=( intersection_id, ))) 
 
 
+    
 
     

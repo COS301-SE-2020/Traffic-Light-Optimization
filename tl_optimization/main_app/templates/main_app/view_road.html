@@ -17,18 +17,7 @@
     <!-- Update Road Info Tab ****************************************************************************************-->
     <div id="home" class="container tab-pane active"><br>
         <!-- Choose intersection side ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-        <!--<table class="table">
-            <thead class="thead-light">
-                <tr>
-                    <th><button type="button" class="btn btn-outline-dark"> A </button></th>
-                    <th><button type="button" class="btn btn-outline-dark"> B </button></th>
-                    <th><button type="button" class="btn btn-outline-dark"> C </button></th>
-                    {% if intersection_info.intersection_type == "Cross" %}
-                    <th><button type="button" class="btn btn-outline-dark"> D </button></th>
-                    {% endif %}
-                </tr>
-            </thead>
-        </table>-->
+        
         <ul class="nav nav-pills nav-fill" role="tablist">
             <li class="nav-item">
                 <a class="nav-link btn btn-outline-secondary active" data-toggle="pill" href="#side0">A</a>
@@ -77,7 +66,7 @@
                     </tbody>
                 </table>
                 <input type="hidden" id="position{{count}}" name="position" value="{{count}}">
-                <button type="submit" class="btn btn-primary btn-primary-sm" style="text-align:left;"> Update </button>
+                <button type="submit" class="btn btn-dark btn-dark-sm" style="text-align:left;"> Update </button>
             </form>
         </div>
         {%endfor%}
@@ -104,8 +93,8 @@
                 <br>
                 <p></p>
                 <div class="btn-group d-flex">
-                    <button type="submit" class="btn btn-primary">Update</button>
-                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#optimerModal"> Traffic Light Timing </button>
+                    <button type="submit" class="btn btn-dark">Update</button>
+                    <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#optimerModal"> Traffic Light Timing </button>
                 </div>
             {% else %}
                 <b> No roads going into intersection </b> <br>
@@ -116,7 +105,7 @@
     </div>
     <!-- Intersection Optimizer Tab *******************************************************************************-->
     <div id="menu2" class="container tab-pane fade"><br>
-        <span class="badge badge-dark"><h7> 1 - Time Series Data Forecasting </h7></span> <br><br>
+        <span class="badge badge-secondary"><h7> 1 - Time Series Data Forecasting </h7></span> <br><br>
             <p>Upload historic traffic data for intersection</p>
             <form action="{% url 'upload_historic_data' intersection_info.id %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
@@ -124,16 +113,15 @@
                     <input type="file" class="form-control-file border" name="historic_data">
                 </div>
                 <div class="btn-group d-flex">
-                    <button type="submit" class="btn btn-primary btn-primary-sm" style="text-align:left;"> Upload </button>
-                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#forecastModal"> View Results </button>
+                    <button type="submit" class="btn btn-dark btn-dark-sm" style="text-align:left;"> Upload </button>
+                    <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#forecastModal"> View Results </button>
                 </div>
             </form>
-
         <hr>
-        <span class="badge badge-dark"><h7> 2 - Optimized Traffic Light Timing </h7></span><br>
+        <span class="badge badge-secondary"><h7> 2 - Optimized Traffic Light Timing </h7></span><br><br>
         <!--<p> Optimizer traffic light timing.</p>-->
         <div class="btn-group d-flex">
-            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#optimizerModal"> Traffic Light Timing </button>
+            <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#optimizerModal"> Traffic Light Timing </button>
         </div>
         
     </div>
@@ -165,14 +153,19 @@
                     <p>Upload historic traffic data for intersection</p>
                 {%endif%}
             </div>
-
+            <div class="modal-footer">
+                <form action="{% url 'download_forecast_results_csv' intersection_info.id %}" method="post">
+                    {% csrf_token %}
+                    <button id="download_tl" type="submit" class="btn btn-outline-dark">Download CSV</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
 
 <!-- The Modal  for Optimizer -->
 <div class="modal fade" id="optimizerModal">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
         <div class="modal-content">
       
             <!-- Modal Header -->
@@ -200,12 +193,17 @@
                 {%endif%}
             
             </div>
-            
+            <div class="modal-footer">
+                <form action="{% url 'download_forecast_traffic_light_csv' intersection_info.id %}" method="post">
+                    {% csrf_token %}
+                    <button id="download_tl" type="submit" class="btn btn-outline-dark">Download CSV </button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
 
-<!-- The Modal  for Data forecasting -->
+<!-- The Modal  for Traffic Timing -->
 <div class="modal fade" id="optimerModal">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
@@ -226,7 +224,12 @@
                 {{ optimer_div }}
                 {% endautoescape %}
             </div>
-
+            <div class="modal-footer">
+                <form action="{% url 'download_traffic_light_csv' intersection_info.id %}" method="post">
+                    {% csrf_token %}
+                    <button id="download_tl" type="submit" class="btn btn-outline-dark">Download CSV </button>
+                </form>
+            </div>
         </div>
     </div>
 </div>

@@ -28,11 +28,11 @@
     </head>
     <body>
     <!--********************************************************************************************************-->
-        <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+        <nav class="navbar navbar-expand-sm bg-info navbar-info fixed-top justify-content-center">
             <a class="navbar-brand" href="#">
-                <img src="{% static 'images/logo_welcome.png' %}" width="70" height="70">
+                <img src="{% static 'images/logo_welcome.png' %}" width="80" height="80">
             </a>
-            <ul class="navbar-nav">
+            <ul class="navbar-nav" style="color:white;">
                 <h1>Traffic Light Optimizer</h1>
             </ul>
         </nav>
@@ -40,7 +40,7 @@
     <!--********************************************************************************************************-->
         <div class="container-fluid">
             <br><br>
-            <div class="container-fluid">
+            <div class="container-fluid ">
                 <br>
                 <div class="row">
                     <!--div class="col-sm-2" style="background-color:#379683;text-align:center;"-->
@@ -51,28 +51,27 @@
 
                     <!--div class="col-sm-6" style="background-color:#5cdb95;height: 500px"-->
                     <div class="col-sm-6" >
-                        <div class="row bg-info">
+                        <div class="row bg-light  border border-dark">
                             <div class="col-sm-6" >
-                                <nav class="navbar navbar-expand bg-info navbar-dark ">
+                                <nav class="navbar navbar-expand navbar-dark ">
                                     <span class="navbar-text">
-                                        <h4> <b> 
-                                            <span class="badge badge-primary">+</span> 
+                                        <h4 class="text-dark"> <b> 
+                                            <span class="badge badge-dark">+</span> 
                                             {{intersection_info.intersection_name}} |
                                         </b></h4>
                                     </span>
-                                    
                                 </nav>
                             </div>
-                            <div class="col-sm-6">
-                                <nav class="navbar navbar-expand bg-info navbar-dark ">
-                                    <div id="btn-group btn-group-sm">
-                                        <button type="button" class="btn btn-outline-primary" onclick="play()"> 
+                            <div class="col-sm-6 ">
+                                <nav class="navbar navbar-expand navbar-dark ">
+                                    <div id="btn-group btn-group-sm ">
+                                        <button type="button" class="btn btn-outline-dark" onclick="play()"> 
                                             <i class="fa fa-play"></i> play</button>
-                                        <button type="button" class="btn btn-outline-primary" onclick="pause()"> 
+                                        <button type="button" class="btn btn-outline-dark" onclick="pause()"> 
                                             <i class="fa fa-pause"></i> pause</button> 
-                                        <button type="button" class="btn btn-outline-primary" onclick="stop()"> 
+                                        <button type="button" class="btn btn-outline-dark" onclick="stop()"> 
                                             <i class="fa fa-stop"></i> stop</button>
-                                        <a type="button" class="btn btn-outline-secondary" 
+                                        <a type="button" class="btn btn-outline-dark" 
                                             href="{% url 'update_delete_intersection' intersection_info.id %}"> 
                                             <i class="fa fa-trash"></i> 
                                         </a>
@@ -81,7 +80,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div style="background-color:green;width=100%;text-align:center;" >
+                            <div style="width:100%;text-align:center;" >
                                 {% include 'main_app/view_simulation.html'%}
                             </div>
                         </div>
@@ -89,8 +88,8 @@
                     
                     <!--div class="col-sm-3" style="background-color:#5cdb95;"-->
                     <div class="col-sm-3" style="background-color:white;text-align:center;">
-                        <div class="list-group">
-                            <span class="current list-group-item bg-primary" style="text-align:center;">
+                        <div class="list-group border border-dark">
+                            <span class="current list-group-item bg-light border-bottom-0" style="text-align:center;">
                                 <b> Intersection Info </b><br>
                                 {% if intersection_info.intersection_type == "T-Up" %}
                                     <img src="{% static 'images/t_up.png' %}" width="220" height="150">
@@ -105,8 +104,8 @@
                                 {% endif %}
                             </span>
                             {% include 'main_app/view_road.html'%}
+                            <br>
                         </div>  
-                        <hr>
                     </div>
 
                 </div>
@@ -115,7 +114,7 @@
             </div>
         </div>
     <!--********************************************************************************************************-->
-        <div class="footer bg-dark navbar-dark fixed-bottom">
+        <div class="footer bg-info navbar-info fixed-bottom">
             <i class="fa fa-github" aria-hidden="true"></i> github
         </div>
 

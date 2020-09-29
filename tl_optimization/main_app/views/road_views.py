@@ -58,8 +58,8 @@ def read_road( intersection_id):
 def update_delete_road(request, intersection_id):
     
     if request.method == 'POST':
-        print("1. [post works]")
-        print( request.POST )
+        #print("1. [post works]")
+        #print( request.POST )
         count = 0
         roads_in, roads_out = read_road( intersection_id )
         for r_in, r_out in zip( roads_in, roads_out ):

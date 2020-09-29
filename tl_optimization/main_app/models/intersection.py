@@ -1,5 +1,6 @@
 # Headers ..................................................
 from django.db import models
+#import jsonfield
 from django.urls import reverse
 from datetime import datetime
 from influxdb import InfluxDBClient
@@ -41,6 +42,7 @@ class Intersection(models.Model):
     )
 
     forecast_count = models.IntegerField(default=0)
+    traffic_light_phases = models.TextField( blank=True )
 
     def get_absolute_url(self):
         return reverse('home', args=(self.id,))
