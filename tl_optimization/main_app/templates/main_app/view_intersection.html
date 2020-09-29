@@ -1,14 +1,14 @@
 
 
-<div class="list-group" style="text-align:left;">
-    <span class="current list-group-item bg-primary" style="text-align:center;">
+<div class="list-group border border-dark" style="text-align:left;">
+    <span class="current list-group-item bg-light" style="text-align:center;">
         <h5> <b> Intersections </b></h5>
         Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
     </span>
     {% for intersection in page_obj %}
         {# Each "contact" is a Contact model object. #}
-        <a href="{% url 'home' intersection.id %}" class="list-group-item ">
-            <span class="badge badge-primary">+</span>
+        <a href="{% url 'home' intersection.id %}" class="list-group-item text-dark" >
+            <span class="badge badge-dark">+</span>
             {{ intersection.intersection_name }}
         </a>
         

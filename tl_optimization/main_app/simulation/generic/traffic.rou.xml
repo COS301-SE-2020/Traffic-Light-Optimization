@@ -1,8 +1,9 @@
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
-  <flow id="A_C_0" begin="0" end="150" probability="0.25" from="inA" to="outC"/>
-  <flow id="A_D_0" begin="0" end="150" probability="0.25" from="inA" to="outD"/>
-  <flow id="C_A_0" begin="0" end="150" probability="0.25" from="inC" to="outA"/>
-  <flow id="C_D_0" begin="0" end="150" probability="0.25" from="inC" to="outD"/>
-  <flow id="D_A_0" begin="0" end="150" probability="0.25" from="inD" to="outA"/>
-  <flow id="D_C_0" begin="0" end="150" probability="0.25" from="inD" to="outC"/>
+  <vType id="mycar" length="5" guiShape="passenger/sedan"/>
+  <flow id="A_B_0" begin="0" end="150" probability="0.16666666666666666" from="inA" to="outB" type="mycar"/>
+  <flow id="A_C_0" begin="0" end="150" probability="0.16666666666666666" from="inA" to="outC" type="mycar"/>
+  <flow id="B_A_0" begin="0" end="150" probability="0.16666666666666666" from="inB" to="outA" type="mycar"/>
+  <flow id="B_C_0" begin="0" end="150" probability="0.16666666666666666" from="inB" to="outC" type="mycar"/>
+  <flow id="C_A_0" begin="0" end="150" probability="0.16666666666666666" from="inC" to="outA" type="mycar"/>
+  <flow id="C_B_0" begin="0" end="150" probability="0.16666666666666666" from="inC" to="outB" type="mycar"/>
 </routes>

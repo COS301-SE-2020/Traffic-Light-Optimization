@@ -181,10 +181,13 @@ class GenerateNetwork:
     def cars_particles(self):
         E = lxml.builder.ElementMaker()
         Routes = E.routes
+        Vtype = E.vType 
         Flow = E.flow
 
         the_doc = Routes( xsi="http://www.w3.org/2001/XMLSchema-instance" ,
                             noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd"  )
+        vehicle_type = Vtype(id="mycar", length="5" , guiShape="passenger/sedan" )
+        the_doc.append( vehicle_type )
         for roadin in self.roads_in:
             for roadout in self.roads_out:
                 if roadout.get("position") != roadin.get("position"):
@@ -200,7 +203,7 @@ class GenerateNetwork:
                         to_ = "out" + str(roadout.get("position"))
                         
                         #edg = Flow(id=idVal, begin=begin_t , end=end_t, vehsPerHour=cars_hour, from_=from_, to=to_ )
-                        edg = Flow(id=idVal, begin=begin_t , end=end_t, probability=cars_hour, from_=from_, to=to_ )
+                        edg = Flow(id=idVal, begin=begin_t , end=end_t, probability=cars_hour, from_=from_, to=to_ , type="mycar")
                         the_doc.append( edg )
 
 
