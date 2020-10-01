@@ -3,5 +3,4 @@
   <node id="A" x="0.0" y="+45" type="priority"/>
   <node id="C" x="0.0" y="-45" type="priority"/>
   <node id="D" x="-45" y="0.0" type="priority"/>
-  <node id="B" x="+45" y="0.0" type="priority"/>
 </nodes>

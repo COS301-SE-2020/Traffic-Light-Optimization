@@ -57,7 +57,8 @@ def home(request, intersection_id ):
     # Prepare data for the simulation --------------------------------------
     intersection_info = get_object_or_404( Intersection, pk=intersection_id)
     roads_in, roads_out = read_road( intersection_id )
-    Simulation = Thread(target=initiate,args=(intersection_id,) )
+    initiate(intersection_id,looper=False)                              # Get visualization only
+    Simulation = Thread(target=initiate,args=(intersection_id,True,) )  # Start the simulation
     Simulation.start() 
 
     # Update road information ---------------------------------------------------------

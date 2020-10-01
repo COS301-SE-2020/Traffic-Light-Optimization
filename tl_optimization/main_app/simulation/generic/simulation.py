@@ -5,6 +5,7 @@ import sys
 import optparse
 from django.conf import settings
 import threading
+import random 
 
 # we need to import some python modules from the $SUMO_HOME/tools directory
 if 'SUMO_HOME' in os.environ:
@@ -27,19 +28,25 @@ def get_options():
 
 
 # contains TraCI control loop
-def run(traci_connection, intersection_id):
+def run(traci_connection, intersection_id, loop=True):
     step = 0
     path = settings.MEDIA_ROOT + "\simulation\inter"+ str(intersection_id)
     if not os.path.isdir(path):
         os.mkdir(path)
-
+    
+    # Adjust the Simulation view and get the screenshot of the first UI view
     traci_connection.gui.setZoom( "View #0", 100 )
-    while traci_connection.simulation.getMinExpectedNumber() > 0:
+    traci_connection.gui.screenshot("View #0", path+"\image"+str(step)+".png", width=1000, height=800)
+    step += 1
+
+    # Iterate throughout the simulation if loop is true i.e. we want the simulation not only the visualization
+    while traci_connection.simulation.getMinExpectedNumber() > 0 and loop:
         traci_connection.simulationStep()
         print(step)
         traci_connection.gui.screenshot("View #0", path+"\image"+str(step)+".png", width=1000, height=800)
         step += 1
 
+    # Close the simulation
     traci_connection.close()
     sys.stdout.flush()
 
@@ -53,7 +60,7 @@ def stop():
 
 
 # main entry point
-def initiate( intersection_id ):
+def initiate( intersection_id, looper=True ):
     options = get_options()
 
     # check binary
@@ -63,7 +70,7 @@ def initiate( intersection_id ):
         sumoBinary = checkBinary('sumo-gui')
 
     # traci starts sumo as a subprocess and then this script connects and runs
-    threadId = threading.get_native_id()
+    threadId = threading.get_native_id() + random.randint(1, 400)
 
     path = os.getcwd() + "\main_app\simulation\generic"
     sumocfg = os.getcwd() + "\main_app\media\config\intersection\simulation\inter_"+str(intersection_id)+".sumocfg"
@@ -73,7 +80,7 @@ def initiate( intersection_id ):
     try:
         traci.start([sumoBinary, "-c", sumocfg , "--tripinfo-output", tripinfo, "-S", "-Q"], label=str(threadId))
         traci_connection = traci.getConnection(str(threadId))
-        run(traci_connection,intersection_id)
+        run(traci_connection,intersection_id, loop=looper)
     except:
         print("********************************* >> Something went wrong")
         traci_connection = traci.getConnection(str(intersection_id))
