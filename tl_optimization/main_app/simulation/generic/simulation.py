@@ -6,6 +6,7 @@ import optparse
 from django.conf import settings
 import threading
 import random 
+import time
 
 # we need to import some python modules from the $SUMO_HOME/tools directory
 if 'SUMO_HOME' in os.environ:
@@ -26,9 +27,14 @@ def get_options():
     options, args = opt_parser.parse_args()
     return options
 
+# Global variable to stop connection
+STOPPER = { 'SUMO': True }
+
 
 # contains TraCI control loop
 def run(traci_connection, intersection_id, loop=True):
+    #global STOPPER 
+    STOPPER[str(intersection_id)] = False
     step = 0
     path = settings.MEDIA_ROOT + "\simulation\inter"+ str(intersection_id)
     if not os.path.isdir(path):
@@ -40,7 +46,7 @@ def run(traci_connection, intersection_id, loop=True):
     step += 1
 
     # Iterate throughout the simulation if loop is true i.e. we want the simulation not only the visualization
-    while traci_connection.simulation.getMinExpectedNumber() > 0 and loop:
+    while traci_connection.simulation.getMinExpectedNumber() > 0 and loop and not STOPPER[str(intersection_id)]:
         traci_connection.simulationStep()
         print(step)
         traci_connection.gui.screenshot("View #0", path+"\image"+str(step)+".png", width=1000, height=800)
@@ -55,12 +61,18 @@ def pause():
     pass
 
 # Stop the traCi simulation
-def stop():
-    traci.close() 
+def stop( connection_label, intersection_id ):
+    #global STOPPER 
+    #STOPPER = True
+    STOPPER[str(intersection_id)] = True
+    time.sleep(1)
+    #traci_connection = traci.getConnection( str(connection_label) )
+    #traci_connection.close() 
+    #sys.stdout.flush()
 
 
 # main entry point
-def initiate( intersection_id, looper=True ):
+def initiate( intersection_id, looper=True , simu_connection=0 ):
     options = get_options()
 
     # check binary
@@ -70,7 +82,8 @@ def initiate( intersection_id, looper=True ):
         sumoBinary = checkBinary('sumo-gui')
 
     # traci starts sumo as a subprocess and then this script connects and runs
-    threadId = threading.get_native_id() + random.randint(1, 400)
+    #threadId = threading.get_native_id() + random.randint(1, 400)
+    threadId = str(simu_connection)
 
     path = os.getcwd() + "\main_app\simulation\generic"
     sumocfg = os.getcwd() + "\main_app\media\config\intersection\simulation\inter_"+str(intersection_id)+".sumocfg"
@@ -82,10 +95,10 @@ def initiate( intersection_id, looper=True ):
         traci_connection = traci.getConnection(str(threadId))
         run(traci_connection,intersection_id, loop=looper)
     except:
-        print("********************************* >> Something went wrong")
-        traci_connection = traci.getConnection(str(intersection_id))
-        traci_connection.close()
-        sys.stdout.flush()
+        print("********************************* >> Something went wrong << ******************************* ")
+        #traci_connection = traci.getConnection( str(intersection_id) )
+        #traci_connection.close()
+        #sys.stdout.flush()
         #traci.start([sumoBinary, "-c", sumocfg , "--tripinfo-output", tripinfo], label=str(intersection_id))
         #traci_connection = traci.getConnection(str(intersection_id))
     

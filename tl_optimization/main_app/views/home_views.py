@@ -1,4 +1,4 @@
-# Headers ................
+# Headers ........................................................
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, get_list_or_404, render
 from django.urls import reverse
@@ -8,20 +8,20 @@ import json
 from django.conf import settings
 
 
-# Views requirements .........
+# Views requirements .............................................
 from ..forms import *
 from ..models import *
 from .road_views import *
 
 # Simulation module
 from ..simulation.generic import *
-# Import optimizer module ............
+# Import optimizer module ........................................
 #from ..optimizer.time_series_forecast import Time_Series_Forecast
 #from ..optimizer.intersection_optimizer import *
 from ..simulation.generic.generate_network import *
 from ..simulation.generic.simulation import *
 
-# External libraries .................
+# External libraries .............................................
 import pandas as pd
 import plotly.express as px
 import plotly.offline as opy
@@ -30,7 +30,7 @@ import random
 import json
 import csv
 
-# Global Variable ..........................
+# Global Variable ................................................
 GLOBAL_stop_threads = True
 
 # Testing response ....................................................
@@ -45,7 +45,7 @@ def home_(request ):
     return home(request,int_id)
 
 def home(request, intersection_id ):
-    # Different intersections list --------------------------------------
+    # Different intersections list ----------------------------------------
     intersection_list = Intersection.objects.get_queryset().order_by('id')
     paginator = Paginator(intersection_list, 7) # Show 7 intersections per page.
     page_number = request.GET.get('page')
@@ -58,7 +58,8 @@ def home(request, intersection_id ):
     intersection_info = get_object_or_404( Intersection, pk=intersection_id)
     roads_in, roads_out = read_road( intersection_id )
     initiate(intersection_id,looper=False)                              # Get visualization only
-    Simulation = Thread(target=initiate,args=(intersection_id,True,) )  # Start the simulation
+    simu_connection = random.randint(1000, 5000)
+    Simulation = Thread(target=initiate,args=(intersection_id,True,simu_connection,) )  # Start the simulation
     Simulation.start() 
 
     # Update road information ---------------------------------------------------------
@@ -160,6 +161,7 @@ def home(request, intersection_id ):
         'optimer_div': optimer_div,
         'forecast_div_': forecast_div_ ,
         'optimization_div_': optimization_div_ ,
+        'connection': simu_connection,
     }
     return render(request, 'main_app/view_home.html', data_input )
 

@@ -9,6 +9,10 @@ from django.core.paginator import Paginator
 from ..forms import *
 from ..models import *
 
+# Required to stop simulation
+from ..simulation.generic.simulation import *
+
+
 # Create Road .....................................................................................................................
 def add_road(request, intersection_id):
     print("1. Attempt to add single road")
@@ -58,8 +62,13 @@ def read_road( intersection_id):
 def update_delete_road(request, intersection_id):
     
     if request.method == 'POST':
-        #print("1. [post works]")
-        #print( request.POST )
+        # Stop the current connection if it still running ---
+        conn_label = str(request.POST.get("simulation"))
+        stop( conn_label, intersection_id )
+
+
+        # Update the file for the simulation ----------------
+        # print( request.POST )
         count = 0
         roads_in, roads_out = read_road( intersection_id )
         for r_in, r_out in zip( roads_in, roads_out ):
@@ -90,6 +99,11 @@ def update_delete_road(request, intersection_id):
 # Update the cars per minute rate ...............................................................................................
 def update_road_rate(request, intersection_id):
     if request.method == 'POST':
+        # Stop the current connection if it still running ---
+        conn_label = str(request.POST.get("simulation"))
+        stop( conn_label, intersection_id  )
+
+        # Update the traffic flow ------------------------
         roads_in, roads_out = read_road( intersection_id )
         for road in roads_in:
             road.rate = request.POST.get(str(road.road_name))
