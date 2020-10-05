@@ -10,6 +10,7 @@ from keras.layers import RepeatVector
 from keras.layers import TimeDistributed
 
 import os
+import numpy 
 
 # Preparing Data .................................................................
 # split a multivariate sequence into samples
@@ -121,6 +122,8 @@ class Time_Series_Forecast:
         # Predict traffic ................
         results = self.prediction()
         print("-------------------------------------------------------")
+        if numpy.isnan(results).any():
+            return self.testdata
         print( results )
         return results
 

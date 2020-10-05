@@ -46,11 +46,15 @@ def run(traci_connection, intersection_id, loop=True):
     step += 1
 
     # Iterate throughout the simulation if loop is true i.e. we want the simulation not only the visualization
-    while traci_connection.simulation.getMinExpectedNumber() > 0 and loop and not STOPPER[str(intersection_id)]:
+
+    #while traci_connection.simulation.getMinExpectedNumber() > 0 and loop and not STOPPER[str(intersection_id)]:
+    while traci_connection.simulation.getMinExpectedNumber() > 0 and not STOPPER[str(intersection_id)]:
         traci_connection.simulationStep()
         print(step)
         traci_connection.gui.screenshot("View #0", path+"\image"+str(step)+".png", width=1000, height=800)
         step += 1
+        if not loop:
+            break
 
     # Close the simulation
     traci_connection.close()
@@ -62,17 +66,12 @@ def pause():
 
 # Stop the traCi simulation
 def stop( connection_label, intersection_id ):
-    #global STOPPER 
-    #STOPPER = True
     STOPPER[str(intersection_id)] = True
     time.sleep(1)
-    #traci_connection = traci.getConnection( str(connection_label) )
-    #traci_connection.close() 
-    #sys.stdout.flush()
 
 
 # main entry point
-def initiate( intersection_id, looper=True , simu_connection=0 ):
+def initiate( intersection_id, looper=True , simu_connection=123 ):
     options = get_options()
 
     # check binary
@@ -99,13 +98,6 @@ def initiate( intersection_id, looper=True , simu_connection=0 ):
         #traci_connection = traci.getConnection( str(intersection_id) )
         #traci_connection.close()
         #sys.stdout.flush()
-        #traci.start([sumoBinary, "-c", sumocfg , "--tripinfo-output", tripinfo], label=str(intersection_id))
-        #traci_connection = traci.getConnection(str(intersection_id))
-    
-    
-    #traci.start([sumoBinary, "-c", path+"\\sumo.sumocfg", "--tripinfo-output", path+"\\tripinfo.xml", "-S", "-Q"])
-    #traci.start([sumoBinary, "-c", "sumo.sumocfg", "--tripinfo-output", "tripinfo.xml", "-S", "-Q"])
-    #traci.start([sumoBinary, "-c", str(intersection.intersection_simulation.url), "--tripinfo-output", "tripinfo.xml", "-S", "-Q"])
 
 
 if __name__ == "__main__":

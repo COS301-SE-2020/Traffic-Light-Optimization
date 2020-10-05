@@ -24,6 +24,10 @@
                 color: white;
                 text-align: center;
             }
+
+            .even_space > div {
+                padding:0 0px;
+            }
         </style>
     </head>
     <body>
@@ -44,13 +48,13 @@
                 <br>
                 <div class="row">
                     <!--div class="col-sm-2" style="background-color:#379683;text-align:center;"-->
-                    <div class="col-sm-3" style="background-color:white;text-align:center;">
+                    <div class="col-sm-2" style="background-color:white;text-align:center;">
                         {% include 'main_app/view_intersection.html'%}
                         <hr>
                     </div>
 
                     <!--div class="col-sm-6" style="background-color:#5cdb95;height: 500px"-->
-                    <div class="col-sm-6" >
+                    <div class="col-sm-7" >
                         <div class="row bg-light  border border-dark">
                             <div class="col-sm-6" >
                                 <nav class="navbar navbar-expand navbar-dark ">
@@ -79,8 +83,38 @@
                                 </nav>
                             </div>
                         </div>
-                        <div class="row">
-                            <div style="width:100%;text-align:center;" >
+                        <div class="row border border-dark border-top-0 even_space">
+                            <div class="col-sm-2 bg-light" >
+                                <ul class="list-group list-group-flush bg-secondary">
+                                    <li class="list-group-item list-group-item-secondary"><h2>CO2</h2> <br> 354 ppm </li>
+                                    <li class="list-group-item list-group-item-secondary"><h2>Cars</h2> <br> 9 </li>
+                                    <li class="list-group-item list-group-item-secondary">
+                                        <h3>
+                                        <span class="badge badge-secondary "> A </span> 2
+                                        <h3>
+                                        
+                                    </li>
+                                    <li class="list-group-item list-group-item-secondary">
+                                        <h3>
+                                        <span class="badge badge-secondary"> B </span> 3
+                                        <h3>
+                                    </li>
+                                    <li class="list-group-item list-group-item-secondary">
+                                        <h3>
+                                        <span class="badge badge-secondary"> C </span> 1
+                                        <h3>
+                                    </li>
+                                    <li class="list-group-item list-group-item-secondary">
+                                        <h3>
+                                        <span class="badge badge-secondary"> D </span> 4
+                                        <h3>
+                                    </li>
+                                </ul>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item list-group-item-secondary"></li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-10" >
                                 {% include 'main_app/view_simulation.html'%}
                             </div>
                         </div>
