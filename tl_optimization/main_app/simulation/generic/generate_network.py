@@ -145,7 +145,7 @@ class GenerateNetwork:
         
 
         for road in roads_out_looper:
-            idVal = "out" + str(neighbor.get("position"))
+            idVal = "out" + str(road.get("position"))
             to_ = str(road.get("position"))
             n_lanes = str(road.get("lanes"))
             speed = str(road.get("speed"))
@@ -229,7 +229,7 @@ class GenerateNetwork:
         self.object.vehicle_routes.delete()
         self.object.vehicle_routes.save( filename , ContentFile( the_doc ) )
 
-    # Creates the intersection
+    # Creates the intersection ...............................................................................................
     def create_network(self):
         self.intersection_nodes()
         self.road_edges()
@@ -268,7 +268,7 @@ class GenerateNetwork:
         self.object.intersection_network.save( filename , File( the_doc ) )
         the_doc.close()
         
-        # Start simulation process
+        # Get the traffic light settings created by SUMO
         with open(output, 'r') as f: 
             data = f.read() 
         Bs_data = BeautifulSoup(data, "xml")
@@ -304,31 +304,58 @@ class GenerateNetwork:
         #print(self.traffic_lights_configuration)
         #Thread(target=initiate).start()
 
+    # Create view settings file ................................................................................................
+    def create_views_settings(self):
+        E = lxml.builder.ElementMaker()
+        viewsettings = E.viewsettings
+        scheme  = E.scheme
+
+        the_doc = viewsettings( 
+                scheme( name="real world" ),
+        )
+        the_doc = lxml.etree.tostring(the_doc, pretty_print=True).decode('utf-8')
+        # Print the xml information ............
+        print("------------------------------------------------------------------------------------------------------------")
+        print( the_doc )
+        print("------------------------------------------------------------------------------------------------------------")
+
+        # Write to the file on db
+        filename = "inter_"+ str(self.object.id) + ".settings.xml"
+        self.object.view_settings.delete()
+        self.object.view_settings.save( filename , ContentFile( the_doc ) )
+
+
+    # Initiate configurations and create the .sumocfg ..........................................................................
     def create_simulation_configurations(self):
 
         # Generating the .net.xml file for simulation
         self.create_network()
-
+        self.create_views_settings()
+        
         # Creating configuration file for intersection simulation 
         E = lxml.builder.ElementMaker()
         Config = E.configuration
         Input = E.input
         Net = E.netfile
         Rout = E.routefiles
+        Settings = E.guisettingsfile
 
         path = os.getcwd() + '\main_app\media\config\intersection'
         network = path + '\\network\inter_'+ str(self.object.id) + '.net.xml'
         edges = path + '\\routes\inter_'+ str(self.object.id) + '.rou.xml'
+        settings = path + '\\settings\inter_'+ str(self.object.id) + '.settings.xml'
 
         the_doc = Config( 
             Input(
                 Net( value=network ),
                 Rout( value=edges ),
+                Settings( value=settings ),
             )
          )
 
         the_doc = re.sub('routefiles', 'route-files', lxml.etree.tostring(the_doc, pretty_print=True).decode('utf-8'))
         the_doc = re.sub('netfile', 'net-file', the_doc)
+        the_doc = re.sub('guisettingsfile', 'gui-settings-file', the_doc)
 
         # Print the xml information ............
         print("------------------------------------------------------------------------------------------------------------")

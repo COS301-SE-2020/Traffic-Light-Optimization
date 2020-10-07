@@ -2,10 +2,11 @@
 {% if intersection_info.id > 19 %}
     <img 
         id="myImg" 
-        src="{% static 'images/load_image.gif' %}"
+        src="{{ MEDIA_URL }}simulation/inter{{intersection_info.id}}/image0.png"
         onload="loadImage()"
         class="img-fluid"
         onError="this.onerror=null;this.src='{% static 'images/loading.gif' %}';"
+        style="width:100%"
     >
 {% else %}
  <!--width="700" height="500" -->
@@ -42,6 +43,8 @@
         }else{
             i = i + 1
             document.getElementById("myImg").src ="{{ MEDIA_URL }}" + "simulation/inter{{intersection_info.id}}/image"+i.toString()+".png";
+            document.getElementById("casrA").innerHTML = "" ;
+            
             player = setTimeout(task, 500 );
         }
     }

@@ -31,6 +31,7 @@ class Intersection(models.Model):
     road_edges = models.FileField(upload_to='config/intersection/edges/', null=True, blank=True)
     vehicle_routes = models.FileField(upload_to='config/intersection/routes/', null=True, blank=True)
     intersection_network = models.FileField(upload_to='config/intersection/network/', null=True, blank=True)
+    view_settings = models.FileField(upload_to='config/intersection/settings/', null=True, blank=True)
     intersection_simulation = models.FileField(upload_to='config/intersection/simulation/', null=True, blank=True)
 
     A, B, C, D, E = 'Cross', 'T-Up','T-Down','T-Left','T-Right'

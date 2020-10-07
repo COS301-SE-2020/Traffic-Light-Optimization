@@ -1,5 +1,5 @@
 # Django requirements ..............
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, get_list_or_404, render
 from django.urls import reverse
 from django.core.paginator import Paginator
@@ -180,6 +180,7 @@ def update_simulation_info( request , intersection_id):
     return HttpResponseRedirect(reverse('home', args=( intersection_id, ))) 
 
 
-    
-
-    
+# Get simulation extra information 
+def get_simulation_infomation(request, intersection_id, iteration ):
+    data = simulation_info(intersection_id,iteration)
+    return  JsonResponse(data)
