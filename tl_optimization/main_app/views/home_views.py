@@ -60,7 +60,9 @@ def home(request, intersection_id ):
     conn_ = random.randint(1000, 5000)
     initiate(intersection_id,looper=False,simu_connection=conn_)                              # Get visualization only
     simu_connection = random.randint(1000, 5000)
-    #Simulation = Thread(target=initiate,args=(intersection_id,True,simu_connection,) )  # Start the simulation
+    in_data = [ r.road_info() for r in roads_in ]
+    out_data = [ r.road_info() for r in roads_out ]
+    #Simulation = Thread(target=initiate,args=(intersection_id,True,simu_connection,in_data,out_data,) )  # Start the simulation
     #Simulation.start() 
 
     # Update road information ---------------------------------------------------------

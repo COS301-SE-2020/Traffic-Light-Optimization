@@ -84,29 +84,42 @@
                             </div>
                         </div>
                         <div class="row border border-dark border-top-0 even_space">
-                            <div class="col-sm-2 bg-light" >
+                            <div class="col-sm-2 bg-light">
                                 <ul class="list-group list-group-flush bg-secondary">
-                                    <li class="list-group-item list-group-item-secondary"><h2>CO2</h2> <br> 354 ppm </li>
-                                    <li class="list-group-item list-group-item-secondary"><h2>Cars</h2> <br> 9 </li>
                                     <li class="list-group-item list-group-item-secondary">
-                                        <h3>
-                                        <span class="badge badge-secondary "> A </span> 2
-                                        <h3>
-                                        
+                                        <h2>CO2</h2> <br> 
+                                        <div id="co2"> 354 </div> mg 
+                                    </li>
+                                    <li class="list-group-item list-group-item-secondary">
+                                        <h5>Fuel Consumption</h5> <br> 
+                                        <div id="fuel"> 9 </div> ml 
+                                    </li>
+                                    <li class="list-group-item list-group-item-secondary">
+                                        <h2>Cars</h2> <br> 
+                                        <div id="cars">9 </div> 
                                     </li>
                                     <li class="list-group-item list-group-item-secondary">
                                         <h3>
-                                        <span class="badge badge-secondary"> B </span> 3
+                                            <span class="badge badge-secondary "> A </span>
+                                            <div id="carsA">0</div>
                                         <h3>
                                     </li>
                                     <li class="list-group-item list-group-item-secondary">
                                         <h3>
-                                        <span class="badge badge-secondary"> C </span> 1
+                                            <span class="badge badge-secondary"> B </span> 
+                                            <div id="carsB">0</div>
                                         <h3>
                                     </li>
                                     <li class="list-group-item list-group-item-secondary">
                                         <h3>
-                                        <span class="badge badge-secondary"> D </span> 4
+                                            <span class="badge badge-secondary"> C </span>
+                                            <div id="carsC">0</div>
+                                        <h3>
+                                    </li>
+                                    <li class="list-group-item list-group-item-secondary">
+                                        <h3>
+                                            <span class="badge badge-secondary"> D </span>
+                                            <div id="carsD">0</div>
                                         <h3>
                                     </li>
                                 </ul>
@@ -151,6 +164,34 @@
         <div class="footer bg-info navbar-info fixed-bottom">
             <i class="fa fa-github" aria-hidden="true"></i> github
         </div>
-
+    <!--********************************************************************************************************-->
+    <script>
+        $.update_info = function () {
+            $.ajax({
+                url: '{% url "get_simulation_infomation" %}' ,
+                dataType: 'json',
+                success: function (data) {
+                    if (data.is_taken) {
+                        alert("A user with this username already exists.");
+                    }
+                    if(data.hasOwnProperty('co2')){
+                        document.getElementById("co2").innerHTML = data.co2 ; }
+                    if(data.hasOwnProperty('fuel')){
+                        document.getElementById("fuel").innerHTML = data.fuel ; }
+                    if(data.hasOwnProperty('cars')){
+                        document.getElementById("cars").innerHTML = data.A ; }
+                    if(data.hasOwnProperty('A')){
+                        document.getElementById("casrA").innerHTML = data.A ; }
+                    if(data.hasOwnProperty('B')){
+                        document.getElementById("casrB").innerHTML = data.B ; }
+                    if(data.hasOwnProperty('C')){
+                        document.getElementById("casrC").innerHTML = data.C ; }
+                    if(data.hasOwnProperty('D')){
+                        document.getElementById("casrD").innerHTML = data.D ; }
+                    
+                }
+            });
+        });
+    </script>
     </body>
 </html>

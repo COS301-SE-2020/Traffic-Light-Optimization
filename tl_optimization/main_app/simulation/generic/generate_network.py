@@ -145,7 +145,7 @@ class GenerateNetwork:
         
 
         for road in roads_out_looper:
-            idVal = "out" + str(neighbor.get("position"))
+            idVal = "out" + str(road.get("position"))
             to_ = str(road.get("position"))
             n_lanes = str(road.get("lanes"))
             speed = str(road.get("speed"))

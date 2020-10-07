@@ -35,6 +35,7 @@ urlpatterns = [
     path('intersection/visualization', views.visualize_intersection, name="visualize_intersection"),
     path('intersection/<int:intersection_id>/simulation', views.simulate_intersection, name="simulate_intersection"),
     path('intersection/simulation/<int:intersection_id>/', views.update_simulation_info, name="update_simulation" ),
+    path('intersection/extrainfo/<int:intersection_id>/<int:iteration>', views.get_simulation_infomation, name="get_simulation_infomation" ),
 
     # Road controllers 
     path('road/<int:intersection_id>/', views.add_road, name="add_road" ),
