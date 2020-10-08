@@ -43,8 +43,7 @@
         }else{
             i = i + 1
             document.getElementById("myImg").src ="{{ MEDIA_URL }}" + "simulation/inter{{intersection_info.id}}/image"+i.toString()+".png";
-            document.getElementById("casrA").innerHTML = "" ;
-            
+            $.update_info(i);
             player = setTimeout(task, 500 );
         }
     }

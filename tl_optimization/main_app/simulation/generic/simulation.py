@@ -96,7 +96,7 @@ def run(traci_connection, intersection_id, loop=True, roads_in=[], roads_out=[])
 # Puause the traCi Simulation
 def simulation_info( intersection_id, iteration ):
     inter_info = RECORDER[str(intersection_id)]
-    info = inter_info[iteration]
+    info = inter_info[int(iteration)]
     return info 
 
 # Stop the traCi simulation
