@@ -62,8 +62,8 @@ def home(request, intersection_id ):
     simu_connection = random.randint(1000, 5000)
     in_data = [ r.road_info() for r in roads_in ]
     out_data = [ r.road_info() for r in roads_out ]
-    #Simulation = Thread(target=initiate,args=(intersection_id,True,simu_connection,in_data,out_data,) )  # Start the simulation
-    #Simulation.start() 
+    Simulation = Thread(target=initiate,args=(intersection_id,True,simu_connection,in_data,out_data,) )  # Start the simulation
+    Simulation.start() 
 
     # Update road information ---------------------------------------------------------
     rforms_in = [ RoadForm(instance=get_object_or_404( Road, pk=r.road_info().get("id"))) for r in roads_in]

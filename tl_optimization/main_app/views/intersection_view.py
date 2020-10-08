@@ -181,6 +181,7 @@ def update_simulation_info( request , intersection_id):
 
 
 # Get simulation extra information 
-def get_simulation_infomation(request, intersection_id, iteration ):
+def get_simulation_infomation(request, intersection_id ):
+    iteration = request.GET.get('iteration', None)
     data = simulation_info(intersection_id,iteration)
     return  JsonResponse(data)
