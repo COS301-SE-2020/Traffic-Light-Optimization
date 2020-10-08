@@ -33,34 +33,31 @@ STOPPER = { 'SUMO': True }
 
 # Gobal array to contain the 
 RECORDER = { 'Info': True }
+RECORDER_SUM = { 'Info': True }
 
 # Extra info calculator
-def calculate_extra_info(traci_connection, roads_in, roads_out):
+def calculate_extra_info(traci_connection, intersection_id,roads_in, roads_pos):
     entry = {}
-    co2 = 0.0
-    fuel = 0.0
-    cars = 0.0
-    for roadId in roads_in:
-        entry[roadId] = traci_connection.edge.getLastStepVehicleNumber(roadId) 
-        cars += entry[roadId]
-        co2 += traci_connection.edge.getCO2Emission(roadId)
-        fuel += traci_connection.edge.getFuelConsumption(roadId)
-    
-    for roadId in roads_out:
-        cars += traci_connection.edge.getLastStepVehicleNumber(roadId) 
-        co2 += traci_connection.edge.getCO2Emission(roadId)
-        fuel += traci_connection.edge.getFuelConsumption(roadId)
-    entry["co2"] = co2
-    entry["fuel"] = fuel
-    entry["cars"] = cars
-
+    if str(intersection_id) in RECORDER:
+        rec = RECORDER[str(intersection_id)]
+        rec_dict = rec[-1]
+        for pos, roadId in zip(roads_pos,roads_in):
+            entry[str("cars"+pos)] = traci_connection.edge.getLastStepVehicleNumber(roadId) 
+            #entry[str("traffic"+pos)] = rec_dict.get(str("traffic"+pos)) + entry[str("cars"+pos)]
+            entry[str("co2"+pos)] =  rec_dict.get(str("co2"+pos)) +  (traci_connection.edge.getCO2Emission(roadId) / 1000.0 ) 
+            entry[str("fuel"+pos)] = rec_dict.get(str("fuel"+pos)) +  (traci_connection.edge.getFuelConsumption(roadId) / 1000.0 )
+    else:
+        for pos, roadId in zip(roads_pos,roads_in):
+            entry[str("cars"+pos)] = traci_connection.edge.getLastStepVehicleNumber(roadId) 
+            #entry[str("traffic"+pos)] = entry[str("cars"+pos)]
+            entry[str("co2"+pos)] =  (traci_connection.edge.getCO2Emission(roadId) / 1000.0)
+            entry[str("fuel"+pos)] =  (traci_connection.edge.getFuelConsumption(roadId) /1000.0)
     return entry
 
 
 # Contains TraCI control loop 
 def run(traci_connection, intersection_id, loop=True, roads_in=[], roads_out=[]):
-    #global STOPPER 
-    STOPPER[str(intersection_id)] = False
+    
     step = 0
     path = settings.MEDIA_ROOT + "\simulation\inter"+ str(intersection_id)
     if not os.path.isdir(path):
@@ -71,12 +68,15 @@ def run(traci_connection, intersection_id, loop=True, roads_in=[], roads_out=[])
     traci_connection.gui.screenshot("View #0", path+"\image"+str(step)+".png", width=1000, height=800)
 
     # Get Extra Information for intersection 
+    roads_pos = [ str(road.get("position")) for road in roads_in ]
     roads_in = [ "in" + str(road.get("position")) for road in roads_in ]
-    roads_out = [ "out" + str(road.get("position")) for road in roads_out ]
     if loop:
-        RECORDER[str(intersection_id)] = [ calculate_extra_info(traci_connection,roads_in,roads_out) ]
-    
+        RECORDER.pop(str(intersection_id), None)
+        RECORDER[str(intersection_id)] = [ calculate_extra_info(traci_connection,intersection_id,roads_in,roads_pos) ]
     step += 1
+
+    #global STOPPER 
+    STOPPER[str(intersection_id)] = False
 
     # Iterate throughout the simulation if loop is true i.e. we want the simulation not only the visualization
     # while traci_connection.simulation.getMinExpectedNumber() > 0 and loop and not STOPPER[str(intersection_id)]:
@@ -87,7 +87,9 @@ def run(traci_connection, intersection_id, loop=True, roads_in=[], roads_out=[])
         step += 1
         if not loop:
             break
-        RECORDER[str(intersection_id)].append( calculate_extra_info(traci_connection,roads_in,roads_out) )
+        info_dict = calculate_extra_info(traci_connection,intersection_id,roads_in,roads_pos)
+        info_dict["time"] = traci_connection.simulation.getTime()
+        RECORDER[str(intersection_id)].append( info_dict )
 
     # Close the simulation
     traci_connection.close()
@@ -107,6 +109,8 @@ def stop( connection_label, intersection_id ):
 
 # main entry point
 def initiate( intersection_id, looper=True , simu_connection=123, roads_in=[], roads_out=[] ):
+    # Stop any other previous 
+    STOPPER[str(intersection_id)] = True
     options = get_options()
 
     # check binary
@@ -123,12 +127,13 @@ def initiate( intersection_id, looper=True , simu_connection=123, roads_in=[], r
     tripinfo = os.getcwd() + "\main_app\media\config\intersection\\tripinfo\inter_"+str(intersection_id)+"_"+str(threadId)+".xml"
     print(sumocfg)
     print(tripinfo)
-    try:
-        traci.start([sumoBinary, "-c", sumocfg , "--tripinfo-output", tripinfo, "-S", "-Q"], label=str(threadId))
-        traci_connection = traci.getConnection(str(threadId))
-        run(traci_connection,intersection_id, loop=looper, roads_in=roads_in, roads_out=roads_out)
-    except:
-        print("********************************* >> Something went wrong << ******************************* ")
+    #try:
+    traci.start([sumoBinary, "-c", sumocfg , "--tripinfo-output", tripinfo, "-S", "-Q"], label=str(threadId))
+    traci_connection = traci.getConnection(str(threadId))
+    print("Before: run .....................................................................................")
+    run(traci_connection,intersection_id, loop=looper, roads_in=roads_in, roads_out=roads_out)
+    #except:
+    print("********************************* >> Something went wrong << ******************************* ")
         #traci_connection = traci.getConnection( str(intersection_id) )
         #traci_connection.close()
         #sys.stdout.flush()
