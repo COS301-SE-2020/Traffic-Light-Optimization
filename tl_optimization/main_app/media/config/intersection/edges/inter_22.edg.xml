@@ -1,8 +1,8 @@
 <edges xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/edges_file.xsd">
   <edge id="inA" from="A" to="0" priority="1" numLanes="2" speed="12" length="25">
-    <neigh lane="outA_0"/>
+    <neigh lane="outA_1"/>
   </edge>
-  <edge id="outA" from="0" to="A" priority="1" numLanes="1" speed="12" length="25">
+  <edge id="outA" from="0" to="A" priority="1" numLanes="2" speed="12" length="25">
     <neigh lane="inA_1"/>
   </edge>
   <edge id="inB" from="B" to="0" priority="1" numLanes="1" speed="15" length="20">

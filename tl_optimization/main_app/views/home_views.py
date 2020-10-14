@@ -103,6 +103,7 @@ def home(request, intersection_id ):
         forecast_div_ = roads_in[:]
 
         # Data graphing for Traffic light optimization ------------------------------------
+        '''
         roadA = [ json.dumps({'Red':random.randint(4, 25), 'Yellow':4 ,'Green':random.randint(4, 15)}) for r in range(24)]
         roadB = [ json.dumps({'Red':random.randint(4, 25), 'Yellow':4 ,'Green':random.randint(4, 15)}) for r in range(24)]
         roadC = [ json.dumps({'Red':random.randint(4, 25), 'Yellow':4 ,'Green':random.randint(4, 15)}) for r in range(24)]
@@ -121,6 +122,40 @@ def home(request, intersection_id ):
         figure= go.Figure(data=data)
         optimization_div = opy.plot(figure, output_type='div', include_plotlyjs=False , show_link=False, link_text="")
         optimization_div_ = roads_in[:]
+        '''
+        tl_array = intersection_info.traffic_light_phases
+        tl_phases = json.loads(tl_array)
+        check_headers = tl_phases[0]
+        headV = [["Phase"],["Time(s)"]]
+        cellV = [[ i+1 for i in range(len(tl_phases))] , [ phase.get("duration") for phase in tl_phases]]
+        
+        if "A" in check_headers:
+            headV.append(["A"])
+            cellV.append([ phase.get("A") for phase in tl_phases])
+        if "B" in check_headers:
+            headV.append(["B"])
+            cellV.append([ phase.get("B") for phase in tl_phases])
+        if "C" in check_headers:
+            headV.append(["C"])
+            cellV.append([ phase.get("C") for phase in tl_phases])
+        if "D" in check_headers:
+            headV.append(["D"])
+            cellV.append([ phase.get("D") for phase in tl_phases])
+        lights = []
+        optimization_div = []
+        for time in range(24):
+            cellV[1] = [ int(phase.get("duration"))+random.randint(0, 5) for phase in tl_phases ]
+            lights = go.Table(columnwidth = [80,250],header=dict(values=headV), cells=dict(values=cellV)) 
+            data = [lights]
+            figure= go.Figure(data=data)
+            optimization_div.append( opy.plot(figure, output_type='div', include_plotlyjs=False , show_link=False, link_text="") )
+        optimization_div_ = roads_in[:]
+        optimization_div_label = ["From - 00:00","From - 01:00","From - 02:00","From - 03:00","From - 04:00","From - 05:00","From - 06:00",
+                                "From - 07:00","From - 08:00","From - 09:00","From - 10:00","From - 11:00","From - 12:00","From - 13:00",
+                                "From - 14:00","From - 15:00","From - 16:00","From - 17:00","From - 18:00","From - 19:00","From - 20:00",
+                                "From - 21:00","From - 22:00","From - 23:00"]
+        optimization_div = zip(optimization_div,optimization_div_label)
+        
 
 
     # Data graphing for Traffic light ------------------------------------
@@ -167,10 +202,16 @@ def home(request, intersection_id ):
         'connection': simu_connection,
     }
     return render(request, 'main_app/view_home.html', data_input )
-
+def coloring( colors ):
+    color_short = ["r","y","g","G"]
+    color_long = ["Red","Yellow","Green","Green"]
+    strn = ""
+    for long,short in zip(color_long,color_short):
+        if short in colors:
+            strn += "+ " + long
+    return strn
 
 # Coordinates of the intersection ..................................................................................
-# def visualize_intersection(request, intersection_id):
 def visualize_intersection(request):
 
     # get intersection info
@@ -264,6 +305,7 @@ def download_forecast_traffic_light_csv(request, intersection_id):
         if "A" in check_headers:
             headV.append("A")
             cellV.append([ phase.get("A") for phase in tl_phases])
+            #cellV.append(arr)
         if "B" in check_headers:
             headV.append("B")
             cellV.append([ phase.get("B") for phase in tl_phases])

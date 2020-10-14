@@ -3,9 +3,9 @@
   <flow id="A_B_0" begin="0" end="150" probability="0.1388888888888889" from="inA" to="outB" type="mycar"/>
   <flow id="A_C_0" begin="0" end="150" probability="0.1388888888888889" from="inA" to="outC" type="mycar"/>
   <flow id="A_D_0" begin="0" end="150" probability="0.1388888888888889" from="inA" to="outD" type="mycar"/>
-  <flow id="B_A_0" begin="0" end="150" probability="0.1111111111111111" from="inB" to="outA" type="mycar"/>
-  <flow id="B_C_0" begin="0" end="150" probability="0.1111111111111111" from="inB" to="outC" type="mycar"/>
-  <flow id="B_D_0" begin="0" end="150" probability="0.1111111111111111" from="inB" to="outD" type="mycar"/>
+  <flow id="B_A_0" begin="0" end="150" probability="0.1388888888888889" from="inB" to="outA" type="mycar"/>
+  <flow id="B_C_0" begin="0" end="150" probability="0.1388888888888889" from="inB" to="outC" type="mycar"/>
+  <flow id="B_D_0" begin="0" end="150" probability="0.1388888888888889" from="inB" to="outD" type="mycar"/>
   <flow id="C_A_0" begin="0" end="150" probability="0.1111111111111111" from="inC" to="outA" type="mycar"/>
   <flow id="C_B_0" begin="0" end="150" probability="0.1111111111111111" from="inC" to="outB" type="mycar"/>
   <flow id="C_D_0" begin="0" end="150" probability="0.1111111111111111" from="inC" to="outD" type="mycar"/>

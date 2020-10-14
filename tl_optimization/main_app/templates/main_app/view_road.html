@@ -186,7 +186,10 @@
                 <!--{{ optimizer.results }}-->
                 {% if optimization_div_ %}
                     {% autoescape off %}
-                    {{ optimization_div }}
+                    {% for opt_div,label in optimization_div %}
+                        <h3>{{label}}</h3>
+                        {{ opt_div }}
+                    {% endfor %}
                     {% endautoescape %}
                 {%else%}
                     <h3> Required:</h3> <br><br>
