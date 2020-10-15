@@ -87,60 +87,54 @@
                             <div class="col-sm-2 bg-light">
                                 <ul class="list-group list-group-flush bg-secondary">
                                 
-                                    <li class="list-group-item list-group-item-secondary">
+                                    <!--<li class="list-group-item list-group-item-secondary">
                                         <h6>
                                             <span> time(s): </span>
                                             <div id="time" style="display:inline;">0</div>
                                         </h6>
-                                    </li>
+                                    </li>-->
                                     <li class="list-group-item list-group-item-secondary">
                                         <h5>
                                             <span class="badge badge-secondary "> in A </span>
                                             <div id="carsA" style="display:inline;">0</div>
                                         </h5>
-                                        <span>traffic</span>
-                                        <div id="trafficA" style="display:inline;padding-left:6pt;">0</div><br>
-                                        <span>fuel(L)</span>
-                                        <div id="fuelA" style="display:inline;padding-left:4pt;">0</div><br>
-                                        <span>co2(g)</span>
-                                        <div id="co2A" style="display:inline;padding-left:4pt;">0</div><br>
+                                        <span>fuel(L):</span>
+                                        <div id="fuelA" style="display:inline;padding-left:1pt;">0</div><br>
+                                        <span>co2(g):</span>
+                                        <div id="co2A" style="display:inline;padding-left:1pt;">0</div><br>
                                     </li>
                                     <li class="list-group-item list-group-item-secondary">
                                         <h5>
                                             <span class="badge badge-secondary"> in B </span> 
                                             <div id="carsB" style="display:inline;">0</div>
                                         </h5>
-                                        <span>traffic</span>
-                                        <div id="trafficB" style="display:inline;padding-left:6pt;">0</div><br>
-                                        <span>fuel(L)</span>
-                                        <div id="fuelB" style="display:inline;padding-left:4pt;">0</div><br>
-                                        <span>co2(g)</span>
-                                        <div id="co2B" style="display:inline;padding-left:4pt;">0</div><br>
+                                        <span>fuel(L):</span>
+                                        <div id="fuelB" style="display:inline;padding-left:1pt;">0</div><br>
+                                        <span>co2(g):</span>
+                                        <div id="co2B" style="display:inline;padding-left:1pt;">0</div><br>
                                     </li>
                                     <li class="list-group-item list-group-item-secondary">
                                         <h5>
                                             <span class="badge badge-secondary"> in C </span>
                                             <p id="carsC" style="display:inline;">0</p>
                                         </h5>
-                                        <span>traffic</span>
-                                        <div id="trafficC" style="display:inline;padding-left:6pt;">0</div><br>
-                                        <span>fuel(L)</span>
-                                        <div id="fuelC" style="display:inline;padding-left:4pt;">0</div><br>
-                                        <span>co2(g)</span>
-                                        <div id="co2C" style="display:inline;padding-left:4pt;">0</div><br>
+                                        <span style="display:inline;padding-left:1pt;">fuel(L):</span>
+                                        <div id="fuelC" style="display:inline;padding-left:1pt;">0</div><br>
+                                        <span>co2(g):</span>
+                                        <div id="co2C" style="display:inline;padding-left:1pt;">0</div><br>
                                     </li>
+                                    {% if intersection_info.intersection_type == "Cross" %}
                                     <li class="list-group-item list-group-item-secondary">
                                         <h5>
                                             <span class="badge badge-secondary"> in D </span>
                                             <div id="carsD" style="display:inline;">0</div>
                                         </h5>
-                                        <span>traffic</span>
-                                        <div id="trafficD" style="display:inline;padding-left:6pt;">0</div><br>
-                                        <span>fuel(L)</span>
-                                        <div id="fuelD" style="display:inline;padding-left:4pt;">0</div><br>
-                                        <span>co2(g)</span>
-                                        <div id="co2D" style="display:inline;padding-left:4pt;">0</div><br>
+                                        <span>fuel(L):</span>
+                                        <div id="fuelD" style="display:inline;padding-left:1pt;">0</div><br>
+                                        <span>co2(g):</span>
+                                        <div id="co2D" style="display:inline;padding-left:1pt;">0</div><br>
                                     </li>
+                                    {% endif %}
                                 </ul>
                             </div>
                             <div class="col-sm-10" >
@@ -188,33 +182,33 @@
                 data:{ 'iteration': iteration},
                 dataType: 'json',
                 success: function (data) {
-                    if(data.hasOwnProperty('time')){
+                    /*if(data.hasOwnProperty('time')){
                         document.getElementById("time").innerHTML = data.co2 ; 
-                    }
+                    }*/
 
                     if(data.hasOwnProperty('carsA')){
                         document.getElementById("carsA").innerHTML = data.carsA ; 
-                        document.getElementById("trafficA").innerHTML = data.trafficA ; 
-                        document.getElementById("fuelA").innerHTML = data.fuelA ; 
-                        document.getElementById("co2A").innerHTML = data.co2A ; 
+                        //document.getElementById("trafficA").innerHTML = data.trafficA ; 
+                        document.getElementById("fuelA").innerHTML = data.fuelA.toFixed(2); 
+                        document.getElementById("co2A").innerHTML = data.co2A.toFixed(1); 
                     }
                     if(data.hasOwnProperty('carsB')){
                         document.getElementById("carsB").innerHTML = data.carsB ; 
-                        document.getElementById("trafficB").innerHTML = data.trafficB ; 
-                        document.getElementById("fuelB").innerHTML = data.fuelB ; 
-                        document.getElementById("co2B").innerHTML = data.co2B ; 
+                        //document.getElementById("trafficB").innerHTML = data.trafficB ; 
+                        document.getElementById("fuelB").innerHTML = data.fuelB.toFixed(2) ; 
+                        document.getElementById("co2B").innerHTML = data.co2B.toFixed(1) ; 
                     }
                     if(data.hasOwnProperty('carsC')){
                         document.getElementById("carsC").innerHTML = data.carsC ; 
-                        document.getElementById("trafficC").innerHTML = data.trafficC ; 
-                        document.getElementById("fuelC").innerHTML = data.fuelC ; 
-                        document.getElementById("co2C").innerHTML = data.co2C ;  
+                        //document.getElementById("trafficC").innerHTML = data.trafficC ; 
+                        document.getElementById("fuelC").innerHTML = data.fuelC.toFixed(2) ; 
+                        document.getElementById("co2C").innerHTML = data.co2C.toFixed(1) ;  
                     }
                     if(data.hasOwnProperty('carsD')){
                         document.getElementById("carsD").innerHTML = data.carsB ; 
-                        document.getElementById("trafficD").innerHTML = data.trafficB ; 
-                        document.getElementById("fuelD").innerHTML = data.fuelB ; 
-                        document.getElementById("co2D").innerHTML = data.co2B ; 
+                        //document.getElementById("trafficD").innerHTML = data.trafficB ; 
+                        document.getElementById("fuelD").innerHTML = data.fuelB.toFixed(2) ; 
+                        document.getElementById("co2D").innerHTML = data.co2B.toFixed(1) ; 
                     }
                 }
             });
